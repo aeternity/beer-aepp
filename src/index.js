@@ -1,19 +1,26 @@
-import './custom.sass'
-import * as R from 'ramda'
-import printMe from './print.js'
+import './custom.scss'
+import Vue from 'vue'
+import App from './App.vue'
 
-function component () {
-  const element = document.createElement('div')
-  const btn = document.createElement('button')
+import VueRouter from 'vue-router'
+import BeerButton from './components/BeerButton.vue'
 
-  element.innerHTML = R.join(' ', ['Hello', 'webpack'])
+const routes = [
+  { path: '/', component: BeerButton }
+]
 
-  btn.innerHTML = 'Click me and check the console!'
-  btn.onclick = printMe
+// 3. Create the router instance and pass the `routes` option
+// You can pass in additional options here, but let's
+// keep it simple for now.
+const router = new VueRouter({
+  routes // short for `routes: routes`
+})
 
-  element.appendChild(btn)
 
-  return element
-}
-
-document.body.appendChild(component())
+Vue.config.productionTip = false
+Vue.use(VueRouter)
+console.info('about to render Vue App');
+new Vue({
+  router,
+  render: h => h(App)
+}).$mount('#app')
