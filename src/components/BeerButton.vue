@@ -20,7 +20,6 @@
 
 <script>
 import * as R from 'ramda'
-import BN from 'bn.js'
 import { AeButton, AeAddress } from '@aeternity/aepp-components'
 import { setTimeout } from 'timers';
 
