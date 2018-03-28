@@ -5,7 +5,7 @@
       <span slot="mobile-left">mobile-left</span>
       <span slot="mobile-right">mobile-right</span>
     </ae-header>
-    <BeerButton msg="Welcome to Your Vue.js App"/>
+    <BeerButton :account="account"/>
   </div>
 </template>
 
@@ -21,16 +21,38 @@ export default {
     AeButton,
     BeerButton
   },
-  mounted: () => {
-    const provider = new AeternityClient.providers.HttpProvider('sdk-testnet.aepps.com', 443, {secured: true})
-    const client = new AeternityClient(provider)
+  computed: {
+    account () {
+      //get query params
+      return this.$route.query // k = private, p = public, n = name
+    }
+  },
+  mounted () {
+    // DEBUG SDK-JS
+    // const provider = new AeternityClient.providers.HttpProvider('sdk-testnet.aepps.com', 443, {secured: true})
+    // const client = new AeternityClient(provider)
+    // console.log(client.base.getHeight().then((value) => console.log(value)));
 
-    // TODO: const { pub, priv } = Crypto.generateKeyPair()
-    // const privateKey = '<lets assume you extracted your private key which is store here as a hex>'
+    // Get URL params (account info)
 
-    console.log(client.base.getHeight().then((value) => console.log(value)));
+    // this.account = this.$route.query;
+
+
+    // DEBUG async fetch
+    // const blabla = this.fetchAsync('https://sdk-testnet.aepps.com/v2/top')
+    //                     .then((value) => console.log(value))
+    //                     .catch((error) => console.warn(error))
+
+
 
     console.info('Vue App mounted');
+  },
+  methods: {
+    async fetchAsync (url) {
+      const response = await fetch(url);
+      return response.json();
+    }
   }
+
 }
 </script>
