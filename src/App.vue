@@ -6,6 +6,11 @@
       <span slot="mobile-right">mobile-right</span>
     </ae-header>
     <BeerButton :account="account"/>
+    <ae-button type='dramatic' @click="showReceiveTokens = !showReceiveTokens">Receive Tokens</ae-button>
+    <qrcode v-if="showReceiveTokens" :value="pubKey" :options="{ size: 200 }"></qrcode>
+    <ae-button type='dramatic' @click="showSendTokens = !showSendTokens">Send Tokens</ae-button>
+    <SendTokens v-if="showSendTokens" />
+
   </div>
 </template>
 
@@ -13,18 +18,31 @@
 import BeerButton from './components/BeerButton.vue'
 import AeternityClient from '@aeternity/aepp-sdk'
 import { AeHeader, AeButton } from '@aeternity/aepp-components'
+import SendTokens from './components/SendTokens.vue'
+import VueQrcode from '@xkeshi/vue-qrcode'
 
 export default {
   name: 'app',
   components: {
     AeHeader,
     AeButton,
-    BeerButton
+    BeerButton,
+    SendTokens,
+    qrcode: VueQrcode
+  },
+  data () {
+    return {
+      showSendTokens: false,
+      showReceiveTokens: false
+    }
   },
   computed: {
     account () {
       //get query params
       return this.$route.query // k = private, p = public, n = name
+    },
+    pubKey () {
+      return this.account && this.account.p ? this.account.p : ''
     }
   },
   mounted () {
