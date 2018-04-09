@@ -31,42 +31,42 @@
 </template>
 
 <script>
-import { AeButton, AeAddress, AeAmountInput } from "@aeternity/aepp-components";
-import { setTimeout } from "timers";
+import { AeButton, AeAddress, AeAmountInput } from '@aeternity/aepp-components'
+import { setTimeout } from 'timers'
 
 export default {
-  name: "BeerButton",
+  name: 'BeerButton',
   components: {
     AeButton,
     AeAddress,
     AeAmountInput
   },
-  data() {
+  data () {
     return {
-      balance: { amount: 1252, symbol: "AE" }, // this should be the actual wallet balance
-      ajaxCall: { status: "busy" }
-    };
+      balance: { amount: 1252, symbol: 'AE' }, // this should be the actual wallet balance
+      ajaxCall: { status: 'busy' }
+    }
   },
   props: {
     account: Object
   },
   methods: {
-    onClick(...strings) {
-      console.log(strings[0] + strings[1]);
+    onClick (...strings) {
+      console.log(strings[0] + strings[1])
     },
-    buyBeer() {
-      this.ajaxCall.status = "idle";
+    buyBeer () {
+      this.ajaxCall.status = 'idle'
       setTimeout(() => {
-        this.ajaxCall.status = "ready";
-        this.balance.amount = 251;
-      }, 1500);
-      //alert('wii');
+        this.ajaxCall.status = 'ready'
+        this.balance.amount = 251
+      }, 1500)
+      // alert('wii')
     }
   },
-  mounted() {
-    console.info("The account: ", this.account);
+  mounted () {
+    console.info('The account: ', this.account)
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -88,3 +88,4 @@ export default {
   background: green;
 }
 </style>
+P

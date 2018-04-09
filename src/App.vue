@@ -10,63 +10,65 @@
 </template>
 
 <script>
-import BeerButton from "./components/BeerButton.vue";
-import AeternityClient from "@aeternity/aepp-sdk";
-import { AeHeader, AeButton } from "@aeternity/aepp-components";
+import BeerButton from './components/BeerButton.vue'
+import AeternityClient from '@aeternity/aepp-sdk'
+import { AeHeader, AeButton } from '@aeternity/aepp-components'
+import fetch from 'isomorphic-fetch'
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
     AeHeader,
     AeButton,
     BeerButton
   },
   computed: {
-    account() {
-      //get query params
-      return this.$route.query; // k = private, p = public, n = name
+    account () {
+      // get query params
+      return this.$route.query // k = private, p = public, n = name
     }
   },
-  mounted() {
+  mounted () {
     // DEBUG SDK-JS
     const provider = new AeternityClient.providers.HttpProvider(
-      "sdk-testnet.aepps.com",
+      'sdk-testnet.aepps.com',
       443,
       { secured: true, internal: false }
-    );
-    const client = new AeternityClient(provider);
+    )
+    const client = new AeternityClient(provider)
     console.log(
-      client.base.getHeight().then(value => console.log("HEIGHT:", value))
-    );
+      client.base.getHeight().then(value => console.log('HEIGHT:', value))
+    )
 
-    const provider_internal = new AeternityClient.providers.HttpProvider(
-      "sdk-testnet.aepps.com",
+    const providerInternal = new AeternityClient.providers.HttpProvider(
+      'sdk-testnet.aepps.com',
       443,
       { secured: true, internal: true }
-    );
-    const client_internal = new AeternityClient(provider_internal);
+    )
+    const clientInternal = new AeternityClient(providerInternal)
     console.log(
-      client_internal.accounts
+      clientInternal.accounts
         .getBalance(this.$route.query.p)
         .then(value => console.log(value))
-    );
+    )
 
     // Get URL params (account info)
 
-    // this.account = this.$route.query;
+    // this.account = this.$route.query
 
     // DEBUG async fetch
     // const blabla = this.fetchAsync('https://sdk-testnet.aepps.com/v2/top')
     //                     .then((value) => console.log(value))
     //                     .catch((error) => console.warn(error))
 
-    console.info("Vue App mounted");
+    console.info('Vue App mounted')
   },
   methods: {
-    async fetchAsync(url) {
-      const response = await fetch(url);
-      return response.json();
+    fetchAsync (url) {
+      return new Promise(resolve => {
+        fetch(url).then(response => resolve(response.json()))
+      })
     }
   }
-};
+}
 </script>
