@@ -6,6 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const dist_folder = path.resolve(__dirname, 'dist');
+const jsLoader = 'babel-loader!standard-loader?error=true'
 
 module.exports = {
   entry: './src/index.js',
@@ -34,6 +35,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        loader: jsLoader,
+        exclude: /node_modules/
+      },
+      {
         test: /\.(s[ac]ss)$/,
         use: ExtractTextPlugin.extract({
           fallback: 'vue-style-loader',
@@ -51,7 +57,7 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            js: 'standard-loader'
+            js: jsLoader
             // scss: 'vue-style-loader!css-loader!sass-loader',
             // sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
           }
