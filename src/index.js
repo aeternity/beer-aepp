@@ -16,10 +16,9 @@ const router = new VueRouter({
   routes // short for `routes: routes`
 })
 
-
 Vue.config.productionTip = false
 Vue.use(VueRouter)
-console.info('about to render Vue App');
+console.info('about to render Vue App')
 new Vue({
   router,
   render: h => h(App)
