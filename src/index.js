@@ -5,6 +5,8 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import BeerButton from './components/BeerButton.vue'
 
+import AsyncComputed from 'vue-async-computed'
+
 const routes = [
   { path: '/', component: BeerButton }
 ]
@@ -18,6 +20,8 @@ const router = new VueRouter({
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
+Vue.use(AsyncComputed)
+
 console.info('about to render Vue App')
 new Vue({
   router,

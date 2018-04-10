@@ -11,9 +11,7 @@
 
 <script>
 import BeerButton from './components/BeerButton.vue'
-import AeternityClient from '@aeternity/aepp-sdk'
 import { AeHeader, AeButton } from '@aeternity/aepp-components'
-import fetch from 'isomorphic-fetch'
 
 export default {
   name: 'app',
@@ -29,29 +27,6 @@ export default {
     }
   },
   mounted () {
-    // DEBUG SDK-JS
-    const provider = new AeternityClient.providers.HttpProvider(
-      'sdk-testnet.aepps.com',
-      443,
-      { secured: true, internal: false }
-    )
-    const client = new AeternityClient(provider)
-    console.log(
-      client.base.getHeight().then(value => console.log('HEIGHT:', value))
-    )
-
-    const providerInternal = new AeternityClient.providers.HttpProvider(
-      'sdk-testnet.aepps.com',
-      443,
-      { secured: true, internal: true }
-    )
-    const clientInternal = new AeternityClient(providerInternal)
-    console.log(
-      clientInternal.accounts
-        .getBalance(this.$route.query.p)
-        .then(value => console.log(value))
-    )
-
     // Get URL params (account info)
 
     // this.account = this.$route.query
@@ -62,12 +37,6 @@ export default {
     //                     .catch((error) => console.warn(error))
 
     console.info('Vue App mounted')
-  },
-  methods: {
-    async fetch (url) {
-      const response = await fetch(url)
-      return response.json()
-    }
   }
 }
 </script>
