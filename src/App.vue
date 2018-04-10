@@ -64,10 +64,9 @@ export default {
     console.info('Vue App mounted')
   },
   methods: {
-    fetchAsync (url) {
-      return new Promise(resolve => {
-        fetch(url).then(response => resolve(response.json()))
-      })
+    async fetch (url) {
+      const response = await fetch(url)
+      return response.json()
     }
   }
 }
