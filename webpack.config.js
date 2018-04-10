@@ -5,7 +5,6 @@ const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-
 const dist_folder = path.resolve(__dirname, 'dist');
 
 module.exports = {
@@ -52,7 +51,7 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            js: 'eslint-loader'
+            js: 'standard-loader?error=true'
             // scss: 'vue-style-loader!css-loader!sass-loader',
             // sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
           }
