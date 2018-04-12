@@ -69,7 +69,7 @@ export default {
   asyncComputed: {
     balance: {
       get () {
-        return client.accounts.getBalance(this.$route.query.p).then(value => {
+        return client.accounts.getBalance(this.account.p).then(value => {
           console.log('VALUE', value)
           return { amount: value, symbol: 'AE' }
         })
@@ -107,9 +107,7 @@ export default {
     // Init HTTP client From SDK-JS
     console.log('wallet', this.account)
 
-    console.log(
-      client.base.getHeight().then(value => console.log('HEIGHT:', value))
-    )
+    client.base.getHeight().then(value => console.log('HEIGHT:', value))
 
     console.info('The account: ', this.account)
   }
