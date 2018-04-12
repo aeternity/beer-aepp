@@ -37,7 +37,7 @@
 <script>
 import { AeButton, AeAddress, AeAmountInput } from '@aeternity/aepp-components'
 // import { setTimeout } from 'timers'
-import AeternityClient from '@aeternity/aepp-sdk'
+import { AeternityClient } from '@aeternity/aepp-sdk'
 import fetch from 'isomorphic-fetch'
 const provider = new AeternityClient.providers.HttpProvider(
   // 'sdk-testnet.aepps.com',
@@ -83,12 +83,13 @@ export default {
     },
     async buyBeer (receiver, amount) {
       this.ajaxCall.status = 'idle'
-      const { txHash } = await client.base.spend(receiver, parseInt(amount), this.wallet, {fee: 1}) // params: (receiver, amount, account sending, { fee = 1, nonce })
+      const spendResult = await client.base.spend(receiver, parseInt(amount), this.wallet, {fee: 1}) // params: (receiver, amount, account sending, { fee = 1, nonce })
+      const txHash = spendResult['tx_hash']
       console.log(`Waiting for ${txHash} to be mined...`)
-      client.tx.waitForTransaction(txHash).then(function (blockHeight) {
+      client.tx.waitForTransaction(txHash).then(blockHeight => {
         this.ajaxCall.status = 'ready'
         console.log(`blockHeight:${blockHeight} `, `txHash:${txHash} `)
-      }, function (reason) {
+      }, reason => {
         this.ajaxCall.status = 'busy'
         console.warn('Something went wrong: ', reason)
       })
