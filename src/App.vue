@@ -4,8 +4,13 @@
       <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'buy-beer'}">🍺</ae-button>
       <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'address'}">🔍</ae-button>
       <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'send'}">✉️</ae-button>
-      <!-- <span slot="mobile-left">mobile-left</span>
-      <span slot="mobile-right">mobile-right</span> -->
+      <div slot="mobile-left">
+        <ae-button v-if="account && account.pub" type='dramatic' size="small" :to="{name: 'buy-beer'}">🍺</ae-button>
+      </div>
+      <div slot="mobile-right">
+        <ae-button v-if="account && account.pub" type='dramatic' size="small" :to="{name: 'address'}">🔍</ae-button>
+        <ae-button v-if="account && account.pub" type='dramatic' size="small" :to="{name: 'send'}">✉️</ae-button>
+      </div>
     </ae-header>
     <router-view></router-view>
   </div>
@@ -26,17 +31,6 @@ export default {
     }
   },
   methods: {
-    async updateBalance () {
-      const pubKey = this.$store.state.account.pub
-      if (pubKey) {
-        try {
-          const balance = await this.$store.getters.clientInternal.accounts.getBalance(pubKey)
-          this.$store.commit('setBalance', balance)
-        } catch (err) {
-          console.log(err)
-        }
-      }
-    }
   },
   mounted () {
     // Get URL params (account info)
@@ -50,10 +44,9 @@ export default {
 
     console.info('Vue App mounted')
 
-    this.updateBalance()
+    this.$store.dispatch('updateBalance')
     setInterval(() => {
-      console.log('interval')
-      this.updateBalance()
+      this.$store.dispatch('updateBalance')
     }, 10000)
   }
 }

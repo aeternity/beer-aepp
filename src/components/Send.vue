@@ -1,6 +1,14 @@
 <template>
   <div class="send">
+    <div v-if="state === 'qrcode'">
+      <div class="loader" v-if="loading">
+        <ae-loader></ae-loader> Loading
+      </div>
+      <qrcode-reader @decode="onDecode" @init="onInit"></qrcode-reader>
+      <ae-button @click="state = 'input'">Skip</ae-button>
+    </div>
     <div v-if="state === 'input'" class="input">
+      <ae-button v-if="hasCamera" @click="startQrCode()">Read Code</ae-button>
       <ae-label for="receiver" :help-text="errors.first('receiver')">Receiver</ae-label>
       <ae-input id="receiver" name="receiver" v-model="receiver" v-validate="{regex: /^(\w+.(aet|test)|ak\$[123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ]{94})$/i}"></ae-input>
       <ae-label for="amount" :help-text="errors.first('amount')">Amount</ae-label>
@@ -9,7 +17,7 @@
         v-model="amount"
         name="amount"
         :units="units"
-        v-validate:amountInt="`required|decimal|min_value:1|max_value:${maxAmount}`"
+        v-validate:amountInt="`required|integer|min_value:1|max_value:${maxAmount}`"
         data-vv-delay="1"
         placeholder="0.00"></ae-amount-input>
       <ae-button
@@ -31,6 +39,7 @@
 
 <script>
 import { AeButton, AeInput, AeAddressInput, AeAmountInput, AeLabel, AeLoader } from '@aeternity/aepp-components'
+import { QrcodeReader } from 'vue-qrcode-reader'
 
 export default {
   name: 'Send',
@@ -40,7 +49,8 @@ export default {
     AeAddressInput,
     AeAmountInput,
     AeLabel,
-    AeLoader
+    AeLoader,
+    QrcodeReader
   },
   data () {
     return {
@@ -52,7 +62,9 @@ export default {
       units: [
         { symbol: 'Æ', name: 'æternity' }
       ],
-      state: 'input'
+      state: 'qrcode',
+      loading: true,
+      hasCamera: false
     }
   },
   computed: {
@@ -97,10 +109,42 @@ export default {
         console.log(err)
         this.state = 'input'
       }
+    },
+    onDecode (content) {
+      console.log(content)
+      // check valid address
+      if (this.isValidAddress(content)) {
+        this.receiver = content
+        this.state = 'input'
+      }
+    },
+    async onInit (promise) {
+      console.log('onInit')
+      try {
+        await promise
+        this.hasCamera = true
+      } catch (e) {
+        console.log(e)
+        this.hasCamera = false
+        this.state = 'input'
+      } finally {
+        // hide loader
+        this.loading = false
+      }
+    },
+    startQrCode () {
+      this.state = 'qrcode'
+      this.loading = true
+    },
+    isValidAddress (value) {
+      const regex = /^(\w+.(aet|test)|ak\$[123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ]{94})$/i
+      return regex.test(value)
     }
   },
-  mounted () {
-
+  async mounted () {
+    // refresh balance once
+    await this.$store.dispatch('updateBalance')
+    this.amount.amount = this.maxAmount
   }
 }
 </script>

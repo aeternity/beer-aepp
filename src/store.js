@@ -44,6 +44,21 @@ const store = new Vuex.Store({
     setBalance (state, newBalance) {
       state.balance = newBalance
     }
+  },
+  actions: {
+    async updateBalance ({ commit, state, getters }) {
+      const pubKey = state.account.pub
+      if (pubKey) {
+        try {
+          const balance = await getters.clientInternal.accounts.getBalance(pubKey)
+          commit('setBalance', balance)
+          return balance
+        } catch (err) {
+          console.log(err)
+        }
+      }
+      return 0
+    }
   }
 })
 
