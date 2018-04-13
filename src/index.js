@@ -12,23 +12,22 @@ Vue.use(VueRouter)
 Vue.use(AsyncComputed)
 Vue.use(VeeValidate)
 
+// set localStorage account BEFORE creating router
+try {
+  // eslint-disable-next-line no-undef
+  let account = JSON.parse(localStorage.getItem('account'))
+  if (account) {
+    store.commit('setAccount', account)
+  }
+} catch (e) {
+  console.log(e)
+}
+
 console.info('about to render Vue App')
 new Vue({
   router: getRouter(store),
   store,
   render: h => h(App),
-  beforeCreate () {
-    try {
-      // eslint-disable-next-line no-undef
-      let account = JSON.parse(localStorage.getItem('account'))
-      if (account) {
-        console.log('stored account', account)
-        store.commit('setAccount', account)
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  },
   mounted () {
   }
 }).$mount('#app')

@@ -12,7 +12,13 @@
         v-validate:amountInt="`required|decimal|min_value:1|max_value:${maxAmount}`"
         data-vv-delay="1"
         placeholder="0.00"></ae-amount-input>
-      <ae-button @click="sendTokens">Send</ae-button>
+      <ae-button
+        @click="sendTokens"
+        type="dramatic"
+        class="send-button"
+        :inactive="errors.any()"
+        >
+        Send</ae-button>
     </div>
     <div v-if="state === 'waiting'" class="waiting">
       <ae-loader /> Waiting
@@ -63,7 +69,10 @@ export default {
       return this.$store.state.balance
     },
     maxAmount () {
-      return this.balance - 1
+      if (this.balance > 0) {
+        return this.balance - 1
+      }
+      return 0
     },
     amountInt () {
       if (!this.amount && !this.amount.amount) {
@@ -77,6 +86,7 @@ export default {
   },
   methods: {
     async sendTokens () {
+      if (!await this.$validator.validateAll()) return
       try {
         const spendTx = await this.client.base.spend(this.receiver, this.amountInt, this.wallet, {fee: 1})
         this.state = 'waiting'
