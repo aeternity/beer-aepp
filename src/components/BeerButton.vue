@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
-    <h1>Hello and welcome, {{account.n}}!</h1>
+    <h1>Hello and welcome, {{account.domain}}!</h1>
 
-    <ae-address v-if="account.p" show-avatar size='short' :address="account.p"/>
+    <ae-address v-if="account.pub" show-avatar size='short' :address="account.pub"/>
 
 
     <button @click="buyBeer(beerBar,1000)" class="beer-btn"
@@ -36,16 +36,7 @@
 
 <script>
 import { AeButton, AeAddress, AeAmountInput } from '@aeternity/aepp-components'
-// import { setTimeout } from 'timers'
-import { AeternityClient } from '@aeternity/aepp-sdk'
 import fetch from 'isomorphic-fetch'
-const provider = new AeternityClient.providers.HttpProvider(
-  // 'sdk-testnet.aepps.com',
-  'republica.aepps.com',
-  443,
-  { secured: true, internal: false }
-)
-const client = new AeternityClient(provider)
 
 export default {
   name: 'BeerButton',
@@ -57,24 +48,31 @@ export default {
   data () {
     return {
       ajaxCall: { status: 'busy' },
-      wallet: Object,
-      beerBar: 'ak$3evGruG5reEY4eWDKCuZxkDBp4KTRyj4YJp98BGTgSegqURNpaTs2FEzVxHbiZwA4Z48JatQzNBoZEGM732BwDRhz3Ng3U'
+      beerBar: 'ak$3evGruG5reEY4eWDKCuZxkDBp4KTRyj4YJp98BGTgSegqURNpaTs2FEzVxHbiZwA4Z48JatQzNBoZEGM732BwDRhz3Ng3U',
+      interval: null
     }
   },
-  props: {
-    account: {
-      type: Object
-    }
-  },
-  asyncComputed: {
-    balance: {
-      get () {
-        return client.accounts.getBalance(this.account.p).then(value => {
-          console.log('VALUE', value)
-          return { amount: value, symbol: 'AE' }
-        })
-      },
-      default: { amount: 0, symbol: 'AE' }
+  computed: {
+    account () {
+      return this.$store.state.account
+    },
+    wallet () {
+      return {
+        priv: this.account.priv,
+        pub: this.account.pub
+      }
+    },
+    balance () {
+      return {
+        amount: this.$store.state.balance,
+        symbol: 'AE'
+      }
+    },
+    client () {
+      return this.$store.getters.client
+    },
+    clientInternal () {
+      return this.$store.getters.clientInternal
     }
   },
   methods: {
@@ -83,10 +81,10 @@ export default {
     },
     async buyBeer (receiver, amount) {
       this.ajaxCall.status = 'idle'
-      const spendResult = await client.base.spend(receiver, parseInt(amount), this.wallet, {fee: 1}) // params: (receiver, amount, account sending, { fee = 1, nonce })
+      const spendResult = await this.client.base.spend(receiver, parseInt(amount), this.wallet, {fee: 1}) // params: (receiver, amount, account sending, { fee = 1, nonce })
       const txHash = spendResult['tx_hash']
       console.log(`Waiting for ${txHash} to be mined...`)
-      client.tx.waitForTransaction(txHash).then(blockHeight => {
+      this.client.tx.waitForTransaction(txHash).then(blockHeight => {
         this.ajaxCall.status = 'ready'
         console.log(`blockHeight:${blockHeight} `, `txHash:${txHash} `)
       }, reason => {
@@ -97,19 +95,33 @@ export default {
     async fetch (url) {
       const response = await fetch(url)
       return response.json()
+    },
+    async updateBalance () {
+      try {
+        const balance = await this.clientInternal.accounts.getBalance(this.account.pub)
+        this.$store.commit('setBalance', balance)
+      } catch (err) {
+        console.log(err)
+      }
     }
   },
   mounted () {
-    this.wallet = {
-      priv: this.account.k,
-      pub: this.account.p
-    }
     // Init HTTP client From SDK-JS
     console.log('wallet', this.account)
 
-    client.base.getHeight().then(value => console.log('HEIGHT:', value))
+    this.client.base.getHeight().then(value => console.log('HEIGHT:', value))
 
     console.info('The account: ', this.account)
+
+    this.updateBalance()
+    this.interval = setInterval(() => {
+      this.updateBalance()
+    }, 10000)
+  },
+  beforeDestroy () {
+    if (this.interval) {
+      clearInterval(this.interval)
+    }
   }
 }
 </script>

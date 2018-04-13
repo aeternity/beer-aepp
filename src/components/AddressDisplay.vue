@@ -1,6 +1,6 @@
 <template>
   <div class="addressDisplay">
-    <vue-qrcode :value="account.p" :options="{ size: 300 }"></vue-qrcode>
+    <vue-qrcode :value="account.pub" :options="{ size: 300 }"></vue-qrcode>
   </div>
 </template>
 
@@ -20,9 +20,9 @@ export default {
     return {
     }
   },
-  props: {
-    account: {
-      type: Object
+  computed: {
+    account () {
+      return this.$store.state.account
     }
   },
   methods: {
