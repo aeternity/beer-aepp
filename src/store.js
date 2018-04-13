@@ -9,7 +9,8 @@ const store = new Vuex.Store({
     account: {
       pub: null,
       priv: null,
-      domain: null
+      domain: null,
+      name: null
     },
     balance: 0
   },
@@ -32,9 +33,10 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    setAccount (state, {pub, priv, domain}) {
+    setAccount (state, {pub, priv, name, domain}) {
       state.account.pub = pub
       state.account.priv = priv
+      state.account.name = name
       state.account.domain = domain
       // eslint-disable-next-line no-undef
       localStorage.setItem('account', JSON.stringify(state.account))
