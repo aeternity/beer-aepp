@@ -2,6 +2,7 @@ import Router from 'vue-router'
 import BeerButton from './components/BeerButton.vue'
 import AddressDisplay from './components/AddressDisplay.vue'
 import Home from './components/Home.vue'
+import Send from './components/Send.vue'
 
 export default (store) => {
   const routes = [
@@ -24,6 +25,15 @@ export default (store) => {
       path: '/address',
       name: 'address',
       component: AddressDisplay,
+      beforeEnter (to, from, next) {
+        if (!store.state.account || !store.state.account.priv) return next({ name: 'home' })
+        next()
+      }
+    },
+    {
+      path: '/send',
+      name: 'send',
+      component: Send,
       beforeEnter (to, from, next) {
         if (!store.state.account || !store.state.account.priv) return next({ name: 'home' })
         next()

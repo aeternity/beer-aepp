@@ -95,14 +95,6 @@ export default {
     async fetch (url) {
       const response = await fetch(url)
       return response.json()
-    },
-    async updateBalance () {
-      try {
-        const balance = await this.clientInternal.accounts.getBalance(this.account.pub)
-        this.$store.commit('setBalance', balance)
-      } catch (err) {
-        console.log(err)
-      }
     }
   },
   mounted () {
@@ -112,11 +104,6 @@ export default {
     this.client.base.getHeight().then(value => console.log('HEIGHT:', value))
 
     console.info('The account: ', this.account)
-
-    this.updateBalance()
-    this.interval = setInterval(() => {
-      this.updateBalance()
-    }, 10000)
   },
   beforeDestroy () {
     if (this.interval) {
