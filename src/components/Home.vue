@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div v-if="account">
+    <div v-if="account && account.pub">
       <span>Hello {{account.domain}}</span>
       <span>shows balance, history of transactions. If the user has an outstanding beer order that should be shown here too.</span>
     </div>

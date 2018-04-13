@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <ae-header name="Free Bæer">
-      <ae-button type='dramatic' :to="{name: 'buy-beer'}">🍺</ae-button>
-      <ae-button type='dramatic' :to="{name: 'address'}">🔍</ae-button>
-      <ae-button type='dramatic' :to="{name: 'send'}">✉️</ae-button>
+      <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'buy-beer'}">🍺</ae-button>
+      <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'address'}">🔍</ae-button>
+      <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'send'}">✉️</ae-button>
       <!-- <span slot="mobile-left">mobile-left</span>
       <span slot="mobile-right">mobile-right</span> -->
     </ae-header>
@@ -21,6 +21,9 @@ export default {
     AeButton
   },
   computed: {
+    account () {
+      return this.$store.state.account
+    }
   },
   methods: {
     async updateBalance () {
