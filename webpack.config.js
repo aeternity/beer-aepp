@@ -40,7 +40,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(s[ac]ss)$/,
+        test: /\.(s?[ac]ss)$/,
         use: ExtractTextPlugin.extract({
           fallback: 'vue-style-loader',
           use: [
