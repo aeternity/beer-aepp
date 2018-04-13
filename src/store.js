@@ -12,7 +12,9 @@ const store = new Vuex.Store({
       domain: null,
       name: null
     },
-    balance: 0
+    balance: 0,
+    lastBeerHash: null,
+    beerPrice: 1000
   },
   getters: {
     client () {
@@ -30,6 +32,14 @@ const store = new Vuex.Store({
         { secured: true, internal: true }
       )
       return new AeternityClient(provider)
+    },
+    beerApi () {
+      return {
+        async getBeerState (txHash) {
+          // TODO: implement the API
+          return 1
+        }
+      }
     }
   },
   mutations: {
@@ -43,6 +53,11 @@ const store = new Vuex.Store({
     },
     setBalance (state, newBalance) {
       state.balance = newBalance
+    },
+    setLastBeerHash (state, lastBeerHash) {
+      state.lastBeerHash = lastBeerHash
+      // eslint-disable-next-line no-undef
+      localStorage.setItem('lastBeerHash', lastBeerHash)
     }
   },
   actions: {

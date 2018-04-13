@@ -19,6 +19,12 @@ try {
   if (account) {
     store.commit('setAccount', account)
   }
+
+  // eslint-disable-next-line no-undef
+  let lastBeerHash = localStorage.getItem('lastBeerHash')
+  if (lastBeerHash) {
+    store.commit('setLastBeerHash', lastBeerHash)
+  }
 } catch (e) {
   console.log(e)
 }

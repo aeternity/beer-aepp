@@ -5,7 +5,7 @@
     <ae-address v-if="account.pub" show-avatar size='short' :address="account.pub"/>
 
 
-    <button @click="buyBeer(beerBar,1000)" class="beer-btn"
+    <button @click="buyBeer(beerBar)" class="beer-btn"
             :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
                       'beer-btn--idle': ajaxCall.status == 'idle',
                       'beer-btn--ready': ajaxCall.status == 'ready'
@@ -79,10 +79,12 @@ export default {
     onClick (...strings) {
       console.log(strings[0] + strings[1])
     },
-    async buyBeer (receiver, amount) {
+    async buyBeer (receiver) {
+      const amount = this.$store.state.beerPrice
       this.ajaxCall.status = 'idle'
       const spendResult = await this.client.base.spend(receiver, parseInt(amount), this.wallet, {fee: 1}) // params: (receiver, amount, account sending, { fee = 1, nonce })
       const txHash = spendResult['tx_hash']
+      this.$store.commit('setLastBeerHash', txHash)
       console.log(`Waiting for ${txHash} to be mined...`)
       this.client.tx.waitForTransaction(txHash).then(blockHeight => {
         this.ajaxCall.status = 'ready'
