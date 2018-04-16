@@ -12,7 +12,9 @@
         <ae-button v-if="account && account.pub" type='dramatic' size="small" :to="{name: 'send'}">✉️</ae-button>
       </div>
     </ae-header>
-    <router-view></router-view>
+    <div class="content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -51,3 +53,11 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+  .content {
+    text-align: center;
+    max-width: 800px;
+    margin: auto;
+  }
+</style>

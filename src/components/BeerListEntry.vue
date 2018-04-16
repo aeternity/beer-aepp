@@ -37,7 +37,7 @@ export default {
   data () {
     return {
       beerTx: null,
-      beerApiState: 0
+      beerApiState: 1
     }
   },
   props: {

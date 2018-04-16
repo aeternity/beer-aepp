@@ -1,5 +1,8 @@
 <template>
   <div class="buy">
+    <div class="balance">
+      You currently have {{storeBalance}} Beer Tokens
+    </div>
     <div class="buyButton" v-if="hasTokensForBeer">
       <button @click="buyBeer(beerBar)" class="beer-btn"
       :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
@@ -9,15 +12,6 @@
 
       <div v-if="ajaxCall.status=='busy'">press to get beer</div>
       <div v-if="ajaxCall.status=='idle'">ordering beer</div>
-
-      <h6>YOUR CURRENT BALANCE</h6>
-      <ae-amount-input
-      placeholder="0"
-      v-model="balance"
-      :units="[
-      { symbol: 'AE', name: 'æternity' }
-      ]"
-      />
     </div>
     <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar and show them <router-link :to="{name: 'beer', params: {beerHash: txHash}}">this</router-link></div>
     <div class="link" v-if="!hasTokensForBeer">
@@ -27,14 +21,13 @@
 </template>
 
 <script>
-import { AeButton, AeAddress, AeAmountInput } from '@aeternity/aepp-components'
+import { AeButton, AeAddress } from '@aeternity/aepp-components'
 
 export default {
   name: 'BeerButton',
   components: {
     AeButton,
-    AeAddress,
-    AeAmountInput
+    AeAddress
   },
   data () {
     return {
