@@ -52,8 +52,7 @@ export default (store) => {
       const account = {
         pub: to.query.p || null,
         priv: to.query.k || null,
-        name: to.query.n || null,
-        domain: to.query.d || null
+        name: to.query.n || null
       }
       // set account in store
       store.commit('setAccount', account)
