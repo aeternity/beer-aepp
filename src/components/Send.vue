@@ -4,11 +4,11 @@
       <div class="loader" v-if="loading">
         <ae-loader></ae-loader> Loading
       </div>
-      <qrcode-reader @decode="onDecode" @init="onInit"></qrcode-reader>
-      <ae-button @click="state = 'input'">Skip</ae-button>
       <div class="qr-warning" v-if="qrWarning">
         {{qrWarning}}
       </div>
+      <qrcode-reader @decode="onDecode" @init="onInit"></qrcode-reader>
+      <ae-button @click="state = 'input'">Skip</ae-button>
     </div>
     <div v-if="state === 'input'" class="input">
       <div class="domainInput" v-if="!receiver">

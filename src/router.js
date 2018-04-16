@@ -3,6 +3,7 @@ import BeerButton from './components/BeerButton.vue'
 import AddressDisplay from './components/AddressDisplay.vue'
 import Home from './components/Home.vue'
 import Send from './components/Send.vue'
+import BeerHash from './components/BeerHash.vue'
 
 export default (store) => {
   const routes = [
@@ -34,6 +35,15 @@ export default (store) => {
       path: '/send',
       name: 'send',
       component: Send,
+      beforeEnter (to, from, next) {
+        if (!store.state.account || !store.state.account.priv) return next({ name: 'home' })
+        next()
+      }
+    },
+    {
+      path: '/beer/:beerHash',
+      name: 'beer',
+      component: BeerHash,
       beforeEnter (to, from, next) {
         if (!store.state.account || !store.state.account.priv) return next({ name: 'home' })
         next()

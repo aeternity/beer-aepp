@@ -21,9 +21,9 @@ try {
   }
 
   // eslint-disable-next-line no-undef
-  let lastBeerHash = localStorage.getItem('lastBeerHash')
-  if (lastBeerHash) {
-    store.commit('setLastBeerHash', lastBeerHash)
+  let beerHashes = JSON.parse(localStorage.getItem('beerHashes'))
+  if (beerHashes) {
+    store.commit('setBeerHashes', beerHashes)
   }
 } catch (e) {
   console.log(e)

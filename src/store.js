@@ -12,11 +12,17 @@ const store = new Vuex.Store({
       name: null
     },
     balance: 0,
-    lastBeerHash: null,
+    beerHashes: [],
     beerPrice: 1000,
     barPubKey: 'ak$3evGruG5reEY4eWDKCuZxkDBp4KTRyj4YJp98BGTgSegqURNpaTs2FEzVxHbiZwA4Z48JatQzNBoZEGM732BwDRhz3Ng3U'
   },
   getters: {
+    lastBeerHash (state) {
+      if (state.beerHashes.length <= 0) {
+        return null
+      }
+      return state.beerHashes[0]
+    },
     client () {
       const provider = new AeternityClient.providers.HttpProvider(
         'republica.aepps.com',
@@ -33,11 +39,18 @@ const store = new Vuex.Store({
       )
       return new AeternityClient(provider)
     },
-    beerApi () {
+    beerApi (state, getters) {
+      // TODO: implement the API
       return {
         async getBeerState (txHash) {
-          // TODO: implement the API
-          return 1
+          // simulate beer was picked up after 20 blocks
+          const currentBlock = await getters.client.base.getHeight()
+          const tx = await getters.client.tx.getTransaction(txHash)
+          if (currentBlock > tx.block_height + 20) {
+            return 1
+          } else {
+            return 0
+          }
         }
       }
     }
@@ -53,10 +66,13 @@ const store = new Vuex.Store({
     setBalance (state, newBalance) {
       state.balance = newBalance
     },
-    setLastBeerHash (state, lastBeerHash) {
-      state.lastBeerHash = lastBeerHash
+    addBeerHash (state, beerHash) {
+      state.beerHashes.unshift(beerHash)
       // eslint-disable-next-line no-undef
-      localStorage.setItem('lastBeerHash', lastBeerHash)
+      localStorage.setItem('beerHashes', JSON.stringify(state.beerHashes))
+    },
+    setBeerHashes (state, beerHashes) {
+      state.beerHashes = beerHashes
     }
   },
   actions: {

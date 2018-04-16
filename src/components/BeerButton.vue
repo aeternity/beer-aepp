@@ -9,7 +9,6 @@
 
       <div v-if="ajaxCall.status=='busy'">press to get beer</div>
       <div v-if="ajaxCall.status=='idle'">ordering beer</div>
-      <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar</div>
 
       <h6>YOUR CURRENT BALANCE</h6>
       <ae-amount-input
@@ -20,6 +19,7 @@
       ]"
       />
     </div>
+    <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar and show them <router-link :to="{name: 'beer', params: {beerHash: txHash}}">this</router-link></div>
     <div class="link" v-if="!hasTokensForBeer">
       Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{storeBalance}} tokens to a friend and share a beer.
     </div>
@@ -38,7 +38,8 @@ export default {
   },
   data () {
     return {
-      ajaxCall: { status: 'busy' }
+      ajaxCall: { status: 'busy' },
+      txHash: null
     }
   },
   computed: {
@@ -82,7 +83,8 @@ export default {
       this.ajaxCall.status = 'idle'
       const spendResult = await this.client.base.spend(receiver, parseInt(amount), this.wallet, {fee: 1}) // params: (receiver, amount, account sending, { fee = 1, nonce })
       const txHash = spendResult['tx_hash']
-      this.$store.commit('setLastBeerHash', txHash)
+      this.txHash = txHash
+      this.$store.commit('addBeerHash', txHash)
       console.log(`Waiting for ${txHash} to be mined...`)
       this.client.tx.waitForTransaction(txHash).then(blockHeight => {
         this.ajaxCall.status = 'ready'

@@ -4,13 +4,11 @@
       <h1>Hello {{account.name}}</h1>
       <div class="balance">
         You currently have {{balance}} tokens
+        <span v-if="balance <= beerPrice">You don't have enough funds for a bew beer. <router-link :to="{name: 'send'}">Maybe send your remaining tokens to a friend.</router-link></span>
       </div>
-      <div class="lastBeer">
-        <span v-if="!lastBeerHash">You have not bought any beer</span>
-        <span v-if="lastBeerTx && lastBeerTx.block_height < 0">Please wait for your beer transaction to be mined</span>
-        <span v-if="txIsMined && lastBeerApiState === 0">Your beer is ready for pickup</span>
-        <span v-if="txIsMined && lastBeerApiState === 1 && balance > beerPrice">You picked up your last beer. <router-link :to="{name: 'buy-beer'}">Buy a new one</router-link></span>
-        <span v-if="txIsMined && lastBeerApiState === 1 && balance <= beerPrice">You picked up your last beer. <router-link :to="{name: 'send'}">Maybe send your remaining tokens to a friend.</router-link></span>
+      <div class="beerList" v-if="beerHashes.length > 0">
+        <h3>Your Beers</h3>
+        <beer-list-entry v-for="beerHash in beerHashes" :key="beerHash" :beerHash="beerHash"></beer-list-entry>
       </div>
     </div>
     <div v-else>
@@ -20,31 +18,29 @@
 </template>
 
 <script>
+import BeerListEntry from './BeerListEntry.vue'
+
 export default {
   name: 'Home',
   components: {
+    BeerListEntry
   },
   computed: {
     account () {
       return this.$store.state.account
     },
-    lastBeerHash () {
-      return this.$store.state.lastBeerHash
-    },
     balance () {
       return this.$store.state.balance
     },
-    txIsMined () {
-      return this.lastBeerTx && this.lastBeerTx.block_height >= 0
-    },
     beerPrice () {
       return this.$store.state.beerPrice
+    },
+    beerHashes () {
+      return this.$store.state.beerHashes
     }
   },
   data () {
     return {
-      lastBeerTx: {},
-      lastBeerApiState: null
     }
   },
   props: {
@@ -53,15 +49,8 @@ export default {
     }
   },
   methods: {
-    async getBeerState (txHash) {
-      return this.$store.getters.beerApi.getBeerState(txHash)
-    }
   },
   async mounted () {
-    if (this.lastBeerHash) {
-      this.lastBeerTx = await this.$store.getters.client.tx.getTransaction(this.lastBeerHash)
-      this.lastBeerApiState = await this.getBeerState(this.lastBeerHash)
-    }
   }
 }
 </script>
