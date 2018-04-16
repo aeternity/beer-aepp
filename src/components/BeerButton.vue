@@ -89,12 +89,7 @@ export default {
     }
   },
   mounted () {
-    // Init HTTP client From SDK-JS
-    console.log('wallet', this.account)
 
-    this.client.base.getHeight().then(value => console.log('HEIGHT:', value))
-
-    console.info('The account: ', this.account)
   }
 }
 </script>

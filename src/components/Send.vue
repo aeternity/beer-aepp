@@ -75,10 +75,10 @@ export default {
       receiver: null,
       amount: {
         amount: 0,
-        symbol: 'Æ'
+        symbol: 'BT'
       },
       units: [
-        { symbol: 'Æ', name: 'æternity' }
+        { symbol: 'BT', name: 'Beer Token' }
       ],
       state: 'qrcode',
       loading: true,
