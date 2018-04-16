@@ -140,7 +140,7 @@ export default {
         this.receiver = content
         this.state = 'input'
       } else if (/^https?:\/\/aet\.li/.test(content)) {
-        this.qrWarning = 'You let somebody scan your private key. You just lost all your beer. Next time use the code on the other side.'
+        this.qrWarning = 'Somebody let you scan their private key. This is terrible. Please tell them to let you scan the other code.'
       }
     },
     async onInit (promise) {
