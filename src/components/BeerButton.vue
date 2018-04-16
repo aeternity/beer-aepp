@@ -1,10 +1,5 @@
 <template>
-  <div class="hello">
-    <h1>Hello and welcome, {{account.domain}}!</h1>
-
-    <ae-address v-if="account.pub" show-avatar size='short' :address="account.pub"/>
-
-
+  <div class="buy">
     <button @click="buyBeer(beerBar)" class="beer-btn"
             :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
                       'beer-btn--idle': ajaxCall.status == 'idle',
@@ -23,20 +18,11 @@
                 { symbol: 'AE', name: 'æternity' }
               ]"
             />
-
-    <div v-if="ajaxCall.status=='ready'">
-      <!-- Here's a Æ component: -->
-      {{balance}}
-      <!-- Transfer your leftover credit ({{balance.amount}}{{balance.symbol}}) to: -->
-      <input type="text" placeholder="sexy foxy"/>
-      <ae-button type="boring" @click="onClick('wii', 'woo')">Transfer</ae-button>
-    </div>
   </div>
 </template>
 
 <script>
 import { AeButton, AeAddress, AeAmountInput } from '@aeternity/aepp-components'
-import fetch from 'isomorphic-fetch'
 
 export default {
   name: 'BeerButton',
@@ -47,12 +33,13 @@ export default {
   },
   data () {
     return {
-      ajaxCall: { status: 'busy' },
-      beerBar: 'ak$3evGruG5reEY4eWDKCuZxkDBp4KTRyj4YJp98BGTgSegqURNpaTs2FEzVxHbiZwA4Z48JatQzNBoZEGM732BwDRhz3Ng3U',
-      interval: null
+      ajaxCall: { status: 'busy' }
     }
   },
   computed: {
+    beerBar () {
+      return this.$store.state.barPubKey
+    },
     account () {
       return this.$store.state.account
     },
@@ -93,10 +80,6 @@ export default {
         this.ajaxCall.status = 'busy'
         console.warn('Something went wrong: ', reason)
       })
-    },
-    async fetch (url) {
-      const response = await fetch(url)
-      return response.json()
     }
   },
   mounted () {
@@ -106,11 +89,6 @@ export default {
     this.client.base.getHeight().then(value => console.log('HEIGHT:', value))
 
     console.info('The account: ', this.account)
-  },
-  beforeDestroy () {
-    if (this.interval) {
-      clearInterval(this.interval)
-    }
   }
 }
 </script>

@@ -14,7 +14,8 @@ const store = new Vuex.Store({
     },
     balance: 0,
     lastBeerHash: null,
-    beerPrice: 1000
+    beerPrice: 1000,
+    barPubKey: 'ak$3evGruG5reEY4eWDKCuZxkDBp4KTRyj4YJp98BGTgSegqURNpaTs2FEzVxHbiZwA4Z48JatQzNBoZEGM732BwDRhz3Ng3U'
   },
   getters: {
     client () {
