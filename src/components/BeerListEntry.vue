@@ -63,6 +63,9 @@ export default {
   .beerListEntryRow {
     display: flex;
     flex-wrap: wrap;
+    border: 1px solid black;
+    margin-bottom: 5px;
+    padding: 15px;
   }
 
   .cell {
