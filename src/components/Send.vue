@@ -6,13 +6,25 @@
       </div>
       <qrcode-reader @decode="onDecode" @init="onInit"></qrcode-reader>
       <ae-button @click="state = 'input'">Skip</ae-button>
+      <div class="qr-warning" v-if="qrWarning">
+        {{qrWarning}}
+      </div>
     </div>
     <div v-if="state === 'input'" class="input">
-      <ae-button v-if="hasCamera" @click="startQrCode()">Read Code</ae-button>
-      <ae-label for="receiver" :help-text="errors.first('receiver')">Receiver</ae-label>
-      <ae-input id="receiver" name="receiver" v-model="receiver" v-validate="{regex: /^(\w+.(aet|test)|ak\$[123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ]{94})$/i}"></ae-input>
-      <ae-label for="amount" :help-text="errors.first('amount')">Amount</ae-label>
-      <ae-amount-input
+      <div class="domainInput" v-if="!receiver">
+        <ae-label for="receiver" :help-text="errors.first('receiver')">Receiver Name</ae-label>
+        <ae-input id="receiver" name="receiver" v-model="domainInput" v-validate="`min:3`"></ae-input>
+        <span v-if="domainError">{{domainError}}</span>
+        <ae-button @click="lookupDomain()">lookupDomain</ae-button>
+        <ae-button v-if="hasCamera" @click="startQrCode()">Read QR Code</ae-button>
+      </div>
+      <div class="privateKeyInput" v-if="receiver">
+        <ae-label>Receiver Public Key</ae-label>
+        <ae-address show-avatar size='short' :address="receiver"/>
+      </div>
+      <div class="amount" v-if="receiver">
+        <ae-label for="amount" :help-text="errors.first('amount')">Amount</ae-label>
+        <ae-amount-input
         id="amount"
         v-model="amount"
         name="amount"
@@ -20,13 +32,17 @@
         v-validate:amountInt="`required|integer|min_value:1|max_value:${maxAmount}`"
         data-vv-delay="1"
         placeholder="0.00"></ae-amount-input>
-      <ae-button
+      </div>
+      <span v-if="isSameAddress">It seems you are trying to send tokens to yourself! Why tho?</span>
+      <div class="actions" v-if="receiver">
+        <ae-button
         @click="sendTokens"
         type="dramatic"
         class="send-button"
         :inactive="errors.any()"
         >
         Send</ae-button>
+      </div>
     </div>
     <div v-if="state === 'waiting'" class="waiting">
       <ae-loader /> Waiting
@@ -38,12 +54,13 @@
 </template>
 
 <script>
-import { AeButton, AeInput, AeAddressInput, AeAmountInput, AeLabel, AeLoader } from '@aeternity/aepp-components'
+import { AeButton, AeInput, AeAddressInput, AeAmountInput, AeLabel, AeLoader, AeAddress } from '@aeternity/aepp-components'
 import { QrcodeReader } from 'vue-qrcode-reader'
 
 export default {
   name: 'Send',
   components: {
+    AeAddress,
     AeInput,
     AeButton,
     AeAddressInput,
@@ -54,6 +71,7 @@ export default {
   },
   data () {
     return {
+      domainInput: null,
       receiver: null,
       amount: {
         amount: 0,
@@ -64,7 +82,9 @@ export default {
       ],
       state: 'qrcode',
       loading: true,
-      hasCamera: false
+      hasCamera: false,
+      qrWarning: null,
+      domainError: null
     }
   },
   computed: {
@@ -94,6 +114,9 @@ export default {
     },
     client () {
       return this.$store.getters.client
+    },
+    isSameAddress () {
+      return this.receiver === this.account.pub
     }
   },
   methods: {
@@ -116,6 +139,8 @@ export default {
       if (this.isValidAddress(content)) {
         this.receiver = content
         this.state = 'input'
+      } else if (/^https?:\/\/aet\.li/.test(content)) {
+        this.qrWarning = 'Somebody let you scan their private key. This is terrible. Please tell them to let you scan the other code.'
       }
     },
     async onInit (promise) {
@@ -139,6 +164,29 @@ export default {
     isValidAddress (value) {
       const regex = /^(\w+.(aet|test)|ak\$[123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ]{94})$/i
       return regex.test(value)
+    },
+    async lookupDomain () {
+      this.domainError = null
+      let domain = this.domainInput.toLowerCase()
+      if (!domain.endsWith('.aet')) {
+        domain += '.aet'
+      }
+      try {
+        const domainData = await this.client.aens.getName(domain)
+        if (!domainData) {
+          this.domainError = 'Domain not found. Check for typos'
+        }
+        if (domainData && domainData.pointers && typeof domainData.pointers === 'string') {
+          domainData.pointers = JSON.parse(domainData.pointers)
+        }
+        console.log('domainData', domainData)
+        if (domainData.pointers && domainData.pointers.account_pubkey) {
+          this.receiver = domainData.pointers.account_pubkey
+        }
+      } catch (err) {
+        console.log(err)
+        this.domainError = 'Domain lookup error. ' + err.message
+      }
     }
   },
   async mounted () {
