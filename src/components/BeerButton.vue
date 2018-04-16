@@ -1,7 +1,7 @@
 <template>
   <div class="buy">
     <div class="balance">
-      You currently have {{storeBalance}} Beer Tokens
+      You currently have {{balance}} Beer Tokens
     </div>
     <div class="buyButton" v-if="hasTokensForBeer">
       <button @click="buyBeer(beerBar)" class="beer-btn"
@@ -15,7 +15,7 @@
     </div>
     <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar and show them <router-link :to="{name: 'beer', params: {beerHash: txHash}}">this</router-link></div>
     <div class="link" v-if="!hasTokensForBeer">
-      Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{storeBalance}} tokens to a friend and share a beer.
+      Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{balance}} tokens to a friend and share a beer.
     </div>
   </div>
 </template>
@@ -49,12 +49,6 @@ export default {
       }
     },
     balance () {
-      return {
-        amount: this.storeBalance,
-        symbol: 'AE'
-      }
-    },
-    storeBalance () {
       return this.$store.state.balance
     },
     client () {
@@ -64,7 +58,7 @@ export default {
       return this.$store.getters.clientInternal
     },
     hasTokensForBeer () {
-      return this.storeBalance >= this.$store.state.beerPrice + 1
+      return this.balance >= this.$store.state.beerPrice + 1
     }
   },
   methods: {
