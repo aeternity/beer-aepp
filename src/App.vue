@@ -1,57 +1,38 @@
 <template>
   <div id="app">
     <ae-header name="Free Bæer">
-      <ae-button type='dramatic'>🍺</ae-button>
-      <span slot="mobile-left">mobile-left</span>
-      <span slot="mobile-right">mobile-right</span>
+      <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'buy-beer'}">🍺</ae-button>
+      <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'address'}">🔍</ae-button>
+      <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'send'}">✉️</ae-button>
+      <div slot="mobile-left">
+        <ae-button v-if="account && account.pub" type='dramatic' size="small" :to="{name: 'buy-beer'}">🍺</ae-button>
+      </div>
+      <div slot="mobile-right">
+        <ae-button v-if="account && account.pub" type='dramatic' size="small" :to="{name: 'address'}">🔍</ae-button>
+        <ae-button v-if="account && account.pub" type='dramatic' size="small" :to="{name: 'send'}">✉️</ae-button>
+      </div>
     </ae-header>
-    <BeerButton :account="account"/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import BeerButton from './components/BeerButton.vue'
-import AeternityClient from '@aeternity/aepp-sdk'
 import { AeHeader, AeButton } from '@aeternity/aepp-components'
-import fetch from 'isomorphic-fetch'
 
 export default {
   name: 'app',
   components: {
     AeHeader,
-    AeButton,
-    BeerButton
+    AeButton
   },
   computed: {
     account () {
-      // get query params
-      return this.$route.query // k = private, p = public, n = name
+      return this.$store.state.account
     }
   },
+  methods: {
+  },
   mounted () {
-    // DEBUG SDK-JS
-    const provider = new AeternityClient.providers.HttpProvider(
-      'sdk-testnet.aepps.com',
-      443,
-      { secured: true, internal: false }
-    )
-    const client = new AeternityClient(provider)
-    console.log(
-      client.base.getHeight().then(value => console.log('HEIGHT:', value))
-    )
-
-    const providerInternal = new AeternityClient.providers.HttpProvider(
-      'sdk-testnet.aepps.com',
-      443,
-      { secured: true, internal: true }
-    )
-    const clientInternal = new AeternityClient(providerInternal)
-    console.log(
-      clientInternal.accounts
-        .getBalance(this.$route.query.p)
-        .then(value => console.log(value))
-    )
-
     // Get URL params (account info)
 
     // this.account = this.$route.query
@@ -62,12 +43,11 @@ export default {
     //                     .catch((error) => console.warn(error))
 
     console.info('Vue App mounted')
-  },
-  methods: {
-    async fetch (url) {
-      const response = await fetch(url)
-      return response.json()
-    }
+
+    this.$store.dispatch('updateBalance')
+    setInterval(() => {
+      this.$store.dispatch('updateBalance')
+    }, 10000)
   }
 }
 </script>

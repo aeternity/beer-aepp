@@ -1,11 +1,11 @@
 <template>
   <div class="hello">
-    <h1>Hello and welcome, {{account.n}}!</h1>
+    <h1>Hello and welcome, {{account.name}}!</h1>
 
-    <ae-address v-if="account.p" show-avatar size='short' :address="account.p"/>
+    <ae-address v-if="account.pub" show-avatar size='short' :address="account.pub"/>
 
 
-    <button @click="buyBeer()" class="beer-btn"
+    <button @click="buyBeer(beerBar)" class="beer-btn"
             :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
                       'beer-btn--idle': ajaxCall.status == 'idle',
                       'beer-btn--ready': ajaxCall.status == 'ready'
@@ -23,16 +23,20 @@
                 { symbol: 'AE', name: 'æternity' }
               ]"
             />
-    <!-- Here's a Æ component: -->
-    Transfer your leftover credit ({{balance.amount}}{{balance.symbol}}) to:
-    <input type="text" placeholder="sexy foxy"/>
-    <ae-button type="boring" @click="onClick('wii', 'woo')">Transfer</ae-button>
+
+    <div v-if="ajaxCall.status=='ready'">
+      <!-- Here's a Æ component: -->
+      {{balance}}
+      <!-- Transfer your leftover credit ({{balance.amount}}{{balance.symbol}}) to: -->
+      <input type="text" placeholder="sexy foxy"/>
+      <ae-button type="boring" @click="onClick('wii', 'woo')">Transfer</ae-button>
+    </div>
   </div>
 </template>
 
 <script>
 import { AeButton, AeAddress, AeAmountInput } from '@aeternity/aepp-components'
-import { setTimeout } from 'timers'
+import fetch from 'isomorphic-fetch'
 
 export default {
   name: 'BeerButton',
@@ -43,28 +47,70 @@ export default {
   },
   data () {
     return {
-      balance: { amount: 1252, symbol: 'AE' }, // this should be the actual wallet balance
-      ajaxCall: { status: 'busy' }
+      ajaxCall: { status: 'busy' },
+      beerBar: 'ak$3evGruG5reEY4eWDKCuZxkDBp4KTRyj4YJp98BGTgSegqURNpaTs2FEzVxHbiZwA4Z48JatQzNBoZEGM732BwDRhz3Ng3U',
+      interval: null
     }
   },
-  props: {
-    account: Object
+  computed: {
+    account () {
+      return this.$store.state.account
+    },
+    wallet () {
+      return {
+        priv: this.account.priv,
+        pub: this.account.pub
+      }
+    },
+    balance () {
+      return {
+        amount: this.$store.state.balance,
+        symbol: 'AE'
+      }
+    },
+    client () {
+      return this.$store.getters.client
+    },
+    clientInternal () {
+      return this.$store.getters.clientInternal
+    }
   },
   methods: {
     onClick (...strings) {
       console.log(strings[0] + strings[1])
     },
-    buyBeer () {
+    async buyBeer (receiver) {
+      const amount = this.$store.state.beerPrice
       this.ajaxCall.status = 'idle'
-      setTimeout(() => {
+      const spendResult = await this.client.base.spend(receiver, parseInt(amount), this.wallet, {fee: 1}) // params: (receiver, amount, account sending, { fee = 1, nonce })
+      const txHash = spendResult['tx_hash']
+      this.$store.commit('setLastBeerHash', txHash)
+      console.log(`Waiting for ${txHash} to be mined...`)
+      this.client.tx.waitForTransaction(txHash).then(blockHeight => {
         this.ajaxCall.status = 'ready'
-        this.balance.amount = 251
-      }, 1500)
-      // alert('wii')
+        console.log(`blockHeight:${blockHeight} `, `txHash:${txHash} `)
+      }, reason => {
+        this.ajaxCall.status = 'busy'
+        console.warn('Something went wrong: ', reason)
+      })
+    },
+    async fetch (url) {
+      const response = await fetch(url)
+      return response.json()
     }
   },
   mounted () {
+    // Init HTTP client From SDK-JS
+    console.log('wallet', this.account)
+
+    this.client.base.getHeight().then(value => console.log('HEIGHT:', value))
+
     console.info('The account: ', this.account)
+  },
+  beforeDestroy () {
+    if (this.interval) {
+      clearInterval(this.interval)
+    }
   }
 }
 </script>

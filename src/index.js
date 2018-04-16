@@ -1,25 +1,39 @@
 import './custom.scss'
 import Vue from 'vue'
-import App from './App.vue'
-
 import VueRouter from 'vue-router'
-import BeerButton from './components/BeerButton.vue'
-
-const routes = [
-  { path: '/', component: BeerButton }
-]
-
-// 3. Create the router instance and pass the `routes` option
-// You can pass in additional options here, but let's
-// keep it simple for now.
-const router = new VueRouter({
-  routes // short for `routes: routes`
-})
+import AsyncComputed from 'vue-async-computed'
+import VeeValidate from 'vee-validate'
+import App from './App.vue'
+import getRouter from './router'
+import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
+Vue.use(AsyncComputed)
+Vue.use(VeeValidate)
+
+// set localStorage account BEFORE creating router
+try {
+  // eslint-disable-next-line no-undef
+  let account = JSON.parse(localStorage.getItem('account'))
+  if (account) {
+    store.commit('setAccount', account)
+  }
+
+  // eslint-disable-next-line no-undef
+  let lastBeerHash = localStorage.getItem('lastBeerHash')
+  if (lastBeerHash) {
+    store.commit('setLastBeerHash', lastBeerHash)
+  }
+} catch (e) {
+  console.log(e)
+}
+
 console.info('about to render Vue App')
 new Vue({
-  router,
-  render: h => h(App)
+  router: getRouter(store),
+  store,
+  render: h => h(App),
+  mounted () {
+  }
 }).$mount('#app')
