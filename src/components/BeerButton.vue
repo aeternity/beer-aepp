@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Hello and welcome, {{account.domain}}!</h1>
+    <h1>Hello and welcome, {{account.name}}!</h1>
 
     <ae-address v-if="account.pub" show-avatar size='short' :address="account.pub"/>
 

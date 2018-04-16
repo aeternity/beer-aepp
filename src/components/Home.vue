@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div v-if="account && account.pub">
-      <h1>Hello {{account.name}} ({{account.domain}})</h1>
+      <h1>Hello {{account.name}}</h1>
       <div class="balance">
         You currently have {{balance}} tokens
       </div>
