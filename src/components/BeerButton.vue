@@ -1,23 +1,28 @@
 <template>
   <div class="buy">
-    <button @click="buyBeer(beerBar)" class="beer-btn"
-            :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
-                      'beer-btn--idle': ajaxCall.status == 'idle',
-                      'beer-btn--ready': ajaxCall.status == 'ready'
-                    }"/>
+    <div class="buyButton" v-if="hasTokensForBeer">
+      <button @click="buyBeer(beerBar)" class="beer-btn"
+      :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
+      'beer-btn--idle': ajaxCall.status == 'idle',
+      'beer-btn--ready': ajaxCall.status == 'ready'
+      }"/>
 
-    <div v-if="ajaxCall.status=='busy'">press to get beer</div>
-    <div v-if="ajaxCall.status=='idle'">ordering beer</div>
-    <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar</div>
+      <div v-if="ajaxCall.status=='busy'">press to get beer</div>
+      <div v-if="ajaxCall.status=='idle'">ordering beer</div>
+      <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar</div>
 
-    <h6>YOUR CURRENT BALANCE</h6>
-    <ae-amount-input
-              placeholder="0"
-              v-model="balance"
-              :units="[
-                { symbol: 'AE', name: 'æternity' }
-              ]"
-            />
+      <h6>YOUR CURRENT BALANCE</h6>
+      <ae-amount-input
+      placeholder="0"
+      v-model="balance"
+      :units="[
+      { symbol: 'AE', name: 'æternity' }
+      ]"
+      />
+    </div>
+    <div class="link" v-if="!hasTokensForBeer">
+      Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{storeBalance}} tokens to a friend and share a beer.
+    </div>
   </div>
 </template>
 
@@ -51,15 +56,21 @@ export default {
     },
     balance () {
       return {
-        amount: this.$store.state.balance,
+        amount: this.storeBalance,
         symbol: 'AE'
       }
+    },
+    storeBalance () {
+      return this.$store.state.balance
     },
     client () {
       return this.$store.getters.client
     },
     clientInternal () {
       return this.$store.getters.clientInternal
+    },
+    hasTokensForBeer () {
+      return this.storeBalance >= this.$store.state.beerPrice + 1
     }
   },
   methods: {
