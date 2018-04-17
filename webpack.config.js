@@ -8,14 +8,16 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const dist_folder = path.resolve(__dirname, 'dist');
 const jsLoader = 'babel-loader!standard-loader?error=true'
 
+const isDevelopment = process.env.NODE_ENV !== 'prod'
+
 module.exports = {
   entry: './src/index.js',
-  mode: process.env.NODE_ENV == 'prod' ? 'production' : 'development',
+  mode: isDevelopment ? 'development' : 'production',
   output: {
     filename: '[name].bundle.js?[hash]',
     path: dist_folder
   },
-  devtool: 'eval-source-map',
+  devtool: isDevelopment ? 'eval-source-map' : false,
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html',
