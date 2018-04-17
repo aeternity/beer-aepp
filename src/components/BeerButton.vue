@@ -1,58 +1,44 @@
 <template>
-  <div class="hello">
-    <h1>Hello and welcome, {{account.name}}!</h1>
+  <div class="buy">
+    <div class="balance">
+      You currently have {{balance}} Beer Tokens
+    </div>
+    <div class="buyButton" v-if="hasTokensForBeer">
+      <button @click="buyBeer(beerBar)" class="beer-btn"
+      :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
+      'beer-btn--idle': ajaxCall.status == 'idle',
+      'beer-btn--ready': ajaxCall.status == 'ready'
+      }"/>
 
-    <ae-address v-if="account.pub" show-avatar size='short' :address="account.pub"/>
-
-
-    <button @click="buyBeer(beerBar)" class="beer-btn"
-            :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
-                      'beer-btn--idle': ajaxCall.status == 'idle',
-                      'beer-btn--ready': ajaxCall.status == 'ready'
-                    }"/>
-
-    <div v-if="ajaxCall.status=='busy'">press to get beer</div>
-    <div v-if="ajaxCall.status=='idle'">ordering beer</div>
-    <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar</div>
-
-    <h6>YOUR CURRENT BALANCE</h6>
-    <ae-amount-input
-              placeholder="0"
-              v-model="balance"
-              :units="[
-                { symbol: 'AE', name: 'æternity' }
-              ]"
-            />
-
-    <div v-if="ajaxCall.status=='ready'">
-      <!-- Here's a Æ component: -->
-      {{balance}}
-      <!-- Transfer your leftover credit ({{balance.amount}}{{balance.symbol}}) to: -->
-      <input type="text" placeholder="sexy foxy"/>
-      <ae-button type="boring" @click="onClick('wii', 'woo')">Transfer</ae-button>
+      <div v-if="ajaxCall.status=='busy'">press to get beer</div>
+      <div v-if="ajaxCall.status=='idle'">ordering beer</div>
+    </div>
+    <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar and show them <router-link :to="{name: 'beer', params: {beerHash: txHash}}">this</router-link></div>
+    <div class="link" v-if="!hasTokensForBeer">
+      Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{balance}} tokens to a friend and share a beer.
     </div>
   </div>
 </template>
 
 <script>
-import { AeButton, AeAddress, AeAmountInput } from '@aeternity/aepp-components'
-import fetch from 'isomorphic-fetch'
+import { AeButton, AeAddress } from '@aeternity/aepp-components'
 
 export default {
   name: 'BeerButton',
   components: {
     AeButton,
-    AeAddress,
-    AeAmountInput
+    AeAddress
   },
   data () {
     return {
       ajaxCall: { status: 'busy' },
-      beerBar: 'ak$3evGruG5reEY4eWDKCuZxkDBp4KTRyj4YJp98BGTgSegqURNpaTs2FEzVxHbiZwA4Z48JatQzNBoZEGM732BwDRhz3Ng3U',
-      interval: null
+      txHash: null
     }
   },
   computed: {
+    beerBar () {
+      return this.$store.state.barPubKey
+    },
     account () {
       return this.$store.state.account
     },
@@ -63,16 +49,16 @@ export default {
       }
     },
     balance () {
-      return {
-        amount: this.$store.state.balance,
-        symbol: 'AE'
-      }
+      return this.$store.state.balance
     },
     client () {
       return this.$store.getters.client
     },
     clientInternal () {
       return this.$store.getters.clientInternal
+    },
+    hasTokensForBeer () {
+      return this.balance >= this.$store.state.beerPrice + 1
     }
   },
   methods: {
@@ -84,7 +70,8 @@ export default {
       this.ajaxCall.status = 'idle'
       const spendResult = await this.client.base.spend(receiver, parseInt(amount), this.wallet, {fee: 1}) // params: (receiver, amount, account sending, { fee = 1, nonce })
       const txHash = spendResult['tx_hash']
-      this.$store.commit('setLastBeerHash', txHash)
+      this.txHash = txHash
+      this.$store.commit('addBeerHash', txHash)
       console.log(`Waiting for ${txHash} to be mined...`)
       this.client.tx.waitForTransaction(txHash).then(blockHeight => {
         this.ajaxCall.status = 'ready'
@@ -93,24 +80,10 @@ export default {
         this.ajaxCall.status = 'busy'
         console.warn('Something went wrong: ', reason)
       })
-    },
-    async fetch (url) {
-      const response = await fetch(url)
-      return response.json()
     }
   },
   mounted () {
-    // Init HTTP client From SDK-JS
-    console.log('wallet', this.account)
 
-    this.client.base.getHeight().then(value => console.log('HEIGHT:', value))
-
-    console.info('The account: ', this.account)
-  },
-  beforeDestroy () {
-    if (this.interval) {
-      clearInterval(this.interval)
-    }
   }
 }
 </script>
