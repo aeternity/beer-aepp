@@ -50,6 +50,11 @@ export default {
     setInterval(() => {
       this.$store.dispatch('updateBalance')
     }, 10000)
+
+    this.$store.dispatch('checkBeerAvailable')
+    setInterval(() => {
+      this.$store.dispatch('checkBeerAvailable')
+    }, 10000)
   }
 }
 </script>

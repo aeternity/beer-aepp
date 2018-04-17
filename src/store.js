@@ -14,7 +14,8 @@ const store = new Vuex.Store({
     balance: 0,
     beerHashes: [],
     beerPrice: 1000,
-    barPubKey: 'ak$3evGruG5reEY4eWDKCuZxkDBp4KTRyj4YJp98BGTgSegqURNpaTs2FEzVxHbiZwA4Z48JatQzNBoZEGM732BwDRhz3Ng3U'
+    barPubKey: 'ak$3evGruG5reEY4eWDKCuZxkDBp4KTRyj4YJp98BGTgSegqURNpaTs2FEzVxHbiZwA4Z48JatQzNBoZEGM732BwDRhz3Ng3U',
+    beerAvailable: false
   },
   getters: {
     lastBeerHash (state) {
@@ -51,6 +52,10 @@ const store = new Vuex.Store({
           } else {
             return 0
           }
+        },
+        async isBeerLeft () {
+          console.log('calling isBeerLeft API')
+          return true
         }
       }
     }
@@ -73,6 +78,9 @@ const store = new Vuex.Store({
     },
     setBeerHashes (state, beerHashes) {
       state.beerHashes = beerHashes
+    },
+    setBeerAvailable (state, beerAvailable) {
+      state.beerAvailable = beerAvailable
     }
   },
   actions: {
@@ -88,6 +96,14 @@ const store = new Vuex.Store({
         }
       }
       return 0
+    },
+    async checkBeerAvailable ({getters, commit}) {
+      try {
+        const beerAvailable = await getters.beerApi.isBeerLeft()
+        commit('setBeerAvailable', beerAvailable)
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 })

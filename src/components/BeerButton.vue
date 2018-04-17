@@ -3,8 +3,11 @@
     <div class="balance">
       You currently have {{balance}} Beer Tokens
     </div>
-    <div class="buyButton" v-if="hasTokensForBeer">
-      <button @click="buyBeer(beerBar)" class="beer-btn"
+    <div class="noBeerLeft" v-if="!beerAvailable">
+      Sorry there currently is no Beer left at the bar
+    </div>
+    <div class="buyButton" v-if="hasTokensForBeer && beerAvailable">
+      <button @click="buyBeer(barPubKey)" class="beer-btn"
       :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
       'beer-btn--idle': ajaxCall.status == 'idle',
       'beer-btn--ready': ajaxCall.status == 'ready'
@@ -36,7 +39,7 @@ export default {
     }
   },
   computed: {
-    beerBar () {
+    barPubKey () {
       return this.$store.state.barPubKey
     },
     account () {
@@ -59,6 +62,12 @@ export default {
     },
     hasTokensForBeer () {
       return this.balance >= this.$store.state.beerPrice + 1
+    },
+    beerAvailable () {
+      return this.$store.state.beerAvailable
+    },
+    beerApi () {
+      return this.$store.getters.beerApi
     }
   },
   methods: {
@@ -66,6 +75,14 @@ export default {
       console.log(strings[0] + strings[1])
     },
     async buyBeer (receiver) {
+      // check first if there is beer
+      const isBeerLeft = await this.beerApi.isBeerLeft()
+      if (!isBeerLeft) {
+        // TODO: display errors
+        console.log('no Beer left')
+        return false
+      }
+
       const amount = this.$store.state.beerPrice
       this.ajaxCall.status = 'idle'
       const spendResult = await this.client.base.spend(receiver, parseInt(amount), this.wallet, {fee: 1}) // params: (receiver, amount, account sending, { fee = 1, nonce })
