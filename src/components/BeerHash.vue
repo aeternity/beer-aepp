@@ -1,5 +1,8 @@
 <template>
   <div class="beerHash">
+    <div class="noBeerLeft" v-if="!beerAvailable">
+      Sorry there currently is no Beer left at the bar
+    </div>
     <div>
       Show this to the bartender to collect your beer!
     </div>
@@ -33,6 +36,9 @@ export default {
     },
     beerHash () {
       return this.$route.params.beerHash
+    },
+    beerAvailable () {
+      return this.$store.state.beerAvailable
     }
   },
   data () {
