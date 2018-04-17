@@ -27,11 +27,8 @@ export default {
       return this.$store.state.account
     },
     fullInfo () {
-      const info = {
-        tx: this.beerHash,
-        sig: this.beerHashSignature
-      }
-      return JSON.stringify(info)
+      // sending as string, for the QR scanning with NETUM bar/qr scanner
+      return this.beerHash + ' ' + this.beerHashSignature
     },
     beerHash () {
       return this.$route.params.beerHash
