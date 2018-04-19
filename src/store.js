@@ -15,7 +15,10 @@ const store = new Vuex.Store({
     beerHashes: [],
     beerPrice: 1000,
     barPubKey: 'ak$3evGruG5reEY4eWDKCuZxkDBp4KTRyj4YJp98BGTgSegqURNpaTs2FEzVxHbiZwA4Z48JatQzNBoZEGM732BwDRhz3Ng3U',
-    beerAvailable: false
+    websocketUrl: 'http://localhost:8087',
+    // websocketUrl: 'http://localhost:5000',
+    socketConnected: false,
+    barState: null
   },
   getters: {
     lastBeerHash (state) {
@@ -39,25 +42,6 @@ const store = new Vuex.Store({
         { secured: true, internal: true }
       )
       return new AeternityClient(provider)
-    },
-    beerApi (state, getters) {
-      // TODO: implement the API
-      return {
-        async getBeerState (txHash) {
-          // simulate beer was picked up after 20 blocks
-          const currentBlock = await getters.client.base.getHeight()
-          const tx = await getters.client.tx.getTransaction(txHash)
-          if (currentBlock > tx.block_height + 20) {
-            return 1
-          } else {
-            return 0
-          }
-        },
-        async isBeerLeft () {
-          console.log('calling isBeerLeft API')
-          return true
-        }
-      }
     }
   },
   mutations: {
@@ -79,8 +63,21 @@ const store = new Vuex.Store({
     setBeerHashes (state, beerHashes) {
       state.beerHashes = beerHashes
     },
-    setBeerAvailable (state, beerAvailable) {
-      state.beerAvailable = beerAvailable
+    setBarState (state, barState) {
+      state.barState = barState
+    },
+    SOCKET_CONNECT (state, status) {
+      state.socketConnected = true
+    },
+    SOCKET_DISCONNECT (state, status) {
+      state.socketConnected = false
+    },
+    SOCKET_BAR_STATE (state, barState) {
+      if (Array.isArray(barState) && barState.length >= 0) {
+        state.barState = barState[0]
+      } else {
+        state.barState = barState
+      }
     }
   },
   actions: {
@@ -96,15 +93,11 @@ const store = new Vuex.Store({
         }
       }
       return 0
-    },
-    async checkBeerAvailable ({getters, commit}) {
-      try {
-        const beerAvailable = await getters.beerApi.isBeerLeft()
-        commit('setBeerAvailable', beerAvailable)
-      } catch (e) {
-        console.log(e)
-      }
     }
+    // socket_barState ({ commit }, barState) {
+    //   console.log('socket_barState', barState)
+    //   commit('setBarState', barState)
+    // }
   }
 })
 

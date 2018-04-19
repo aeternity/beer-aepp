@@ -37,7 +37,7 @@ export default {
       return this.signHash(this.beerHash, this.account.priv)
     },
     beerAvailable () {
-      return this.$store.state.beerAvailable
+      return this.$store.state.barState === 'open'
     }
   },
   data () {

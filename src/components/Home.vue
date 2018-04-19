@@ -14,6 +14,11 @@
     <div v-else>
       <span>You are not logged in. Please visit this by opening the provided short url</span>
     </div>
+    <div class="websocket-debug">
+      <button @click="setBarState('open')">bar = open</button>
+      <button @click="setBarState('closed')">bar = closed</button>
+      <button @click="setBarState('out_of_beer')">bar = beer empty</button>
+    </div>
   </div>
 </template>
 
@@ -49,6 +54,9 @@ export default {
     }
   },
   methods: {
+    setBarState (newState) {
+      this.$socket.emit('set_bar_state', newState)
+    }
   },
   async mounted () {
   }
