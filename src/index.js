@@ -35,9 +35,12 @@ new Vue({
     connect () {
       console.log('socket connected')
       // set the initial bar state after connecting
+      console.log('asking bar state')
       this.$socket.emit('get_bar_state', (barState) => {
         console.log('get_bar_state', barState)
-        store.commit('setBarState', barState)
+        if (barState && barState.state) {
+          store.commit('setBarState', barState.state)
+        }
       })
     }
   },

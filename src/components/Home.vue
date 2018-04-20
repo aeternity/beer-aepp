@@ -18,6 +18,7 @@
       <button @click="setBarState('open')">bar = open</button>
       <button @click="setBarState('closed')">bar = closed</button>
       <button @click="setBarState('out_of_beer')">bar = beer empty</button>
+      <button @click="sendPing()">ping</button>
     </div>
   </div>
 </template>
@@ -55,10 +56,19 @@ export default {
   },
   methods: {
     setBarState (newState) {
-      this.$socket.emit('set_bar_state', newState)
+      this.$socket.emit('set_bar_state', '456456', newState)
+    },
+    sendPing () {
+      console.log('sending ping')
+      this.$socket.emit('my_ping', (resp) => {
+        console.log('my_ping', resp)
+      })
     }
   },
   async mounted () {
+    this.$options.sockets.my_ping_response = (data) => {
+      console.log('my_ping_response', data)
+    }
   }
 }
 </script>

@@ -48,13 +48,14 @@ export default {
   methods: {
     async getBeerState (txHash) {
       return new Promise((resolve, reject) => {
-        this.$socket.emit('get_beer_state', txHash, (beerState) => {
-          // console.log('beerState', beerState)
-          if (Number.isInteger(beerState.state)) {
-            return resolve(beerState.state)
-          }
-          return reject(new Error('Error asking beer status'))
-        })
+        return resolve(1)
+        // this.$socket.emit('get_beer_state', txHash, (beerState) => {
+        //   console.log('beerState', beerState)
+        //   if (beerState && Number.isInteger(beerState.state)) {
+        //     return resolve(beerState.state)
+        //   }
+        //   return reject(new Error('Error asking beer status'))
+        // })
       })
     }
   },

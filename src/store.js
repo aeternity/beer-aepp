@@ -15,8 +15,8 @@ const store = new Vuex.Store({
     beerHashes: [],
     beerPrice: 1000,
     barPubKey: 'ak$3evGruG5reEY4eWDKCuZxkDBp4KTRyj4YJp98BGTgSegqURNpaTs2FEzVxHbiZwA4Z48JatQzNBoZEGM732BwDRhz3Ng3U',
-    websocketUrl: 'http://localhost:8087',
-    // websocketUrl: 'http://localhost:5000',
+    // websocketUrl: 'http://localhost:8087',
+    websocketUrl: 'http://localhost:5000',
     socketConnected: false,
     barState: null
   },
