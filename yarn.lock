@@ -15,7 +15,7 @@
 
 "@aeternity/aepp-sdk@aeternity/aepp-sdk-js#develop":
   version "0.10.2-0.1.0-alpha.1"
-  resolved "https://codeload.github.com/aeternity/aepp-sdk-js/tar.gz/56ca5a551b7f7b9fddb7d2c93b11884c925c4c8a"
+  resolved "https://codeload.github.com/aeternity/aepp-sdk-js/tar.gz/d0e6668cca378c674c3def2a0f5fcdf19779f8d5"
   dependencies:
     "@babel/polyfill" "^7.0.0-beta.42"
     "@babel/runtime" "^7.0.0-beta.42"
@@ -23,6 +23,7 @@
     axios "^0.17.1"
     bs58check "^2.1.1"
     elliptic "^6.4.0"
+    postinstall-build "^5.0.1"
     rlp "^2.0.0"
     sha.js "^2.4.10"
     websocket "^1.0.25"
@@ -3198,7 +3199,7 @@ expand-tilde@^2.0.0, expand-tilde@^2.0.2:
   dependencies:
     homedir-polyfill "^1.0.1"
 
-express@^4.16.2:
+express@^4.16.2, express@^4.16.3:
   version "4.16.3"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.3.tgz#6af8a502350db3246ecc4becf6b5a34d22f7ed53"
   dependencies:
@@ -6532,6 +6533,10 @@ postcss@^6, postcss@^6.0, postcss@^6.0.0, postcss@^6.0.1, postcss@^6.0.11, postc
     chalk "^2.3.2"
     source-map "^0.6.1"
     supports-color "^5.3.0"
+
+postinstall-build@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/postinstall-build/-/postinstall-build-5.0.1.tgz#b917a9079b26178d9a24af5a5cd8cb4a991d11b9"
 
 precss@^3.1.2:
   version "3.1.2"
