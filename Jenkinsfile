@@ -30,13 +30,20 @@ pipeline {
       steps {
         script {
           docker.withRegistry(env.DOCKER_REGISTRY, env.ECR_CREDENTIAL) {
-            docker.build(env.DOCKER_IMAGE).push('latest')
+            def image = docker.build(env.DOCKER_IMAGE)
+            image.push('latest')
+            if (BRANCH_NAME ==~ /master/) {
+              image.push('release')
+            }
           }
         }
       }
     }
 
     stage('Deploy') {
+      when {
+        expression { BRANCH_NAME ==~ /master/ }
+      }
       steps {
         build 'deploy-beer-aepp'
       }
