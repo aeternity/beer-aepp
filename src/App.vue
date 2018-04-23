@@ -1,36 +1,68 @@
 <template>
   <div id="app">
     <ae-header name="Free Bæer">
-      <ae-button type='dramatic'>🍺</ae-button>
-      <span slot="mobile-left">mobile-left</span>
-      <span slot="mobile-right">mobile-right</span>
+      <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'buy-beer'}">🍺</ae-button>
+      <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'address'}">🔍</ae-button>
+      <ae-button v-if="account && account.pub" type='dramatic' :to="{name: 'send'}">✉️</ae-button>
+      <div slot="mobile-left">
+        <ae-button v-if="account && account.pub" type='dramatic' size="small" :to="{name: 'buy-beer'}">🍺</ae-button>
+      </div>
+      <div slot="mobile-right">
+        <ae-button v-if="account && account.pub" type='dramatic' size="small" :to="{name: 'address'}">🔍</ae-button>
+        <ae-button v-if="account && account.pub" type='dramatic' size="small" :to="{name: 'send'}">✉️</ae-button>
+      </div>
     </ae-header>
-    <BeerButton msg="Welcome to Your Vue.js App"/>
+    <div class="content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import BeerButton from './components/BeerButton.vue'
-import AeternityClient from '@aeternity/aepp-sdk'
 import { AeHeader, AeButton } from '@aeternity/aepp-components'
 
 export default {
   name: 'app',
   components: {
     AeHeader,
-    AeButton,
-    BeerButton
+    AeButton
   },
-  mounted: () => {
-    const provider = new AeternityClient.providers.HttpProvider('sdk-testnet.aepps.com', 443, {secured: true})
-    const client = new AeternityClient(provider)
+  computed: {
+    account () {
+      return this.$store.state.account
+    }
+  },
+  methods: {
+  },
+  mounted () {
+    // Get URL params (account info)
 
-    // TODO: const { pub, priv } = Crypto.generateKeyPair()
-    // const privateKey = '<lets assume you extracted your private key which is store here as a hex>'
+    // this.account = this.$route.query
 
-    console.log(client.base.getHeight().then((value) => console.log(value)));
+    // DEBUG async fetch
+    // const blabla = this.fetchAsync('https://sdk-testnet.aepps.com/v2/top')
+    //                     .then((value) => console.log(value))
+    //                     .catch((error) => console.warn(error))
 
-    console.info('Vue App mounted');
+    console.info('Vue App mounted')
+
+    this.$store.dispatch('updateBalance')
+    setInterval(() => {
+      this.$store.dispatch('updateBalance')
+    }, 10000)
+
+    this.$store.dispatch('checkBeerAvailable')
+    setInterval(() => {
+      this.$store.dispatch('checkBeerAvailable')
+    }, 10000)
   }
 }
 </script>
+
+<style scoped lang="scss">
+  .content {
+    text-align: center;
+    max-width: 800px;
+    margin: auto;
+  }
+</style>
