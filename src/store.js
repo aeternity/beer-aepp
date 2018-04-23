@@ -96,10 +96,6 @@ const store = new Vuex.Store({
       }
       return 0
     }
-    // socket_barState ({ commit }, barState) {
-    //   console.log('socket_barState', barState)
-    //   commit('setBarState', barState)
-    // }
   }
 })
 

@@ -17,7 +17,6 @@
 import VueQrcode from '@xkeshi/vue-qrcode'
 // const { AeternityClient, Crypto } = require('@aeternity/aepp-sdk')
 import { Crypto } from '@aeternity/aepp-sdk'
-import secrets from '../../secrets.js'
 
 export default {
   name: 'BeerHash',
@@ -60,23 +59,9 @@ export default {
       const pub = Crypto.decodeBase58Check(pubKey.split('$')[1])
       const verified = Crypto.verify(hashBuffer, sigBuffer, pub)
       return verified
-    },
-    scan () {
-      // TODO: remove in production
-      const accessKey = secrets.apiKey
-      const txHash = this.beerHash
-      const txSignature = this.beerHashSignature
-      const sender = this.account.pub
-      this.$socket.emit('scan', accessKey, txHash, txSignature, sender, (resp) => {
-        console.log('scan response', resp)
-      })
     }
   },
   async mounted () {
-    // let sigBase64 = this.signHash(this.beerHash, this.account.priv)
-    // console.log('sigBase64', sigBase64)
-    // const verified = this.verifyHash(this.beerHash, sigBase64, this.account.pub)
-    // console.log('verified', verified)
   }
 }
 </script>

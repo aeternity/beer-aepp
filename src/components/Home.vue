@@ -14,18 +14,11 @@
     <div v-else>
       <span>You are not logged in. Please visit this by opening the provided short url</span>
     </div>
-    <div class="websocket-debug">
-      <button @click="setBarState('open')">bar = open</button>
-      <button @click="setBarState('closed')">bar = closed</button>
-      <button @click="setBarState('out_of_beers')">bar = beer empty</button>
-      <button @click="sendPing()">ping</button>
-    </div>
   </div>
 </template>
 
 <script>
 import BeerListEntry from './BeerListEntry.vue'
-import secrets from '../../secrets.js'
 
 export default {
   name: 'Home',
@@ -56,22 +49,8 @@ export default {
     }
   },
   methods: {
-    setBarState (newState) {
-      this.$socket.emit('set_bar_state', secrets.apiKey, newState, (resp) => {
-        console.log('set_bar_state response', resp)
-      })
-    },
-    sendPing () {
-      console.log('sending ping')
-      this.$socket.emit('my_ping', (resp) => {
-        console.log('my_ping', resp)
-      })
-    }
   },
   async mounted () {
-    this.$options.sockets.my_ping_response = (data) => {
-      console.log('my_ping_response', data)
-    }
   }
 }
 </script>
