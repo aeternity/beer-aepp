@@ -15,7 +15,7 @@
 
 "@aeternity/aepp-sdk@aeternity/aepp-sdk-js#develop":
   version "0.10.2-0.1.0-alpha.1"
-  resolved "https://codeload.github.com/aeternity/aepp-sdk-js/tar.gz/56ca5a551b7f7b9fddb7d2c93b11884c925c4c8a"
+  resolved "https://codeload.github.com/aeternity/aepp-sdk-js/tar.gz/d0e6668cca378c674c3def2a0f5fcdf19779f8d5"
   dependencies:
     "@babel/polyfill" "^7.0.0-beta.42"
     "@babel/runtime" "^7.0.0-beta.42"
@@ -23,6 +23,7 @@
     axios "^0.17.1"
     bs58check "^2.1.1"
     elliptic "^6.4.0"
+    postinstall-build "^5.0.1"
     rlp "^2.0.0"
     sha.js "^2.4.10"
     websocket "^1.0.25"
@@ -234,6 +235,36 @@
     "@babel/helper-remap-async-to-generator" "7.0.0-beta.44"
     "@babel/plugin-syntax-async-generators" "7.0.0-beta.44"
 
+"@babel/plugin-proposal-class-properties@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.0.0-beta.44.tgz#aff9192a883b41fdf1c73026b9105c92e931c55e"
+  dependencies:
+    "@babel/helper-function-name" "7.0.0-beta.44"
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+    "@babel/plugin-syntax-class-properties" "7.0.0-beta.44"
+
+"@babel/plugin-proposal-export-namespace-from@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-export-namespace-from/-/plugin-proposal-export-namespace-from-7.0.0-beta.44.tgz#00ac9d8a28addd88599d356f098894ae3d8ec1de"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+    "@babel/plugin-syntax-export-namespace-from" "7.0.0-beta.44"
+
+"@babel/plugin-proposal-function-sent@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-function-sent/-/plugin-proposal-function-sent-7.0.0-beta.44.tgz#9137c9cf082c73e1014d3ecfb8f741bf466d5093"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+    "@babel/helper-wrap-function" "7.0.0-beta.44"
+    "@babel/plugin-syntax-function-sent" "7.0.0-beta.44"
+
+"@babel/plugin-proposal-numeric-separator@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-numeric-separator/-/plugin-proposal-numeric-separator-7.0.0-beta.44.tgz#48c580cdd055cd11c8d3abc94829bc6f830e18fd"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+    "@babel/plugin-syntax-numeric-separator" "7.0.0-beta.44"
+
 "@babel/plugin-proposal-object-rest-spread@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-object-rest-spread/-/plugin-proposal-object-rest-spread-7.0.0-beta.44.tgz#b7817770cb9cf72f2e73ca6fcb83d61a87305259"
@@ -247,6 +278,13 @@
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.44"
     "@babel/plugin-syntax-optional-catch-binding" "7.0.0-beta.44"
+
+"@babel/plugin-proposal-throw-expressions@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-throw-expressions/-/plugin-proposal-throw-expressions-7.0.0-beta.44.tgz#1e54689dddc733e4986371b6818adcea161531a3"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+    "@babel/plugin-syntax-throw-expressions" "7.0.0-beta.44"
 
 "@babel/plugin-proposal-unicode-property-regex@7.0.0-beta.44":
   version "7.0.0-beta.44"
@@ -262,6 +300,42 @@
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.44"
 
+"@babel/plugin-syntax-class-properties@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-class-properties/-/plugin-syntax-class-properties-7.0.0-beta.44.tgz#1e4e67ef6d7101a3a7d2ae5f60e580cbf4b7750f"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+
+"@babel/plugin-syntax-dynamic-import@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-dynamic-import/-/plugin-syntax-dynamic-import-7.0.0-beta.44.tgz#1a7d009f892bc9799dcb22ace4bd24198eef8992"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+
+"@babel/plugin-syntax-export-namespace-from@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-export-namespace-from/-/plugin-syntax-export-namespace-from-7.0.0-beta.44.tgz#c75a1607a453b74fe83d3bccf442931a7021209b"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+
+"@babel/plugin-syntax-function-sent@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-function-sent/-/plugin-syntax-function-sent-7.0.0-beta.44.tgz#2f1075e365d1df700cb54bc2434c72f5246f6526"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+
+"@babel/plugin-syntax-import-meta@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-import-meta/-/plugin-syntax-import-meta-7.0.0-beta.44.tgz#48d0af27aac06938542cc71abda014301af2dc13"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+
+"@babel/plugin-syntax-numeric-separator@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-numeric-separator/-/plugin-syntax-numeric-separator-7.0.0-beta.44.tgz#f692545d4011e541bf948338b6e856cefb78e27e"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+
 "@babel/plugin-syntax-object-rest-spread@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-object-rest-spread/-/plugin-syntax-object-rest-spread-7.0.0-beta.44.tgz#c37d271e4edf8a1b5d4623fb2917ba0f5a9da3b3"
@@ -271,6 +345,12 @@
 "@babel/plugin-syntax-optional-catch-binding@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-optional-catch-binding/-/plugin-syntax-optional-catch-binding-7.0.0-beta.44.tgz#c79ee93c371831b104bb0a1cc9c85ac5373af4f3"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+
+"@babel/plugin-syntax-throw-expressions@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-throw-expressions/-/plugin-syntax-throw-expressions-7.0.0-beta.44.tgz#e2d1c33690e62f82d61e5d0b07af3267732159bf"
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.44"
 
@@ -519,6 +599,30 @@
     browserslist "^3.0.0"
     invariant "^2.2.2"
     semver "^5.3.0"
+
+"@babel/preset-stage-2@^7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/preset-stage-2/-/preset-stage-2-7.0.0-beta.44.tgz#1e435afc4d47acdee54fc6ba6a107c84eebf16f5"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+    "@babel/plugin-proposal-export-namespace-from" "7.0.0-beta.44"
+    "@babel/plugin-proposal-function-sent" "7.0.0-beta.44"
+    "@babel/plugin-proposal-numeric-separator" "7.0.0-beta.44"
+    "@babel/plugin-proposal-throw-expressions" "7.0.0-beta.44"
+    "@babel/preset-stage-3" "7.0.0-beta.44"
+
+"@babel/preset-stage-3@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/preset-stage-3/-/preset-stage-3-7.0.0-beta.44.tgz#954e485be21bd76627aa449b15b9a748757ac440"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+    "@babel/plugin-proposal-async-generator-functions" "7.0.0-beta.44"
+    "@babel/plugin-proposal-class-properties" "7.0.0-beta.44"
+    "@babel/plugin-proposal-object-rest-spread" "7.0.0-beta.44"
+    "@babel/plugin-proposal-optional-catch-binding" "7.0.0-beta.44"
+    "@babel/plugin-proposal-unicode-property-regex" "7.0.0-beta.44"
+    "@babel/plugin-syntax-dynamic-import" "7.0.0-beta.44"
+    "@babel/plugin-syntax-import-meta" "7.0.0-beta.44"
 
 "@babel/runtime@^7.0.0-beta.42":
   version "7.0.0-beta.44"
@@ -1125,9 +1229,9 @@ babel-helpers@^6.24.1:
     babel-runtime "^6.22.0"
     babel-template "^6.24.1"
 
-babel-loader@^7.1.4:
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-7.1.4.tgz#e3463938bd4e6d55d1c174c5485d406a188ed015"
+babel-loader@^8.0.0-beta:
+  version "8.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.0.0-beta.2.tgz#4d5b67c964dc8c9cba866fd13d6b90df3acf8723"
   dependencies:
     find-cache-dir "^1.0.0"
     loader-utils "^1.0.2"
@@ -3262,7 +3366,7 @@ expand-tilde@^2.0.0, expand-tilde@^2.0.2:
   dependencies:
     homedir-polyfill "^1.0.1"
 
-express@^4.16.2:
+express@^4.16.2, express@^4.16.3:
   version "4.16.3"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.3.tgz#6af8a502350db3246ecc4becf6b5a34d22f7ed53"
   dependencies:
@@ -6626,6 +6730,10 @@ postcss@^6, postcss@^6.0, postcss@^6.0.0, postcss@^6.0.1, postcss@^6.0.11, postc
     chalk "^2.3.2"
     source-map "^0.6.1"
     supports-color "^5.3.0"
+
+postinstall-build@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/postinstall-build/-/postinstall-build-5.0.1.tgz#b917a9079b26178d9a24af5a5cd8cb4a991d11b9"
 
 precss@^3.1.2:
   version "3.1.2"
