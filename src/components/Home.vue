@@ -25,6 +25,7 @@
 
 <script>
 import BeerListEntry from './BeerListEntry.vue'
+import secrets from '../../secrets.js'
 
 export default {
   name: 'Home',
@@ -56,7 +57,7 @@ export default {
   },
   methods: {
     setBarState (newState) {
-      this.$socket.emit('set_bar_state', '456456', newState, (resp) => {
+      this.$socket.emit('set_bar_state', secrets.apiKey, newState, (resp) => {
         console.log('set_bar_state response', resp)
       })
     },

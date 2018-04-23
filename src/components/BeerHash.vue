@@ -17,6 +17,7 @@
 import VueQrcode from '@xkeshi/vue-qrcode'
 // const { AeternityClient, Crypto } = require('@aeternity/aepp-sdk')
 import { Crypto } from '@aeternity/aepp-sdk'
+import secrets from '../../secrets.js'
 
 export default {
   name: 'BeerHash',
@@ -62,7 +63,7 @@ export default {
     },
     scan () {
       // TODO: remove in production
-      const accessKey = '456456'
+      const accessKey = secrets.apiKey
       const txHash = this.beerHash
       const txSignature = this.beerHashSignature
       const sender = this.account.pub

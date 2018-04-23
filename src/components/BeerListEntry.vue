@@ -48,8 +48,8 @@ export default {
         console.log('asking beer state')
         this.$socket.emit('was_beer_scanned', txHash, (beerState) => {
           console.log('beerState', beerState)
-          if (beerState && typeof beerState.was_scanned === 'boolean') {
-            return resolve(beerState.was_scanned)
+          if (beerState && typeof beerState.scanned === 'boolean') {
+            return resolve(beerState.scanned)
           }
           return reject(new Error('Error asking beer status'))
         })
