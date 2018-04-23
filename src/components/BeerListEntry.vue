@@ -1,13 +1,13 @@
 <template>
   <div class="beerListEntryRow">
     <div class="cell hash">
-      {{beerHash.substring(3,9)}} <router-link v-if="wasMined && !wasCollected" :to="{name: 'beer', params: {beerHash: beerHash}}">collect</router-link>
+      {{beerHash.substring(3,9)}} <router-link v-if="wasMined && !wasScanned" :to="{name: 'beer', params: {beerHash: beerHash}}">collect</router-link>
     </div>
     <div class="cell mined">
       {{wasMined ? 'bought' : 'buying'}}
     </div>
     <div class="cell collected">
-      {{wasCollected ? 'collected' : 'ready'}}
+      {{wasScanned ? 'collected' : 'ready'}}
     </div>
   </div>
 </template>
@@ -29,15 +29,12 @@ export default {
         return false
       }
       return this.beerTx.block_height >= 0
-    },
-    wasCollected () {
-      return this.beerApiState > 0
     }
   },
   data () {
     return {
       beerTx: null,
-      beerApiState: 1
+      wasScanned: false
     }
   },
   props: {
@@ -48,21 +45,25 @@ export default {
   methods: {
     async getBeerState (txHash) {
       return new Promise((resolve, reject) => {
-        return resolve(1)
-        // this.$socket.emit('get_beer_state', txHash, (beerState) => {
-        //   console.log('beerState', beerState)
-        //   if (beerState && Number.isInteger(beerState.state)) {
-        //     return resolve(beerState.state)
-        //   }
-        //   return reject(new Error('Error asking beer status'))
-        // })
+        console.log('asking beer state')
+        this.$socket.emit('was_beer_scanned', txHash, (beerState) => {
+          console.log('beerState', beerState)
+          if (beerState && typeof beerState.was_scanned === 'boolean') {
+            return resolve(beerState.was_scanned)
+          }
+          return reject(new Error('Error asking beer status'))
+        })
       })
     }
   },
   async mounted () {
     if (this.beerHash) {
-      this.beerTx = await this.client.tx.getTransaction(this.beerHash)
-      this.beerApiState = await this.getBeerState(this.beerHash)
+      try {
+        this.beerTx = await this.client.tx.getTransaction(this.beerHash)
+        this.wasScanned = await this.getBeerState(this.beerHash)
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }

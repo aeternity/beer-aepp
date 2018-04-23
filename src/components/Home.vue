@@ -17,7 +17,7 @@
     <div class="websocket-debug">
       <button @click="setBarState('open')">bar = open</button>
       <button @click="setBarState('closed')">bar = closed</button>
-      <button @click="setBarState('out_of_beer')">bar = beer empty</button>
+      <button @click="setBarState('out_of_beers')">bar = beer empty</button>
       <button @click="sendPing()">ping</button>
     </div>
   </div>
@@ -56,7 +56,9 @@ export default {
   },
   methods: {
     setBarState (newState) {
-      this.$socket.emit('set_bar_state', '456456', newState)
+      this.$socket.emit('set_bar_state', '456456', newState, (resp) => {
+        console.log('set_bar_state response', resp)
+      })
     },
     sendPing () {
       console.log('sending ping')

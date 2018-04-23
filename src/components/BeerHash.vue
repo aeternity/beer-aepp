@@ -9,6 +9,7 @@
     <div>
       <vue-qrcode :value="fullInfo" :options="{ size: 300 }"></vue-qrcode>
     </div>
+    <button @click="scan()">Scan</button>
   </div>
 </template>
 
@@ -58,6 +59,16 @@ export default {
       const pub = Crypto.decodeBase58Check(pubKey.split('$')[1])
       const verified = Crypto.verify(hashBuffer, sigBuffer, pub)
       return verified
+    },
+    scan () {
+      // TODO: remove in production
+      const accessKey = '456456'
+      const txHash = this.beerHash
+      const txSignature = this.beerHashSignature
+      const sender = this.account.pub
+      this.$socket.emit('scan', accessKey, txHash, txSignature, sender, (resp) => {
+        console.log('scan response', resp)
+      })
     }
   },
   async mounted () {
