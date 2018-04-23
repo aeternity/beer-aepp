@@ -1,6 +1,6 @@
 {
   "name": "beer-aepp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Self-contained aeternity web aepp",
   "private": true,
   "scripts": {
