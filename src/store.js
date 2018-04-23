@@ -76,9 +76,10 @@ const store = new Vuex.Store({
     SOCKET_BAR_STATE (state, barState) {
       console.log('SOCKET_BAR_STATE', barState)
       if (Array.isArray(barState) && barState.length >= 0) {
-        state.barState = barState[0]
-      } else {
-        state.barState = barState
+        barState = barState[0]
+      }
+      if (barState.state) {
+        state.barState = barState.state
       }
     }
   },

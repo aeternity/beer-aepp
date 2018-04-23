@@ -9,7 +9,6 @@
     <div>
       <vue-qrcode :value="fullInfo" :options="{ size: 300 }"></vue-qrcode>
     </div>
-    <button @click="scan()">Scan</button>
   </div>
 </template>
 
