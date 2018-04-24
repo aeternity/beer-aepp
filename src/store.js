@@ -78,6 +78,8 @@ const store = new Vuex.Store({
     },
     setBeerHashes (state, beerHashes) {
       state.beerHashes = beerHashes
+      // eslint-disable-next-line no-undef
+      localStorage.setItem('beerHashes', JSON.stringify(state.beerHashes))
     },
     setBeerAvailable (state, beerAvailable) {
       state.beerAvailable = beerAvailable
