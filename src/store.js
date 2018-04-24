@@ -15,9 +15,7 @@ const store = new Vuex.Store({
     beerHashes: [],
     beerPrice: 1000,
     barPubKey: 'ak$3TRJBCvcvaegewQkexWVQkt7bEFf1tCvhvj6jfErZQNWyJ4NoyxUwkGrVVWDefxPpPEiY534fTutPaURn72HrGKCYaNWPM',
-    // websocketUrl: 'http://localhost:8087',
-    // websocketUrl: 'http://localhost:5000',
-    websocketUrl: 'http://192.168.111.108:5000',
+    websocketUrl: 'https://republica-pos.aepps.com',
     socketConnected: false,
     barState: null
   },
