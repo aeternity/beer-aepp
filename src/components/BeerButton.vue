@@ -7,6 +7,11 @@
       Sorry there currently is no Beer left at the bar
     </div>
     <div class="buyButton" v-if="hasTokensForBeer && beerAvailable">
+      <ae-label for="numBeers" :help-text="errors.first('numBeers')">How many beers?</ae-label>
+      <ae-input id="numBeers" name="numBeers" type="number" v-model.number="selectedBeerNumber" v-validate="`min_value:1|max_value:${maxBeers}`"></ae-input>
+      <div>
+        This will send {{numberOfTokens}} tokens
+      </div>
       <button @click="buyBeer(barPubKey)" class="beer-btn"
       :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
       'beer-btn--idle': ajaxCall.status == 'idle',
@@ -24,18 +29,21 @@
 </template>
 
 <script>
-import { AeButton, AeAddress } from '@aeternity/aepp-components'
+import { AeButton, AeAddress, AeInput, AeLabel } from '@aeternity/aepp-components'
 
 export default {
   name: 'BeerButton',
   components: {
     AeButton,
-    AeAddress
+    AeAddress,
+    AeInput,
+    AeLabel
   },
   data () {
     return {
       ajaxCall: { status: 'busy' },
-      txHash: null
+      txHash: null,
+      selectedBeerNumber: 1
     }
   },
   computed: {
@@ -61,13 +69,24 @@ export default {
       return this.$store.getters.clientInternal
     },
     hasTokensForBeer () {
-      return this.balance >= this.$store.state.beerPrice + 1
+      return this.balance >= this.beerPrice + 1
     },
     beerAvailable () {
       return this.$store.state.beerAvailable
     },
     beerApi () {
       return this.$store.getters.beerApi
+    },
+    maxBeers () {
+      return Math.floor((this.balance - 1) / this.beerPrice)
+    },
+    beerPrice () {
+      return this.$store.state.beerPrice
+    },
+    numberOfTokens () {
+      const numTokens = this.selectedBeerNumber * this.beerPrice
+      const rest = numTokens % this.beerPrice
+      return numTokens - rest
     }
   },
   methods: {
@@ -83,7 +102,7 @@ export default {
         return false
       }
 
-      const amount = this.$store.state.beerPrice
+      const amount = this.numberOfTokens
       this.ajaxCall.status = 'idle'
       const spendResult = await this.client.base.spend(receiver, parseInt(amount), this.wallet, {fee: 1}) // params: (receiver, amount, account sending, { fee = 1, nonce })
       const txHash = spendResult['tx_hash']
