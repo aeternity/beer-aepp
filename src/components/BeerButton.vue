@@ -1,24 +1,40 @@
 <template>
-  <div class="buy">
-    <div class="balance">
+  <div class="buy shell">
+    <!-- <div class="balance">
       You currently have {{balance}} Beer Tokens
-    </div>
+    </div> -->
     <div class="noBeerLeft" v-if="!beerAvailable">
       Sorry there currently is no Beer left at the bar
     </div>
     <div class="buyButton" v-if="hasTokensForBeer && beerAvailable">
       <ae-label for="numBeers" :help-text="errors.first('numBeers')">How many beers?</ae-label>
       <ae-input id="numBeers" name="numBeers" type="number" v-model.number="selectedBeerNumber" v-validate="`min_value:1|max_value:${maxBeers}`"></ae-input>
+     <div class="equal-icon">
+       <p class="center">
+         =
+       </p>
+     </div>
       <div>
-        This will send {{numberOfTokens}} tokens
+        <!-- This will send {{numberOfTokens}} tokens -->
+        <ae-input 
+        id="tokensCount"
+        v-model.number="numberOfTokens">
+        </ae-input>
       </div>
-      <button @click="buyBeer(barPubKey)" class="beer-btn"
+      <!-- <ae-button type='booring' @click='take()'>Order all the beer i can get!</ae-button> -->
+      <button @click='take()'>
+        <strong>
+          Order all the beer i can get!
+        </strong>
+      </button>
+      <ae-button type='dramatic'>🍺 Order Beer</ae-button>
+      <!-- <button @click="buyBeer(barPubKey)" class="beer-btn"
       :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
       'beer-btn--idle': ajaxCall.status == 'idle',
       'beer-btn--ready': ajaxCall.status == 'ready'
-      }"/>
+      }"/> -->
 
-      <div v-if="ajaxCall.status=='busy'">press to get beer</div>
+      <!-- <div v-if="ajaxCall.status=='busy'">press to get beer</div> -->
       <div v-if="ajaxCall.status=='idle'">ordering beer</div>
     </div>
     <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar and show them <router-link :to="{name: 'beer', params: {beerHash: txHash}}">this</router-link></div>
@@ -116,6 +132,14 @@ export default {
         this.ajaxCall.status = 'busy'
         console.warn('Something went wrong: ', reason)
       })
+    },
+    take () {
+      // let bal = this.$store.state.balance
+      // let res = parseInt( / 1000)
+      // console.log(res)
+      console.log(parseInt(this.$store.state.balance / 1000))
+      this.selectedBeerNumber = parseInt(this.$store.state.balance / 1000) 
+      // return parseInt(this.$store.state.balance / 1000)
     }
   },
   mounted () {
@@ -125,7 +149,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style lang="scss">
 // @import '../custom.scss';
 .beer-btn {
   width: 5rem;
@@ -142,5 +166,21 @@ export default {
 .beer-btn--ready {
   background: green;
 }
+input#numBeers,
+input#tokensCount {
+  text-align: center;
+  font-size: 22px;
+  margin: 0 !important;
+}
+.buyButton .ae-input {
+  margin-bottom: 0 !important;
+}
+.buyButton .ae-button {
+  margin-top: 30px;
+}
+// .ae-input {
+//   text-align: center;
+//   font-size: 40px !important;
+//   margin-bottom: 0 !important;
+// }
 </style>
-P
