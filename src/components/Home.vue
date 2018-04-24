@@ -1,14 +1,19 @@
 <template>
   <div class="home shell">
     <div v-if="account && account.pub">
-      <div class="logo"></div>
-      <div class="svg">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+      <div class="logo">
+        <Logo></Logo>
+      </div>
+      <div class="cross">
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
           <defs>
             <path id="a" d="M12 13.414l6.364 6.364 1.414-1.414L13.414 12l6.364-6.364-1.414-1.414L12 10.586 5.636 4.222 4.222 5.636 10.586 12l-6.364 6.364 1.414 1.414z"/>
           </defs>
           <use fill="#1E1E1E" fill-rule="evenodd" transform="translate(-4 -4)" xlink:href="#a"/>
-        </svg>
+        </svg> -->
+        <p class="center">
+          +
+        </p>
       </div>
       <div class="title">
         <h1>
@@ -26,14 +31,11 @@
         </p>
       </div>
       <div class="action">
-        <router-link to="order">
+        <router-link to="buy">
           <ae-button type='dramatic'>
             Give me tokens for beer!
           </ae-button>  
         </router-link>
-        <!-- <ae-button type='dramatic'>
-          Give me tokens for beer!
-        </ae-button> -->
       </div>
       <div id="water">
         <div class="wave">
@@ -69,12 +71,14 @@
 <script>
 import BeerListEntry from './BeerListEntry.vue'
 import { AeButton } from '@aeternity/aepp-components'
+import Logo from './Logo.vue'
 
 export default {
   name: 'Home',
   components: {
     BeerListEntry,
-    AeButton
+    AeButton,
+    Logo
   },
   computed: {
     account () {
@@ -107,6 +111,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.logo {
+  margin-top: 5vh;
+}
 .action {
   position: relative;
 }
@@ -115,21 +122,21 @@ export default {
   line-height: 28px;
 }
 #water { 
-  height: 20vh;
+  height: 30vh;
   width:100%;
   position:fixed;
-  bottom:0;
+  bottom:-4vh;
   left:0;
   background: #015871;
   background: white;
   overflow-x: hidden;
+  z-index: -1;
 }
 
 .wave {
   position: absolute;
   bottom:0;
   left: 0;
-  // width: 100%;
   height: 100%;
   animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
   animation-iteration-count:infinite;
@@ -141,6 +148,13 @@ export default {
   animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
   animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
   opacity: 1;
+}
+.cross p {
+  font-size: 37px;
+  transform: translate3d;
+  transform: rotateZ(45deg);
+  line-height: 0;
+  margin:15px 0;
 }
 
 @keyframes wave {
