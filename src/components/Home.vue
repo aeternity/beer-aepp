@@ -1,15 +1,6 @@
 <template>
-  <div class="home">
+  <div class="home shell">
     <div v-if="account && account.pub">
-      <!-- <h1>Hello {{account.name}}</h1>
-      <div class="balance">
-        You currently have {{balance}} tokens
-        <span v-if="balance <= beerPrice">You don't have enough funds for a bew beer. <router-link :to="{name: 'send'}">Maybe send your remaining tokens to a friend.</router-link></span>
-      </div>
-      <div class="beerList" v-if="beerHashes.length > 0">
-        <h3>Your Beers</h3>
-        <beer-list-entry v-for="beerHash in beerHashes" :key="beerHash" :beerHash="beerHash"></beer-list-entry>
-      </div> -->
       <div class="logo"></div>
       <div class="svg">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
@@ -24,7 +15,7 @@
           re:publica
         </h1>
       </div>
-      <div class="content">
+      <div class="intro-text">
         <p>
           æternity is not just a blockchain, it’s a vision for the future. It is a way of thinking. It’s a cause realized through technology.
         </p>
@@ -35,16 +26,43 @@
         </p>
       </div>
       <div class="action">
-        <ae-button type='dramatic'>
+        <router-link to="order">
+          <ae-button type='dramatic'>
+            Give me tokens for beer!
+          </ae-button>  
+        </router-link>
+        <!-- <ae-button type='dramatic'>
           Give me tokens for beer!
-        </ae-button>
+        </ae-button> -->
       </div>
       <div id="water">
+        <div class="wave">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="198">
+            <defs>
+              <linearGradient id="a" x1="50%" x2="50%" y1="-10.959%" y2="100%">
+                <stop stop-color="#57BBC1" stop-opacity=".25" offset="0%"/>
+                <stop stop-color="#015871" offset="100%"/>
+              </linearGradient>
+            </defs>
+            <path fill="#f7296e" fill-rule="evenodd" d="M.005 121C311 121 409.898-.25 811 0c400 0 500 121 789 121v77H0s.005-48 .005-77z" transform="matrix(-1 0 0 1 1600 0)"/>
+          </svg>
+        </div>
+        <div class="wave">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="198">
+            <defs>
+              <linearGradient id="a" x1="50%" x2="50%" y1="-10.959%" y2="100%">
+                <stop stop-color="#57BBC1" stop-opacity=".25" offset="0%"/>
+                <stop stop-color="#015871" offset="100%"/>
+              </linearGradient>
+            </defs>
+            <path fill="#f7296e" fill-rule="evenodd" d="M.005 121C311 121 409.898-.25 811 0c400 0 500 121 789 121v77H0s.005-48 .005-77z" transform="matrix(-1 0 0 1 1600 0)"/>
+          </svg>
+        </div>
       </div>
     </div>
-    <!-- <div v-else>
+    <div v-else>
       <span>You are not logged in. Please visit this by opening the provided short url</span>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -84,87 +102,62 @@ export default {
   methods: {
   },
   async mounted () {
-    var ocean = document.getElementById("water"),
-    waveWidth = 10,
-    waveCount = Math.floor(window.innerWidth/waveWidth),
-    docFrag = document.createDocumentFragment();
-
-for(var i = 0; i < waveCount; i++){
-  var wave = document.createElement("div");
-  wave.className += " wave";
-  docFrag.appendChild(wave);
-  wave.style.left = i * waveWidth + "px";
-  wave.style.webkitAnimationDelay = (i/100) + "s";
-}
-
-ocean.appendChild(docFrag);
   }
 }
 </script>
 
 <style scoped lang="scss">
-.home {
-  position: relative;
-  height: 100vh;
-}
 .action {
   position: relative;
 }
-#water{
-  position:absolute;
-  width:100vw;
-  height: 10%;
-  background-image: -webkit-gradient(
-  linear,
-  left bottom,
-  left top,
-  color-stop(0, rgb(0,50,150)),
-  color-stop(0.50, rgb(0,150,255))
-  );
+.intro-text {
+  font-size: 18px;
+  line-height: 28px;
 }
-.wave{
-  background:#a8e3ff;
-  background:red;
-  display:inline-block;
-  height:60% !important;
-  width:10vw;
-  position:absolute;
-  bottom: 0;
+#water { 
+  height: 20vh;
+  width:100%;
+  position:fixed;
+  bottom:0;
+  left:0;
+  background: #015871;
+  background: white;
+  overflow-x: hidden;
+}
+
+.wave {
+  position: absolute;
+  bottom:0;
   left: 0;
-  -webkit-animation-name:             dostuff; 
-  -webkit-animation-duration:         3s; 
-  -webkit-animation-iteration-count:  infinite;
-  -webkit-transition-timing-function: ease-in-out;
-  animation-name:             dostuff; 
-  animation-duration:         3s; 
-  animation-iteration-count:  infinite;
-  transition-timing-function: ease-in-out;
-  background: red;
-  z-index: 3;
-  bottom: 0;
-  left: 0;
-  width: 10px;
+  // width: 100%;
+  height: 100%;
+  animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
+  animation-iteration-count:infinite;
+  transform: translate3d(0, 0, 0);
 }
-@-webkit-keyframes dostuff{
-  0%{
-    height:60%;
+.wave:nth-of-type(2) {
+  bottom:0;
+  left: 1600px;
+  animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
+  animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
+  opacity: 1;
+}
+
+@keyframes wave {
+  0% {
+    margin-left: 0;
   }
-  50%{ 
-    height:40%;
-  }
-  100%{ 
-    height:60%;
+  100% {
+    margin-left: -1600px;
   }
 }
-@keyframes dostuff {
-  0%{
-    height:60%;
+
+@keyframes swell {
+  0%, 100% {
+    transform: translate3d(0,-25px,0);
   }
-  50%{ 
-    height:40%;
-  }
-  100%{ 
-    height:60%;
+  50% {
+    transform: translate3d(0,5px,0);
   }
 }
 </style>
