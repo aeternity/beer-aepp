@@ -3,4 +3,3 @@
 .tern-port
 /dist
 .vscode
-/secrets.js
