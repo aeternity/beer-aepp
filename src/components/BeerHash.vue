@@ -37,7 +37,7 @@ export default {
       return this.signHash(this.beerHash, this.account.priv)
     },
     beerAvailable () {
-      return this.$store.state.beerAvailable
+      return this.$store.state.barState === 'open'
     }
   },
   data () {
@@ -61,10 +61,6 @@ export default {
     }
   },
   async mounted () {
-    // let sigBase64 = this.signHash(this.beerHash, this.account.priv)
-    // console.log('sigBase64', sigBase64)
-    // const verified = this.verifyHash(this.beerHash, sigBase64, this.account.pub)
-    // console.log('verified', verified)
   }
 }
 </script>
