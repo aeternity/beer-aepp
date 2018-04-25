@@ -1,12 +1,13 @@
 <template>
   <div class="buy shell">
-    <!-- <div class="balance">
-      You currently have {{balance}} Beer Tokens
-    </div> -->
     <div class="noBeerLeft" v-if="!beerAvailable">
       Sorry there currently is no Beer left at the bar
     </div>
-    <div class="buyButton" v-if="hasTokensForBeer && beerAvailable">
+    <div class="buyButton" v-if="hasTokensForBeer && beerAvailable && t">
+      <h1>Order Beer</h1>
+      <p>
+        With your tokens (upper right corner), you can order beer at the æternity stand. 
+      </p>
       <ae-label for="numBeers" :help-text="errors.first('numBeers')">How many beers?</ae-label>
       <ae-input id="numBeers" name="numBeers" type="number" v-model.number="selectedBeerNumber" v-validate="`min_value:1|max_value:${maxBeers}`"></ae-input>
      <div class="equal-icon">
@@ -27,7 +28,7 @@
           Order all the beer i can get!
         </strong>
       </button>
-      <ae-button type='dramatic'>🍺 Order Beer</ae-button>
+      <ae-button type='dramatic' @click="buyBeer(barPubKey)">🍺 Order Beer</ae-button>
       <!-- <button @click="buyBeer(barPubKey)" class="beer-btn"
       :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
       'beer-btn--idle': ajaxCall.status == 'idle',
@@ -35,9 +36,57 @@
       }"/> -->
 
       <!-- <div v-if="ajaxCall.status=='busy'">press to get beer</div> -->
-      <div v-if="ajaxCall.status=='idle'">ordering beer</div>
+      <!-- <div v-if="ajaxCall.status=='idle'">ordering beer</div> -->
+      
     </div>
-    <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar and show them <router-link :to="{name: 'beer', params: {beerHash: txHash}}">this</router-link></div>
+    <div v-if="ajaxCall.status=='idle'">
+      <h1>
+        We are filling up your beer!
+      </h1>
+      <p class="loadingText">
+        Head over to the æternity stand and have a drink and chat with us!
+      </p>
+      <p class="loadingText">
+        You’re using Blockchain for this order. Every transaction on Blockchain, needs to wait until the next Block is mined.
+      </p>
+      <div id="water">
+        <div class="wave">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="198">
+            <defs>
+              <linearGradient id="a" x1="50%" x2="50%" y1="-10.959%" y2="100%">
+                <stop stop-color="#57BBC1" stop-opacity=".25" offset="0%"/>
+                <stop stop-color="#015871" offset="100%"/>
+              </linearGradient>
+            </defs>
+            <path fill="#f7296e" fill-rule="evenodd" d="M.005 121C311 121 409.898-.25 811 0c400 0 500 121 789 121v77H0s.005-48 .005-77z" transform="matrix(-1 0 0 1 1600 0)"/>
+          </svg>
+        </div>
+        <div class="wave">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="198">
+            <defs>
+              <linearGradient id="a" x1="50%" x2="50%" y1="-10.959%" y2="100%">
+                <stop stop-color="#57BBC1" stop-opacity=".25" offset="0%"/>
+                <stop stop-color="#015871" offset="100%"/>
+              </linearGradient>
+            </defs>
+            <path fill="#f7296e" fill-rule="evenodd" d="M.005 121C311 121 409.898-.25 811 0c400 0 500 121 789 121v77H0s.005-48 .005-77z" transform="matrix(-1 0 0 1 1600 0)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <!-- <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar and show them <router-link :to="{name: 'beer', params: {beerHash: txHash}}">this</router-link></div> -->
+    <div v-if="ajaxCall.status=='ready'">
+      <h1>
+        Beer is ready, go to the bar and show them
+      </h1>
+      <BeerHash :bHash='txHash'></BeerHash>
+    </div>
+    <!-- <div>
+      <h1>
+        Beer is ready, go to the bar and show them
+      </h1>
+      <BeerHash></BeerHash>
+    </div> -->
     <div class="link" v-if="!hasTokensForBeer">
       Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{balance}} tokens to a friend and share a beer.
     </div>
@@ -46,6 +95,7 @@
 
 <script>
 import { AeButton, AeAddress, AeInput, AeLabel } from '@aeternity/aepp-components'
+import BeerHash from './BeerHash.vue'
 
 export default {
   name: 'BeerButton',
@@ -53,13 +103,15 @@ export default {
     AeButton,
     AeAddress,
     AeInput,
-    AeLabel
+    AeLabel,
+    BeerHash
   },
   data () {
     return {
       ajaxCall: { status: 'busy' },
       txHash: null,
-      selectedBeerNumber: 1
+      selectedBeerNumber: 1,
+      t: true
     }
   },
   computed: {
@@ -119,6 +171,7 @@ export default {
       }
 
       const amount = this.numberOfTokens
+      this.t = false
       this.ajaxCall.status = 'idle'
       const spendResult = await this.client.base.spend(receiver, parseInt(amount), this.wallet, {fee: 1}) // params: (receiver, amount, account sending, { fee = 1, nonce })
       const txHash = spendResult['tx_hash']
@@ -149,7 +202,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
+<style lang="scss" scoped>
 // @import '../custom.scss';
 .beer-btn {
   width: 5rem;
@@ -183,4 +236,96 @@ input#tokensCount {
 //   font-size: 40px !important;
 //   margin-bottom: 0 !important;
 // }
+#water { 
+  height: 75vh;
+  width:100%;
+  position:fixed;
+  bottom:0;
+  left:0;
+  background: #015871;
+  background: white;
+  overflow-x: hidden;
+  z-index: -1;
+  box-shadow: inset 0px -50vh 0 0 #f7296e;
+  animation: grow 7s ease;
+}
+div#water1:before {
+  content:' ';
+  position: absolute;
+  left:0;
+  height:50vh;
+  width:100vw;
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 50%,rgba(247,41,110,1) 51%,rgba(247,41,110,1) 100%);
+}
+
+.wave {
+  position: absolute;
+  bottom:0;
+  left: 0;
+  height: 100%;
+  animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
+  animation-iteration-count:infinite;
+  transform: translate3d(0, 0, 0);
+}
+.wave:nth-of-type(2) {
+  bottom:0;
+  left: 1600px;
+  animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
+  animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
+  opacity: 1;
+}
+.loadingText {
+  color:white;
+  animation: loadingText 10s ease;
+  font-size:18px;
+  line-height:28px;
+}
+@keyframes wave {
+  0% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: -1600px;
+    height:100%;
+  }
+}
+
+@keyframes swell {
+  0%, 100% {
+    transform: translate3d(0,-25px,0);
+  }
+  50% {
+    transform: translate3d(0,5px,0);
+  }
+}
+@keyframes grow {
+  0% {
+    height:0;
+    box-shadow: inset 0px -0vh 0 0 #f7296e;
+  }
+  25% {
+    height:25vh;
+    box-shadow: inset 0px -10vh 0 0 #f7296e;
+  }
+  50% {
+    height: 50vh;
+    box-shadow: inset 0px -23vh 0 0 #f7296e;
+  }
+  70% {
+    height: 66vh;
+    box-shadow: inset 0px -45vh 0 0 #f7296e;
+  }
+  100% {
+    height: 75vh;
+    box-shadow: inset 0px -50vh 0 0 #f7296e;
+  }
+}
+@keyframes loadingText {
+  0% {
+    color: black;
+  }
+  100% {
+    color: white;
+  }
+}
 </style>
