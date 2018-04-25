@@ -1,5 +1,5 @@
 <template>
-  <div class="beerHash">
+  <div class="beerHash shell">
     <div class="noBeerLeft" v-if="!beerAvailable">
       Sorry there currently is no Beer left at the bar
     </div>
@@ -19,6 +19,9 @@ import { Crypto } from '@aeternity/aepp-sdk'
 
 export default {
   name: 'BeerHash',
+  props: [
+    'bHash'
+  ],
   components: {
     VueQrcode
   },
@@ -28,13 +31,15 @@ export default {
     },
     fullInfo () {
       // sending as string, for the QR scanning with NETUM bar/qr scanner
-      return this.beerHash + ' ' + this.beerHashSignature
+      // return this.beerHash + ' ' + this.beerHashSignature
+      return this.bHash + ' ' + this.beerHashSignature
+      return this.bHash + ' ' + this.beerHashSignature
     },
     beerHash () {
       return this.$route.params.beerHash
     },
     beerHashSignature () {
-      return this.signHash(this.beerHash, this.account.priv)
+      return this.signHash(this.bHash, this.account.priv)
     },
     beerAvailable () {
       return this.$store.state.beerAvailable
