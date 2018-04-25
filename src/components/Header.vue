@@ -3,7 +3,7 @@
     <div class="header-container shell">
       <div class="item address-icon">
         <!-- <ae-identity-avatar :address='account.pub'></ae-identity-avatar> -->
-        <ae-identity-avatar :address="'0x35d8830ea35e6Df033eEdb6d5045334A4e34f9f9'"></ae-identity-avatar>
+        <ae-identity-avatar :address="account.pub"></ae-identity-avatar>
       </div>
       <div class="item account-name">
         <h4>
@@ -19,11 +19,11 @@
   </div>
 </template>
 <script>
-import aeIdentityAvatar from '@aeternity/aepp-components'
+import { AeIdentityAvatar } from '@aeternity/aepp-components'
   export default {
     name: 'Header',
     components: {
-      aeIdentityAvatar
+      AeIdentityAvatar
     },
     // props: [address],
     data () {
