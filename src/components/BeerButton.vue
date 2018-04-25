@@ -28,7 +28,52 @@
           Order all the beer i can get!
         </strong>
       </button>
-      <ae-button type='dramatic' @click="buyBeer(barPubKey)">🍺 Order Beer</ae-button>
+      <ae-modal-light
+              v-if="modalVisible == true"
+              @close="modalVisible = false"
+              title="Delete Voting?"
+            >
+            <ae-app-icon :app="app"></ae-app-icon>
+              requests a transaction
+              <ae-divider />
+              <div class="summary">
+                <h4>
+                  {{numberOfTokens}} tokens
+                </h4>
+                <h5>
+                  {{selectedBeerNumber}} beer(s)
+                </h5>
+              </div>
+              <ae-divider />
+              <div class="fees">
+                <div>
+                  <strong>
+                    Additional fees                    
+                  </strong>
+                </div>
+                <div>
+                  <strong>
+                    {{1 * selectedBeerNumber}}
+                  </strong>
+                </div>
+              </div>
+              <ae-button
+                size="smaller"
+                type="exciting"
+                uppercase
+                @click="modalVisible = false"
+                slot="buttons"
+              >cancel</ae-button>
+              <ae-button
+                size="smaller"
+                type="dramatic"
+                uppercase
+                
+                @click="buyBeer(barPubKey)"
+                slot="buttons"
+              >sign</ae-button>
+            </ae-modal-light>
+      <ae-button type='dramatic' @click="modalVisible = true">🍺 Order Beer</ae-button>
       <!-- <button @click="buyBeer(barPubKey)" class="beer-btn"
       :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
       'beer-btn--idle': ajaxCall.status == 'idle',
@@ -81,12 +126,6 @@
       </h1>
       <BeerHash :bHash='txHash'></BeerHash>
     </div>
-    <!-- <div>
-      <h1>
-        Beer is ready, go to the bar and show them
-      </h1>
-      <BeerHash></BeerHash>
-    </div> -->
     <div class="link" v-if="!hasTokensForBeer">
       Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{balance}} tokens to a friend and share a beer.
     </div>
@@ -94,7 +133,7 @@
 </template>
 
 <script>
-import { AeButton, AeAddress, AeInput, AeLabel } from '@aeternity/aepp-components'
+import { AeButton, AeAddress, AeInput, AeLabel, AeModalLight, AeDivider, AeAppIcon } from '@aeternity/aepp-components'
 import BeerHash from './BeerHash.vue'
 
 export default {
@@ -104,14 +143,18 @@ export default {
     AeAddress,
     AeInput,
     AeLabel,
-    BeerHash
+    BeerHash,
+    AeModalLight,
+    AeDivider,
+    AeAppIcon
   },
   data () {
     return {
       ajaxCall: { status: 'busy' },
       txHash: null,
       selectedBeerNumber: 1,
-      t: true
+      t: true,
+      modalVisible: false
     }
   },
   computed: {
@@ -202,7 +245,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
+<style lang="scss">
 // @import '../custom.scss';
 .beer-btn {
   width: 5rem;
@@ -231,11 +274,7 @@ input#tokensCount {
 .buyButton .ae-button {
   margin-top: 30px;
 }
-// .ae-input {
-//   text-align: center;
-//   font-size: 40px !important;
-//   margin-bottom: 0 !important;
-// }
+
 #water { 
   height: 75vh;
   width:100%;
@@ -248,14 +287,6 @@ input#tokensCount {
   z-index: -1;
   box-shadow: inset 0px -50vh 0 0 #f7296e;
   animation: grow 7s ease;
-}
-div#water1:before {
-  content:' ';
-  position: absolute;
-  left:0;
-  height:50vh;
-  width:100vw;
-  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 50%,rgba(247,41,110,1) 51%,rgba(247,41,110,1) 100%);
 }
 
 .wave {
@@ -279,6 +310,24 @@ div#water1:before {
   animation: loadingText 10s ease;
   font-size:18px;
   line-height:28px;
+}
+.fees {
+  display: flex;
+}
+.fees div {
+  flex:1;
+}
+.fees div:nth-child(1) {
+  text-align:left;
+}
+.fees div:nth-child(2) {
+  text-align:right;
+}
+.ae-modal-light {
+  width:90vw;
+}
+.app-icon {
+  margin: 0 auto;
 }
 @keyframes wave {
   0% {
