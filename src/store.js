@@ -15,7 +15,9 @@ const store = new Vuex.Store({
     beerHashes: [],
     beerPrice: 1000,
     barPubKey: 'ak$3TRJBCvcvaegewQkexWVQkt7bEFf1tCvhvj6jfErZQNWyJ4NoyxUwkGrVVWDefxPpPEiY534fTutPaURn72HrGKCYaNWPM',
-    beerAvailable: false
+    websocketUrl: 'https://republica-pos.aepps.com',
+    socketConnected: false,
+    barState: null
   },
   getters: {
     lastBeerHash (state) {
@@ -39,25 +41,6 @@ const store = new Vuex.Store({
         { secured: true, internal: true }
       )
       return new AeternityClient(provider)
-    },
-    beerApi (state, getters) {
-      // TODO: implement the API
-      return {
-        async getBeerState (txHash) {
-          // simulate beer was picked up after 20 blocks
-          const currentBlock = await getters.client.base.getHeight()
-          const tx = await getters.client.tx.getTransaction(txHash)
-          if (currentBlock > tx.block_height + 20) {
-            return 1
-          } else {
-            return 0
-          }
-        },
-        async isBeerLeft () {
-          console.log('calling isBeerLeft API')
-          return true
-        }
-      }
     }
   },
   mutations: {
@@ -78,9 +61,26 @@ const store = new Vuex.Store({
     },
     setBeerHashes (state, beerHashes) {
       state.beerHashes = beerHashes
+      // eslint-disable-next-line no-undef
+      localStorage.setItem('beerHashes', JSON.stringify(state.beerHashes))
     },
-    setBeerAvailable (state, beerAvailable) {
-      state.beerAvailable = beerAvailable
+    setBarState (state, barState) {
+      state.barState = barState
+    },
+    SOCKET_CONNECT (state, status) {
+      state.socketConnected = true
+    },
+    SOCKET_DISCONNECT (state, status) {
+      state.socketConnected = false
+    },
+    SOCKET_BAR_STATE (state, barState) {
+      console.log('SOCKET_BAR_STATE', barState)
+      if (Array.isArray(barState) && barState.length >= 0) {
+        barState = barState[0]
+      }
+      if (barState.state) {
+        state.barState = barState.state
+      }
     }
   },
   actions: {
@@ -96,14 +96,6 @@ const store = new Vuex.Store({
         }
       }
       return 0
-    },
-    async checkBeerAvailable ({getters, commit}) {
-      try {
-        const beerAvailable = await getters.beerApi.isBeerLeft()
-        commit('setBeerAvailable', beerAvailable)
-      } catch (e) {
-        console.log(e)
-      }
     }
   }
 })

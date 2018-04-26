@@ -251,10 +251,7 @@ export default {
       return this.balance >= this.beerPrice + 1
     },
     beerAvailable () {
-      return this.$store.state.beerAvailable
-    },
-    beerApi () {
-      return this.$store.getters.beerApi
+      return this.$store.state.barState === 'open'
     },
     maxBeers () {
       return Math.floor((this.balance - 1) / this.beerPrice)
@@ -274,8 +271,7 @@ export default {
     },
     async buyBeer (receiver) {
       // check first if there is beer
-      const isBeerLeft = await this.beerApi.isBeerLeft()
-      if (!isBeerLeft) {
+      if (!this.beerAvailable) {
         // TODO: display errors
         console.log('no Beer left')
         return false

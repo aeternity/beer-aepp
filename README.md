@@ -4,7 +4,9 @@
 
 This is a simple Web Application that will be used during [re:publica 2018](https://re-publica.com/en) using VueJS and [Aeternity's JS SDK](https://github.com/aeternity/aepp-sdk-js).
 
-It allows conference participants to order beers using Æ tokens.
+It allows conference participants to order beers using tokens.
+
+There will be a dedicated Aeternity-Blockchain running only for this project. Accounts for the participants will be generated on this chain beforehand. For every account a domain name will be registered and an initial token amount will be transfered.
 
 *This repository is a work in progress* and it has the precise scope of only being used during re:publica 2018 to gamify the process of ordering a beer offered by Aeternity.
 
@@ -22,15 +24,23 @@ Make sure you have at least 2 keypairs for the minimum 2 wallets to test:
 The "Person Wallet" (the app itself) is accessed via a URL shortner service (https://aet.li/shortName) or through the scan of a QR code.
 
 This action will send the user to the app via a URL
-http://URL/#/?p=PUB_KEY&k=PRIV_KEY&n=fake%20name%20here
+https://beer.aepps.com/?p=PUB_KEY&k=PRIV_KEY&n=DOMAIN_NAME
 
+The acocunt data will then be stored on the users device in localStorage.
 
 Once the app is open, the user can:
 
-1. Check its balance
+1. Check her token balance
 2. Order a beer
 3. Send & Receive tokens to/from other users
 
+Beer orders are token transactions from the user to the bar with multiples of the price for one beer which currently is 1000 tokens. To collect the beer at the Bar the user presents a QR-Code. The Code contains the transaction hash and also the transaction hash signed with her private key.
+
+The [Bar App (pos app)](https://github.com/aeternity/pos-aepp) then scans the code and forwards the Info to the [middleware (pos middleware)](https://github.com/aeternity/pos-middleware). The middleware keeps record of all beer transactions. On scan it validates the scanned transaction by checking the signature and returning to the bar how many beers to give out. It also keeps a record on which transactions were already scanned to prevent double spending.
+
+The Beer Aepp also keeps a websocket conenction with the middleware. Over this connection the state of bar (open, closed, out of beer) is transmitted. Also the aepp can check whether a beer transaction has already been scanned.
+
+To send tokens from one account to another the sending device can either enter the domain name of the receiver or scan a qr-code containing the public key of the receiver.
 
 ## Installation
 
@@ -60,9 +70,6 @@ yarn start:dev
 
 # build for production with minification
 yarn build
-
-# TODO: runs tests
-yarn test
 ```
 
 ## License
