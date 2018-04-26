@@ -161,7 +161,27 @@
       <ae-button type='booring'>How to get there</ae-button>
     </div>
     <div class="link" v-if="!hasTokensForBeer">
-      Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{balance}} tokens to a friend and share a beer.
+      <h1 class="screen-title">
+        🤔
+      </h1>
+      <p class="screen-subtitle">
+        You don’t have enough tokens <br>
+        to buy a beer. Let someone <br>
+        transfer you some. navigate to <br>
+        ‘Receive’ in the bottom.
+      </p>
+      <!-- Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{balance}} tokens to a friend and share a beer. -->
+    </div>
+    <div class="link" v-if="isBarClosed">
+      <h1 class="screen-title">
+        🍺
+      </h1>
+      <p class="screen-subtitle">
+        The’re is nodody who can hand <br>
+        you a beer at the moment. We <br>
+        are there on the 2nd until the <br>
+        4th of May: 12 - 18Uhr
+      </p>
     </div>
   </div>
 </template>
@@ -407,6 +427,17 @@ input#tokensCount {
   font-size:18px;
   line-height:1.56;
   color:#fff;
+}
+.link {
+  margin-bottom:20vh;
+}
+.link .screen-title {
+  font-size:50px;
+  margin-top:20vh;
+}
+.link .screen-title,
+.link .screen-subtitle {
+  text-align:center;
 }
 @keyframes swell {
   0%, 100% {
