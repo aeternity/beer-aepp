@@ -1,6 +1,12 @@
 <template>
   <div class="send">
-    <div v-if="state === 'qrcode'">
+    <div v-if="state === 'qrcode'" class="shell">
+      <h1 class="screen-title">
+        Scan QR
+      </h1>
+      <p class="screen-subtitle">
+        From somebody who you want to send your tokens to. They need to reveil their QR Code in the ‘Receive’ tab.
+      </p>
       <div class="loader" v-if="loading">
         <ae-loader></ae-loader> Loading
       </div>
@@ -10,7 +16,13 @@
       <qrcode-reader @decode="onDecode" @init="onInit"></qrcode-reader>
       <ae-button @click="state = 'input'">Skip</ae-button>
     </div>
-    <div v-if="state === 'input'" class="input">
+    <div v-if="state === 'input'" class="input shell">
+      <h1 class="screen-title">
+        Send Tokens
+      </h1>
+      <p class="screen-subtitle">
+        Not such a beer drinker? Transfer tokens to someone who is! 
+      </p>
       <div class="domainInput" v-if="!receiver">
         <ae-label for="receiver" :help-text="errors.first('receiver')">Receiver Name</ae-label>
         <ae-input id="receiver" name="receiver" v-model="domainInput" v-validate="`min:3`"></ae-input>
@@ -22,6 +34,7 @@
         <ae-label>Receiver Public Key</ae-label>
         <ae-address show-avatar size='short' :address="receiver"/>
       </div>
+
       <div class="amount" v-if="receiver">
         <ae-label for="amount" :help-text="errors.first('amount')">Amount</ae-label>
         <ae-amount-input
@@ -198,5 +211,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+label {
+  text-transform:capitalize;
+  font-size:18px;
+  line-height:1.58;
+  color: #1e1e1e;
+  text-align:left;
+}
 </style>
