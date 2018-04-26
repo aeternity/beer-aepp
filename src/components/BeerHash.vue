@@ -4,9 +4,6 @@
       Sorry there currently is no Beer left at the bar
     </div>
     <div>
-      Show this to the bartender to collect your beer!
-    </div>
-    <div>
       <vue-qrcode :value="fullInfo" :options="{ size: 300 }"></vue-qrcode>
     </div>
   </div>

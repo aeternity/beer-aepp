@@ -5,12 +5,6 @@
         <Logo></Logo>
       </div>
       <div class="cross">
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
-          <defs>
-            <path id="a" d="M12 13.414l6.364 6.364 1.414-1.414L13.414 12l6.364-6.364-1.414-1.414L12 10.586 5.636 4.222 4.222 5.636 10.586 12l-6.364 6.364 1.414 1.414z"/>
-          </defs>
-          <use fill="#1E1E1E" fill-rule="evenodd" transform="translate(-4 -4)" xlink:href="#a"/>
-        </svg> -->
         <p class="center">
           +
         </p>
@@ -21,10 +15,10 @@
         </h1>
       </div>
       <div class="intro-text">
-        <p>
+        <p style="padding:2vw;">
           æternity is not just a blockchain, it’s a vision for the future. It is a way of thinking. It’s a cause realized through technology.
         </p>
-        <p>
+        <p style="padding:2vw;">
           We want to start a decentralized
           digital revolution. But first we want
           to give you beer.
@@ -111,6 +105,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+h1 {
+  text-align:center;
+}
 .logo {
   margin-top: 5vh;
 }

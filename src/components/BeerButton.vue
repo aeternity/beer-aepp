@@ -1,15 +1,15 @@
 <template>
-  <div class="buy shell">
+  <div class="buy shell" v-bind:class="{orderDone: isOrderDone}">
     <div class="noBeerLeft" v-if="!beerAvailable">
       Sorry there currently is no Beer left at the bar
     </div>
     <div class="buyButton" v-if="hasTokensForBeer && beerAvailable && t">
-      <h1>Order Beer</h1>
-      <p>
+      <h1 class="screen-title">Order Beer</h1>
+      <p class="screen-subtitle">
         With your tokens (upper right corner), you can order beer at the æternity stand. 
       </p>
-      <ae-label for="numBeers" :help-text="errors.first('numBeers')">How many beers?</ae-label>
-      <ae-input id="numBeers" name="numBeers" type="number" v-model.number="selectedBeerNumber" v-validate="`min_value:1|max_value:${maxBeers}`"></ae-input>
+      <!-- <ae-label for="numBeers" :help-text="errors.first('numBeers')">How many beers?</ae-label> -->
+      <ae-input id="numBeers" name="numBeers" type="number" v-model.number="selectedBeerNumber" v-validate="`min_value:1|max_value:${maxBeers}`" units="beers"></ae-input>
      <div class="equal-icon">
        <p class="center">
          =
@@ -22,25 +22,56 @@
         v-model.number="numberOfTokens">
         </ae-input>
       </div>
-      <!-- <ae-button type='booring' @click='take()'>Order all the beer i can get!</ae-button> -->
-      <button @click='take()'>
+      <button @click='getAllBeer()' class="takeAllPar">
         <strong>
           Order all the beer i can get!
         </strong>
       </button>
       <ae-modal-light
               v-if="modalVisible == true"
-              @close="modalVisible = false"
-              title="Delete Voting?"
-            >
-            <ae-app-icon :app="app"></ae-app-icon>
-              requests a transaction
+              @close="modalVisible = false">
+            <div class="icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="27" height="31" viewBox="0 0 27 31">
+                  <path fill="#F7296E" fill-rule="evenodd" d="M26.803 6.571c-.243-1.293-.858-2.47-1.732-3.318-.915-.888-2.079-1.376-3.274-1.376-.23 0-.464.02-.698.058C20.135.756 18.809.09 17.395.09 16.32.09 15.29.48 14.427 1.2 13.543.42 12.473 0 11.35 0 9.856 0 8.445.763 7.478 2.067a4.398 4.398 0 0 0-1.276-.191c-1.196 0-2.358.49-3.274 1.376-.875.848-1.49 2.026-1.732 3.318-.08.423-.12.859-.12 1.294 0 1.802.688 3.488 1.863 4.62C1.23 13.069 0 14.678 0 16.574V18.3c0 2.39 1.952 4.329 4.358 4.329h.28v4.76C4.637 29.384 6.422 31 8.624 31H19.43c2.203 0 3.987-1.616 3.987-3.611V13.545c.105-.04.21-.083.312-.133 1.94-.92 3.193-3.099 3.193-5.548a6.747 6.747 0 0 0-.118-1.293zM4.895 21.211c-1.401-.284-2.448-1.387-2.448-2.709v-1.11c0-1.32 1.047-2.423 2.448-2.708v6.527zm18.04-8.87c-.419.2-.856.3-1.303.3-1.043 0-2.042-.565-2.74-1.548a.722.722 0 0 0-1.266.174c-.59 1.65-1.903 2.718-3.346 2.718-.183 0-.38-.022-.596-.066a.72.72 0 0 0-.867.706v5.506c0 1.045-1.026 1.895-2.288 1.895-1.26 0-2.287-.85-2.287-1.895v-7.055a.719.719 0 0 0-.995-.666c-1.049.43-2.174.243-3.081-.469-1.076-.846-1.719-2.29-1.719-3.864 0-.348.033-.696.095-1.033.382-2.047 1.881-3.532 3.566-3.532.422 0 .843.095 1.254.283a.72.72 0 0 0 .92-.288c.692-1.174 1.795-1.875 2.95-1.875.93 0 1.817.44 2.501 1.24a.72.72 0 0 0 1.083.014c.675-.751 1.539-1.165 2.43-1.165 1.075 0 2.093.59 2.793 1.618a.724.724 0 0 0 .79.29 2.95 2.95 0 0 1 .8-.116c1.685 0 3.185 1.486 3.566 3.532.063.338.094.686.094 1.034.005 1.873-.944 3.587-2.355 4.261z"/>
+              </svg>
+            </div>
+            <h1 class="modal-title">
+              beer app
+            </h1>
+            <p class="modal-subtitle">
+              requests a transaction  
+            </p>
+            <div class="row" style="display:flex;align-items:center;">
+                <div>
+                  <ae-identity-avatar :address="account.pub"></ae-identity-avatar>
+                </div>
+                <div>
+                  <ae-icon name="arrow" />
+                </div>
+                <div>
+                  <ae-identity-avatar :address="barPubKey"></ae-identity-avatar>
+                </div>
+              </div>
+              <div class="row" style="display:flex;align-items:center;">
+                <div>
+                  <p class="modal-address-name">
+                    {{account.name}}
+                  </p>
+                </div>
+                <div></div>
+                <div>
+                  <p class="modal-address-name">
+                    aeternity bar  
+                  </p>
+                </div>
+              </div>
               <ae-divider />
               <div class="summary">
-                <h4>
-                  {{numberOfTokens}} tokens
+                <h4 class="modal-token-amount">
+                  {{numberOfTokens}}
+                  <span class="modal-token-amount-sub">tokens</span>
                 </h4>
-                <h5>
+                <h5 class="modal-beer-count">
                   {{selectedBeerNumber}} beer(s)
                 </h5>
               </div>
@@ -119,12 +150,15 @@
         </div>
       </div>
     </div>
-    <!-- <div v-if="ajaxCall.status=='ready'">Beer is ready, go to the bar and show them <router-link :to="{name: 'beer', params: {beerHash: txHash}}">this</router-link></div> -->
-    <div v-if="ajaxCall.status=='ready'">
+    <div class="beer-panel--ready" v-if="ajaxCall.status=='ready'">
       <h1>
-        Beer is ready, go to the bar and show them
+        Your beer is ready.
       </h1>
+      <p class="screen-subtitle" style="text-align: center;padding:0 10px;">
+        Show this QR at the æternity stand & pick up your beer(s)
+      </p>
       <BeerHash :bHash='txHash'></BeerHash>
+      <ae-button type='booring'>How to get there</ae-button>
     </div>
     <div class="link" v-if="!hasTokensForBeer">
       Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{balance}} tokens to a friend and share a beer.
@@ -133,7 +167,17 @@
 </template>
 
 <script>
-import { AeButton, AeAddress, AeInput, AeLabel, AeModalLight, AeDivider, AeAppIcon } from '@aeternity/aepp-components'
+import { AeButton,
+        AeAddress,
+        AeInput,
+        AeLabel,
+        AeModalLight,
+        AeDivider,
+        AeAppIcon,
+        AeIdentityAvatar,
+        AeIcon,
+        AeAmountInput } 
+from '@aeternity/aepp-components'
 import BeerHash from './BeerHash.vue'
 
 export default {
@@ -146,7 +190,10 @@ export default {
     BeerHash,
     AeModalLight,
     AeDivider,
-    AeAppIcon
+    AeAppIcon,
+    AeIdentityAvatar,
+    AeIcon,
+    AeAmountInput
   },
   data () {
     return {
@@ -154,7 +201,8 @@ export default {
       txHash: null,
       selectedBeerNumber: 1,
       t: true,
-      modalVisible: false
+      modalVisible: false,
+      isOrderDone: false
     }
   },
   computed: {
@@ -223,19 +271,15 @@ export default {
       console.log(`Waiting for ${txHash} to be mined...`)
       this.client.tx.waitForTransaction(txHash).then(blockHeight => {
         this.ajaxCall.status = 'ready'
+        this.isOrderDone = true
         console.log(`blockHeight:${blockHeight} `, `txHash:${txHash} `)
       }, reason => {
         this.ajaxCall.status = 'busy'
         console.warn('Something went wrong: ', reason)
       })
     },
-    take () {
-      // let bal = this.$store.state.balance
-      // let res = parseInt( / 1000)
-      // console.log(res)
-      console.log(parseInt(this.$store.state.balance / 1000))
+    getAllBeer () {
       this.selectedBeerNumber = parseInt(this.$store.state.balance / 1000) 
-      // return parseInt(this.$store.state.balance / 1000)
     }
   },
   mounted () {
@@ -247,6 +291,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 // @import '../custom.scss';
+h1 {
+  text-align:center;
+}
 .beer-btn {
   width: 5rem;
   height: 5rem;
@@ -329,6 +376,19 @@ input#tokensCount {
 .app-icon {
   margin: 0 auto;
 }
+.ae-overlay {
+  z-index:2;
+}
+.row {
+  display:flex;
+  align-items:center;
+}
+.row div {
+  flex:1;
+}
+._type_booring {
+  color: #1e1e1e !important;
+}
 @keyframes wave {
   0% {
     margin-left: 0;
@@ -338,7 +398,16 @@ input#tokensCount {
     height:100%;
   }
 }
-
+.orderDone {
+  background: #f7296e;
+  color: #fff;
+  box-shadow: 0 0 0 100vh #f7296e;
+}
+.beer-panel--ready p {
+  font-size:18px;
+  line-height:1.56;
+  color:#fff;
+}
 @keyframes swell {
   0%, 100% {
     transform: translate3d(0,-25px,0);
@@ -355,6 +424,10 @@ input#tokensCount {
   25% {
     height:25vh;
     box-shadow: inset 0px -10vh 0 0 #f7296e;
+  }
+  35% {
+    height: 35vh;
+    box-shadow: inset 0px -29vh 0 0 #f7296e;
   }
   50% {
     height: 50vh;
