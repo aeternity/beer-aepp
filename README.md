@@ -54,7 +54,7 @@ yarn install
 ## Start the application
 
 ```
-yarn run start:dev
+yarn start:dev
 ```
 
 The current form should be self explainatory.
@@ -66,10 +66,10 @@ The current form should be self explainatory.
 yarn install
 
 # serve with hot reload at localhost:8080
-yarn run start:dev
+yarn start:dev
 
 # build for production with minification
-yarn run build
+yarn build
 ```
 
 ## License
