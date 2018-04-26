@@ -115,7 +115,10 @@
       <!-- <div v-if="ajaxCall.status=='idle'">ordering beer</div> -->
       
     </div>
-    <div v-if="ajaxCall.status=='idle'">
+    <div v-if="ajaxCall.status=='idle'" class="link fillBeer">
+      <h1 class="screen-title" style="margin-top:10vh;">
+        🍺
+      </h1>
       <h1>
         We are filling up your beer!
       </h1>
@@ -123,7 +126,10 @@
         Head over to the æternity stand and have a drink and chat with us!
       </p>
       <p class="loadingText">
-        You’re using Blockchain for this order. Every transaction on Blockchain, needs to wait until the next Block is mined.
+        You’re using Blockchain for this <br>
+        order. Every transaction on <br>
+        Blockchain, needs to wait until the <br>
+        next Block is mined.
       </p>
       <div id="water">
         <div class="wave">
@@ -172,7 +178,7 @@
       </p>
       <!-- Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{balance}} tokens to a friend and share a beer. -->
     </div>
-    <div class="link" v-if="isBarClosed">
+    <div class="link" v-if="barState !== 'open'">
       <h1 class="screen-title">
         🍺
       </h1>
@@ -263,6 +269,9 @@ export default {
       const numTokens = this.selectedBeerNumber * this.beerPrice
       const rest = numTokens % this.beerPrice
       return numTokens - rest
+    },
+    barState () {
+      return this.$store.state.barState
     }
   },
   methods: {
@@ -339,7 +348,7 @@ input#tokensCount {
 }
 
 #water { 
-  height: 75vh;
+  height: 85vh;
   width:100%;
   position:fixed;
   bottom:0;
@@ -348,7 +357,7 @@ input#tokensCount {
   background: white;
   overflow-x: hidden;
   z-index: -1;
-  box-shadow: inset 0px -50vh 0 0 #f7296e;
+  box-shadow: inset 0px -61vh 0 0 #f7296e;
   animation: grow 7s ease;
 }
 
@@ -369,10 +378,14 @@ input#tokensCount {
   opacity: 1;
 }
 .loadingText {
-  color:white;
-  animation: loadingText 10s ease;
+  color:#fff;
+  animation: loadingText 3.5s ease-in;
   font-size:18px;
   line-height:28px;
+}
+.fillBeer h1 {
+  color:#fff;
+  animation: loadingText 5s ease-in;
 }
 .fees {
   display: flex;
@@ -454,19 +467,19 @@ input#tokensCount {
   }
   35% {
     height: 35vh;
-    box-shadow: inset 0px -29vh 0 0 #f7296e;
+    box-shadow: inset 0px -39vh 0 0 #f7296e;
   }
   50% {
-    height: 50vh;
-    box-shadow: inset 0px -23vh 0 0 #f7296e;
+    height: 55vh;
+    box-shadow: inset 0px -43vh 0 0 #f7296e;
   }
   70% {
-    height: 66vh;
-    box-shadow: inset 0px -45vh 0 0 #f7296e;
+    height: 80vh;
+    box-shadow: inset 0px -55vh 0 0 #f7296e;
   }
   100% {
-    height: 75vh;
-    box-shadow: inset 0px -50vh 0 0 #f7296e;
+    height: 85vh;
+    box-shadow: inset 0px -65vh 0 0 #f7296e;
   }
 }
 @keyframes loadingText {
