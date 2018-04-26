@@ -9,7 +9,22 @@
       </p>
       <p class="pubKey">
         {{account.pub}}
-      </p>  
+      </p>
+      <p class="screen-subtitle" style="font-weight:400;">
+        A public key is a cryptographic code that allows a user to receive cryptocurrencies into his or her account. The private key is used to  decrypt the information that is sent to the account.
+      </p>
+      <p class="screen-subtitle">
+        Opening hours aeternity stand
+      </p>
+      <p class="screen-subtitle" style="font-weight:400;">
+        re:publica 2018 <br>
+        Schönhauser Allee 6/7 <br>
+        10179 Berlin <br>
+        Germany <br>
+        <br>
+        2nd until 4th of May <br>
+        12:00 – 18:00
+      </p>
     </div>
     <div class="more-bottom">
       <div class="list">

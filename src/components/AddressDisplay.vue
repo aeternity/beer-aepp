@@ -45,5 +45,6 @@ export default {
   width: 85%;
   display: flex;
   margin: 0 auto;
+  margin-bottom:20vh;
 }
 </style>
