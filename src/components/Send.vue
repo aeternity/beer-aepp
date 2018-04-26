@@ -49,7 +49,7 @@
         data-vv-delay="1"
         placeholder="0.00"></ae-amount-input>
       </div>
-      <span v-if="isSameAddress">It seems you are trying to send tokens to yourself! Why tho?</span>
+      <!-- <span v-if="!isSameAddress">It seems you are trying to send tokens to yourself! Why tho?</span> -->
       <div class="actions" v-if="receiver">
         <ae-button
         
@@ -136,6 +136,19 @@
                 slot="buttons"
               >send</ae-button>
             </ae-modal-light>
+    </div>
+    <div class="link shell" v-if="isSameAddress">
+      <h1 class="screen-title">
+        🤷‍♂️
+      </h1>
+      <h1 class="screen-title">
+        Why send money to yourself?
+      </h1>
+      <p class="screen-subtitle">
+        Scanning your own code <br>
+        doesn’t make any sense. Scan <br>
+        another one.
+      </p>
     </div>
     <div v-if="state === 'waiting'" class="waiting">
       <div style="font-size:50px;margin-top:15vh;">
