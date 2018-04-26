@@ -1,14 +1,12 @@
 <template>
   <div class="header">
     <div class="header-container shell">
-      <div class="item address-icon">
+      <div class="item address-icon" style="display:flex; align-items:center;">
         <!-- <ae-identity-avatar :address='account.pub'></ae-identity-avatar> -->
         <ae-identity-avatar :address="account.pub"></ae-identity-avatar>
-      </div>
-      <div class="item account-name">
-        <h4>
+        <strong>
           {{account.name}}
-        </h4>
+        </strong>
       </div>
       <div class="item account-ballance">
         <h4>
