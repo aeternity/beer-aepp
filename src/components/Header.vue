@@ -42,6 +42,8 @@ import { AeIdentityAvatar } from '@aeternity/aepp-components'
 <style lang="scss" scoped>
 .header {
   box-shadow: 0 3px #f0f0f0;
+  position:relative;
+  background: #fff;
 }
 .header-container {
   display: flex;
