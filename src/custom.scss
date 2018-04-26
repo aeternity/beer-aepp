@@ -28,6 +28,13 @@ p {
     line-height: 1.56;
     font-weight: 400;
 }
+.cross p {
+  font-size: 37px;
+  transform: translate3d;
+  transform: rotateZ(45deg);
+  line-height: 0;
+  margin:15px 0;
+}
 .screen-title {
   text-align:left;
 }
