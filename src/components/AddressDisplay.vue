@@ -1,20 +1,10 @@
 <template>
   <div class="addressDisplay shell">
-    <!-- <div>
-      Somebody wants to send you tokens? They need your public key or your public name.
-      You can find both on the flyer handed out to you or on this page. The easiest way is
-      to let the other person scan the following QR Code.
-    </div> -->
-    <h1>Receive Tokens</h1>
-    <p>
+    <h1 class="screen-title">Receive Tokens</h1>
+    <p class="screen-subtitle">
       Somebody who likes you that much, and wants to send you tokens? Show your QR Code! 
     </p>
     <vue-qrcode :value="account.pub" :options="{ size: 300 }"></vue-qrcode>
-    <!-- <div>
-      They can also enter your public name <strong>{{account.name}}</strong> and make a lookup.
-      In any case the following public key should be displayed.
-    </div> -->
-    <!-- <ae-address v-if="account.pub" show-avatar size='short' :address="account.pub"/> -->
   </div>
 </template>
 
