@@ -63,17 +63,17 @@
 </template>
 <script>
 import { AeIcon } from '@aeternity/aepp-components'
-  export default {
-    name: 'About',
-    components: {
-      AeIcon
-    },
-    data () {
-      return {
+export default {
+  name: 'About',
+  components: {
+    AeIcon
+  },
+  data () {
+    return {
 
-      }
     }
   }
+}
 </script>
 <style>
   .fab {

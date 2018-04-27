@@ -4,10 +4,10 @@
       Impressum
     </h1>
     <p class="screen-subtitle">
-      Aeternity Establishment <br> 
-      Landstr. 123, FL-9495 Triesen <br> 
+      Aeternity Establishment <br>
+      Landstr. 123, FL-9495 Triesen <br>
       info@aeternity.com <br>
-      PEID / Steuernummer: 2528358 <br> 
+      PEID / Steuernummer: 2528358 <br>
       Vat-Nr.: 60 351
     </p>
     <p class="screen-subtitle">
@@ -30,7 +30,7 @@
 </template>
 <script>
   export default {
-    name:'impressum',
+    name: 'impressum',
     data () {
       return {
 

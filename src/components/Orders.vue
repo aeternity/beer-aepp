@@ -17,7 +17,7 @@
           Picked up?
         </div>
         <div class="orders-head-item">
-          
+
         </div>
       </div>
       <div class="order-row">
@@ -34,7 +34,6 @@ export default {
   name: 'Order',
   data () {
     return {
-      
     }
   }
 }
