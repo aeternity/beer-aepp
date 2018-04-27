@@ -20,20 +20,38 @@
 
         </div>
       </div>
-      <div class="order-row">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <order-row v-for="beerHash in beerHashes" :key="beerHash" :beerHash="beerHash" @click.native="showQrCode(beerHash)"></order-row>
+    </div>
+    <!-- TODO: display hash in a popover?! -->
+    <div class="popover">
+      <BeerHash v-if="bHash" :bHash='bHash'></BeerHash>
     </div>
   </div>
 </template>
 
 <script>
+import OrderRow from './OrderRow.vue'
+import BeerHash from './BeerHash.vue'
+
 export default {
   name: 'Order',
+  components: {
+    OrderRow,
+    BeerHash
+  },
   data () {
     return {
+      bHash: null
+    }
+  },
+  computed: {
+    beerHashes () {
+      return this.$store.state.beerHashes
+    }
+  },
+  methods: {
+    showQrCode (beerHash) {
+      this.bHash = beerHash
     }
   }
 }

@@ -28,7 +28,7 @@
         <router-link to="buy">
           <ae-button type='dramatic'>
             Give me tokens for beer!
-          </ae-button>  
+          </ae-button>
         </router-link>
       </div>
       <div id="water">
@@ -63,14 +63,12 @@
 </template>
 
 <script>
-import BeerListEntry from './BeerListEntry.vue'
 import { AeButton } from '@aeternity/aepp-components'
 import Logo from './Logo.vue'
 
 export default {
   name: 'Home',
   components: {
-    BeerListEntry,
     AeButton,
     Logo
   },
@@ -118,7 +116,7 @@ h1 {
   font-size: 18px;
   line-height: 28px;
 }
-#water { 
+#water {
   height: 30vh;
   width:100%;
   position:fixed;

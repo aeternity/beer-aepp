@@ -54,5 +54,6 @@ export default {
     text-align: center;
     max-width: 800px;
     margin: auto;
+    padding-bottom: 70px;
   }
 </style>

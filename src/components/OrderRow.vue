@@ -1,21 +1,24 @@
 <template>
-  <div class="beerListEntryRow">
-    <div class="cell hash">
-      {{beerHash.substring(3,9)}} <router-link v-if="wasMined && !wasScanned" :to="{name: 'beer', params: {beerHash: beerHash}}">collect</router-link>
+  <div class="order-row">
+    <div>{{noOfBeer}} Beer</div>
+    <div>
+      <span v-if="!wasMined">spinner</span>
+      <span v-if="wasMined && !wasScanned">qr code</span>
+      <span v-if="wasMined && wasScanned">checkmark</span>
     </div>
-    <div class="cell mined">
-      {{wasMined ? 'bought' : 'buying'}}
-    </div>
-    <div class="cell collected">
-      {{wasScanned ? 'collected' : 'ready'}}
+    <div class="arrow">
+      <ae-icon name="arrow" />
     </div>
   </div>
 </template>
 
 <script>
+import { AeIcon } from '@aeternity/aepp-components'
+
 export default {
-  name: 'BeerListEntry',
+  name: 'OrderRow',
   components: {
+    AeIcon
   },
   computed: {
     account () {
@@ -29,6 +32,12 @@ export default {
         return false
       }
       return this.beerTx.block_height >= 0
+    },
+    noOfBeer () {
+      if (this.beerTx && this.beerTx.tx && this.beerTx.tx.amount) {
+        return Math.ceil(this.beerTx.tx.amount / this.$store.state.beerPrice)
+      }
+      return ''
     }
   },
   data () {
@@ -70,7 +79,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .beerListEntryRow {
+  .orderRow {
     display: flex;
     flex-wrap: wrap;
     border: 1px solid black;
