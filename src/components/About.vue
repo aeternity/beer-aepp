@@ -81,4 +81,7 @@ export default {
     font-size:17px;
     margin: 10px;
   }
+  .ae-icon {
+    transform: rotate(-40deg);
+  }
 </style>

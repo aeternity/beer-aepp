@@ -20,7 +20,9 @@
 
         </div>
       </div>
-      <order-row v-for="beerHash in beerHashes" :key="beerHash" :beerHash="beerHash" @click.native="showQrCode(beerHash)"></order-row>
+      <div class="orders-rows">
+        <order-row v-for="beerHash in beerHashes" :key="beerHash" :beerHash="beerHash" @click.native="showQrCode(beerHash)"></order-row>  
+      </div>
     </div>
     <!-- TODO: display hash in a popover?! -->
     <div class="popover">
@@ -57,5 +59,27 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+.orders-head {
+  display:flex;
+  .orders-head-item {
+    flex:1;
+  }
+}
+.order-row {
+  display:flex;
+  flex-wrap:wrap;
+  padding:10px 0 10px;
+  border-top:1px solid #c3c3c3;
+}
+.order-row:last-child {
+  border-bottom:1px solid #c3c3c3;
+}
+// .orders-rows div {
+//   flex:1 !important;
+// }
+.order-row div {
+flex:1;
+align-self:center;
+}
 </style>

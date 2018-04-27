@@ -2,9 +2,13 @@
   <div class="order-row">
     <div>{{noOfBeer}} Beer</div>
     <div>
-      <span v-if="!wasMined">spinner</span>
+      <span v-if="!wasMined">
+        <ae-loader />
+      </span>
       <span v-if="wasMined && !wasScanned">qr code</span>
-      <span v-if="wasMined && wasScanned">checkmark</span>
+      <span v-if="wasMined && wasScanned">
+        <ae-icon name="check" />
+      </span>
     </div>
     <div class="arrow">
       <ae-icon name="arrow" />
@@ -13,12 +17,13 @@
 </template>
 
 <script>
-import { AeIcon } from '@aeternity/aepp-components'
+import { AeIcon, AeLoader } from '@aeternity/aepp-components'
 
 export default {
   name: 'OrderRow',
   components: {
-    AeIcon
+    AeIcon,
+    AeLoader
   },
   computed: {
     account () {
@@ -81,7 +86,7 @@ export default {
 <style scoped lang="scss">
   .orderRow {
     display: flex;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     border: 1px solid black;
     margin-bottom: 5px;
     padding: 15px;
@@ -93,5 +98,8 @@ export default {
     flex-grow: 1;
     overflow: hidden;
     list-style: none;
+  }
+  .order-row  .ae-icon {
+    // transform: rotate(-40deg);
   }
 </style>
