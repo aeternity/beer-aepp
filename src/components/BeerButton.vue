@@ -19,6 +19,7 @@
         <!-- This will send {{numberOfTokens}} tokens -->
         <ae-input
         id="tokensCount"
+        ref="tokensCount"
         v-model.number="numberOfTokens">
         </ae-input>
       </div>
@@ -84,7 +85,7 @@
                 </div>
                 <div>
                   <strong>
-                    {{1 * selectedBeerNumber}}
+                    1
                   </strong>
                 </div>
               </div>
@@ -104,7 +105,7 @@
                 slot="buttons"
               >sign</ae-button>
             </ae-modal-light>
-      <ae-button type='dramatic' @click="modalVisible = true">🍺 Order Beer</ae-button>
+      <ae-button type='dramatic' @click="showModal()" :inactive="!isValidInput">🍺 Order Beer</ae-button>
       <!-- <button @click="buyBeer(barPubKey)" class="beer-btn"
       :class="{ 'beer-btn--busy': ajaxCall.status == 'busy',
       'beer-btn--idle': ajaxCall.status == 'idle',
@@ -273,6 +274,9 @@ export default {
     },
     barState () {
       return this.$store.state.barState
+    },
+    isValidInput () {
+      return this.selectedBeerNumber > 0 && this.selectedBeerNumber <= this.maxBeers
     }
   },
   methods: {
@@ -305,11 +309,20 @@ export default {
       })
     },
     getAllBeer () {
-      this.selectedBeerNumber = parseInt(this.$store.state.balance / 1000)
+      this.selectedBeerNumber = this.maxBeers
+    },
+    showModal () {
+      if (this.isValidInput) {
+        this.modalVisible = true
+      }
     }
   },
   mounted () {
-
+    // hack to disable direct token input
+    const tokenInput = this.$refs.tokensCount.$el.querySelector('input')
+    if (tokenInput) {
+      tokenInput.readOnly = true
+    }
   }
 }
 </script>
