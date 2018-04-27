@@ -379,8 +379,7 @@ input#tokensCount {
   position:fixed;
   bottom:0;
   left:0;
-  background: #015871;
-  background: white;
+  background: #fff;
   overflow-x: hidden;
   z-index: -1;
   box-shadow: inset 0px -61vh 0 0 #f7296e;
