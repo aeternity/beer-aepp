@@ -36,13 +36,13 @@
             <div class="list-item-el">
               <div class="arrow">
                 <router-link to='/orders'>
-                  <ae-icon name="arrow" />  
+                  <ae-icon name="arrow" />
                 </router-link>
               </div>
             </div>
           </div>
         </div>
-        <div class="list-item">
+        <!-- <div class="list-item">
           <div class="shell">
             <div class="list-item-el">
               <h5>My Transactions</h5>
@@ -50,12 +50,12 @@
             <div class="list-item-el">
               <div class="arrow">
                 <router-link to='/transactions'>
-                  <ae-icon name="arrow" />  
+                  <ae-icon name="arrow" />
                 </router-link>
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="list-item">
           <div class="shell">
             <div class="list-item-el">
@@ -64,7 +64,7 @@
             <div class="list-item-el">
               <div class="arrow">
                 <router-link to='/about'>
-                  <ae-icon name="arrow" />  
+                  <ae-icon name="arrow" />
                 </router-link>
               </div>
             </div>
@@ -78,7 +78,7 @@
             <div class="list-item-el">
               <div class="arrow">
                 <router-link to='/impressum'>
-                  <ae-icon name="arrow" />  
+                  <ae-icon name="arrow" />
                 </router-link>
               </div>
             </div>

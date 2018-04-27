@@ -1,8 +1,5 @@
 <template>
   <div class="buy shell" v-bind:class="{orderDone: isOrderDone}">
-    <div class="noBeerLeft" v-if="!beerAvailable">
-      Sorry there currently is no Beer left at the bar
-    </div>
     <div class="buyButton" v-if="hasTokensForBeer && beerAvailable && t">
       <h1 class="screen-title">Order Beer</h1>
       <p class="screen-subtitle">
@@ -179,7 +176,7 @@
       </p>
       <!-- Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{balance}} tokens to a friend and share a beer. -->
     </div>
-    <div class="link" v-if="barState !== 'open'">
+    <div class="link" v-if="barClosed">
       <h1 class="screen-title">
         🍺
       </h1>
@@ -188,6 +185,15 @@
         you a beer at the moment. We <br>
         are there on the 2nd until the <br>
         4th of May: 12 - 18Uhr
+      </p>
+    </div>
+    <div class="link" v-if="beerEmpty">
+      <h1 class="screen-title">
+        🍺
+      </h1>
+      <p class="screen-subtitle">
+        Sorry. Currently the Bar is <br>
+        out of beer
       </p>
     </div>
   </div>
@@ -259,7 +265,13 @@ export default {
       return this.balance >= this.beerPrice + 1
     },
     beerAvailable () {
-      return this.$store.state.barState === 'open'
+      return this.barState === 'open'
+    },
+    beerEmpty () {
+      return this.barState === 'out_of_beers'
+    },
+    barClosed () {
+      return this.barState === 'closed'
     },
     maxBeers () {
       return Math.floor((this.balance - 1) / this.beerPrice)
