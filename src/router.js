@@ -58,7 +58,7 @@ export default (store) => {
       path: '/more',
       name: 'more',
       component: More,
-      beforeEnter(to, from, next) {
+      beforeEnter (to, from, next) {
         if (!store.state.account || !store.state.account.priv) return next({ name: 'home' })
         next()
       }

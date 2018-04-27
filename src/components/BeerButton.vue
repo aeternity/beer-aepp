@@ -6,7 +6,7 @@
     <div class="buyButton" v-if="hasTokensForBeer && beerAvailable && t">
       <h1 class="screen-title">Order Beer</h1>
       <p class="screen-subtitle">
-        With your tokens (upper right corner), you can order beer at the æternity stand. 
+        With your tokens (upper right corner), you can order beer at the æternity stand.
       </p>
       <!-- <ae-label for="numBeers" :help-text="errors.first('numBeers')">How many beers?</ae-label> -->
       <ae-input id="numBeers" name="numBeers" type="number" v-model.number="selectedBeerNumber" v-validate="`min_value:1|max_value:${maxBeers}`" units="beers"></ae-input>
@@ -17,7 +17,7 @@
      </div>
       <div>
         <!-- This will send {{numberOfTokens}} tokens -->
-        <ae-input 
+        <ae-input
         id="tokensCount"
         v-model.number="numberOfTokens">
         </ae-input>
@@ -39,7 +39,7 @@
               beer app
             </h1>
             <p class="modal-subtitle">
-              requests a transaction  
+              requests a transaction
             </p>
             <div class="row" style="display:flex;align-items:center;">
                 <div>
@@ -61,7 +61,7 @@
                 <div></div>
                 <div>
                   <p class="modal-address-name">
-                    aeternity bar  
+                    aeternity bar
                   </p>
                 </div>
               </div>
@@ -79,7 +79,7 @@
               <div class="fees">
                 <div>
                   <strong>
-                    Additional fees                    
+                    Additional fees
                   </strong>
                 </div>
                 <div>
@@ -99,7 +99,7 @@
                 size="smaller"
                 type="dramatic"
                 uppercase
-                
+
                 @click="buyBeer(barPubKey)"
                 slot="buttons"
               >sign</ae-button>
@@ -113,7 +113,7 @@
 
       <!-- <div v-if="ajaxCall.status=='busy'">press to get beer</div> -->
       <!-- <div v-if="ajaxCall.status=='idle'">ordering beer</div> -->
-      
+
     </div>
     <div v-if="ajaxCall.status=='idle'" class="link fillBeer">
       <h1 class="screen-title" style="margin-top:10vh;">
@@ -193,17 +193,18 @@
 </template>
 
 <script>
-import { AeButton,
-        AeAddress,
-        AeInput,
-        AeLabel,
-        AeModalLight,
-        AeDivider,
-        AeAppIcon,
-        AeIdentityAvatar,
-        AeIcon,
-        AeAmountInput } 
-from '@aeternity/aepp-components'
+import {
+  AeButton,
+  AeAddress,
+  AeInput,
+  AeLabel,
+  AeModalLight,
+  AeDivider,
+  AeAppIcon,
+  AeIdentityAvatar,
+  AeIcon,
+  AeAmountInput
+} from '@aeternity/aepp-components'
 import BeerHash from './BeerHash.vue'
 
 export default {
@@ -304,7 +305,7 @@ export default {
       })
     },
     getAllBeer () {
-      this.selectedBeerNumber = parseInt(this.$store.state.balance / 1000) 
+      this.selectedBeerNumber = parseInt(this.$store.state.balance / 1000)
     }
   },
   mounted () {
@@ -347,7 +348,7 @@ input#tokensCount {
   margin-top: 30px;
 }
 
-#water { 
+#water {
   height: 85vh;
   width:100%;
   position:fixed;
