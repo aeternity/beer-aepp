@@ -97,7 +97,7 @@ export default {
       return this.$store.state.account
     }
   }
-}  
+}
 </script>
 <style lang="scss" scoped>
 .pubKey {

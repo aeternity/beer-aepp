@@ -18,26 +18,26 @@
 </template>
 <script>
 import { AeIdentityAvatar } from '@aeternity/aepp-components'
-  export default {
-    name: 'Header',
-    components: {
-      AeIdentityAvatar
-    },
-    // props: [address],
-    data () {
-      return {
-        address: this.$store.state.account.pub
-      }
-    },
-    computed: {
-      account () {
+export default {
+  name: 'Header',
+  components: {
+    AeIdentityAvatar
+  },
+  // props: [address],
+  data () {
+    return {
+      address: this.$store.state.account.pub
+    }
+  },
+  computed: {
+    account () {
       return this.$store.state.account
-      },
-      balance () {
-        return this.$store.state.balance
-      }
+    },
+    balance () {
+      return this.$store.state.balance
     }
   }
+}
 </script>
 <style lang="scss" scoped>
 .header {
