@@ -6,7 +6,18 @@
         With your tokens (upper right corner), you can order beer at the æternity stand.
       </p>
       <!-- <ae-label for="numBeers" :help-text="errors.first('numBeers')">How many beers?</ae-label> -->
-      <ae-input id="numBeers" name="numBeers" type="number" v-model.number="selectedBeerNumber" v-validate="`min_value:1|max_value:${maxBeers}`" units="beers"></ae-input>
+      <ae-input id="numBeers" name="numBeers" type="number" v-model.number="selectedBeerNumber" v-validate="`min_value:1|max_value:${maxBeers}`" units="beers">
+        <!-- <ae-button class='inc' slot='left'>
+          
+        </ae-button> -->
+        <div class="inc" @click="beerQuantity('inc')" slot='left'>
+          <ae-icon name="chevron" rotate="270" />  
+        </div>
+        <div class="dec" @click="beerQuantity('dec')" slot='left'>
+          <ae-icon name="chevron" rotate="90" />          
+        </div>
+        <span class="unit" slot='right'>beer(s)</span>
+      </ae-input>
      <div class="equal-icon">
        <p class="center">
          =
@@ -18,13 +29,14 @@
         id="tokensCount"
         ref="tokensCount"
         v-model.number="numberOfTokens">
+          <span class="unit" slot='right'>tokens</span>
         </ae-input>
       </div>
-      <button @click='getAllBeer()' class="takeAllPar">
+      <div @click='getAllBeer()' class="takeAllPar">
         <strong>
           Order all the beer i can get!
         </strong>
-      </button>
+      </div>
       <ae-modal-light
               v-if="modalVisible == true"
               @close="modalVisible = false">
@@ -327,6 +339,13 @@ export default {
       if (this.isValidInput) {
         this.modalVisible = true
       }
+    },
+    beerQuantity (action) {
+      if (action === 'inc') {
+        this.selectedBeerNumber++
+      } else {
+        this.selectedBeerNumber--
+      }
     }
   },
   mounted () {
@@ -360,11 +379,33 @@ h1 {
 .beer-btn--ready {
   background: green;
 }
+.ae-input {
+  position:relative;
+}
 input#numBeers,
 input#tokensCount {
   text-align: center;
   font-size: 22px;
   margin: 0 !important;
+}
+.unit {
+  position:absolute;
+  right:1%;
+  top:auto;
+  text-transform:uppercase;
+  color:#1e1e1e;
+  font-size:12px;
+}
+.inc,
+.dec {
+  position:absolute;
+  left:4%;
+}
+.inc {
+  top:4%;
+}
+.dec {
+  bottom:4%;
 }
 .buyButton .ae-input {
   margin-bottom: 0 !important;

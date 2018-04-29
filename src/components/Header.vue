@@ -4,9 +4,9 @@
       <div class="item address-icon" style="display:flex; align-items:center;">
         <!-- <ae-identity-avatar :address='account.pub'></ae-identity-avatar> -->
         <ae-identity-avatar :address="account.pub"></ae-identity-avatar>
-        <strong>
+        <span>
           {{account.name}}
-        </strong>
+        </span>
       </div>
       <div class="item account-ballance">
         <h4>
@@ -23,7 +23,6 @@ export default {
   components: {
     AeIdentityAvatar
   },
-  // props: [address],
   data () {
     return {
       address: this.$store.state.account.pub
@@ -56,5 +55,19 @@ export default {
 .account-ballance h4{
   width: 100%;
   text-align: right;
+}
+.address-icon {
+  text-transform:capitalize;
+  font-weight:400;
+  color: #1e1e1e;
+  span {
+    text-indent:10px;
+    text-overflow: ellipsis;
+    overflow:hidden;
+  }
+}
+.avatar {
+  width:30px !important;
+  height:30px !important;
 }
 </style>
