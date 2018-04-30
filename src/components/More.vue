@@ -11,7 +11,7 @@
         {{account.pub}}
       </p>
       <p class="screen-subtitle" style="font-weight:400;">
-        A public key is a cryptographic code that allows users to receive cryptocurrencies into his or her account. A private key is used to  decrypt the information that is sent to the account.
+        A keypair consists of a private and a public key. Your public key is the address people use to send funds to you. Your private key must be kept secret at all times.
       </p>
       <p class="screen-subtitle">
         Opening hours of the æternity stand
@@ -19,12 +19,12 @@
       <p class="screen-subtitle" style="font-weight:400;">
         re:publica 2018<br>
         STATION Berlin<br>
-        Luckenwalder Str. 4&thinsp;–&thinsp;6<br>
+        Luckenwalder Str. 4&hairsp;–&hairsp;6<br>
         10963 Berlin<br>
         Germany<br>
         <br>
-        2nd&thinsp;–&thinsp;4th of May<br>
-        12:00&thinsp;–&thinsp;18:00
+        2nd&hairsp;–&hairsp;4th of May<br>
+        12:00&hairsp;–&hairsp;18:00
       </p>
       <p class="screen-subtitle">
         How to get to the æternity stand

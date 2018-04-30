@@ -8,7 +8,7 @@
         Give someone tokens
       </h1>
       <p class="screen-subtitle">
-        Ask the person to whom you would like to send tokens to reveal their QR code by clicking on 'Receive'. Simply scan the code, choose an amount and hit send.
+        Ask the person to whom you would like to send tokens to reveal their QR code by clicking on ‘Receive’. Simply scan the code, choose an amount, and hit send.
       </p>
       <div class="loader" v-if="loading">
         <ae-loader></ae-loader> Loading
@@ -27,7 +27,7 @@
         Look up name
       </h1>
       <p class="screen-subtitle">
-        Enter the name of the person you want to send tokens to. You find the name in the header or on the postcard.
+        Enter the name of the person you want to send tokens to. You find the name in their header or on their postcard.
       </p>
       <ae-label for="receiver" :help-text="errors.first('receiver')">Name</ae-label>
       <ae-input id="receiver" name="receiver" v-model="domainInput" v-validate="`min:3`" placeholder='Enter Receiver’s Public Name'>
@@ -93,7 +93,7 @@
               </svg>
             </div>
             <h1 class="modal-title">
-              Beer App
+              Beer æpp
             </h1>
             <p class="modal-subtitle">
               REQUESTS A TRANSACTION

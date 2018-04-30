@@ -5,7 +5,7 @@
         My Orders
       </h1>
       <p class="screen-subtitle">
-        Here is a list of all the beer you have ordered so far.  Click an order to display the QR Code, which you can show us at the aeternity stand.
+        Here is a list of all the beer you have ordered so far.  Click an order to display the QR Code, which you can show us at the æternity stand.
       </p>
     </div>
     <div class="orders-bottom">

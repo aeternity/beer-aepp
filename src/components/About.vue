@@ -28,7 +28,7 @@
         <div class="list-item">
           <div class="shell">
             <div class="list-item-el">
-              <h5>Aepps Showcase</h5>
+              <h5>æpps Showcase</h5>
             </div>
             <div class="list-item-el">
               <div class="arrow">

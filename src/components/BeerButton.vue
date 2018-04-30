@@ -46,7 +46,7 @@
               </svg>
             </div>
             <h1 class="modal-title">
-              Beer App
+              Beer æpp
             </h1>
             <p class="modal-subtitle">
               REQUESTS A TRANSACTION
@@ -71,7 +71,7 @@
                 <div></div>
                 <div>
                   <p class="modal-address-name">
-                    aeternity bar
+                    æternity bar
                   </p>
                 </div>
               </div>
@@ -168,7 +168,7 @@
         Your beer is ready!
       </h1>
       <p class="screen-subtitle" style="text-align: center;padding:0 10px;">
-        Show this QR at the æternity stand &amp; pick up your beer(s)
+        Show this QR at the æternity stand &amp; pick up your beer(s).
       </p>
       <BeerHash :bHash='txHash'></BeerHash>
       <router-link to='buy'>
@@ -189,7 +189,7 @@
         🍺
       </h1>
       <p class="screen-subtitle">
-        Sorry, there is no one to serve your beer right now. Our stand is only open for beer service from 12:00&thinsp;–&thinsp;18:00 on May 2nd, 3rd, and 4th.
+        Sorry, there is no one to serve your beer right now. Our stand is only open for beer service from 12:00&hairsp;–&hairsp;18:00 on May 2nd, 3rd, and 4th.
       </p>
     </div>
     <div class="link" v-if="beerEmpty">
