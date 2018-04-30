@@ -2,7 +2,8 @@
   <div class="addressDisplay shell">
     <h1 class="screen-title">Receive Tokens</h1>
     <p class="screen-subtitle">
-      Somebody who likes you that much, and wants to send you tokens? Show your QR Code! Also when you get your bottle deposit back.
+      Show this QR Code to receive tokens. <br>
+      (If people really like you, you may use this screen a lot!)
     </p>
     <vue-qrcode :value="account.pub" :options="{ size: 300 }"></vue-qrcode>
   </div>

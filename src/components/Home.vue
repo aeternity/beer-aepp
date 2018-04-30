@@ -16,7 +16,7 @@
       </div>
       <div class="intro-text">
         <p style="padding:2vw;">
-          æternity is not just a blockchain, it’s a vision for the future. It is a way of thinking. It’s a cause realized through technology.
+          æternity is an open source blockchain that builds on decentralized cryptographic P2P technology.
         </p>
         <p style="padding:2vw;">
           We want to start a decentralized

@@ -19,12 +19,12 @@
       <p class="screen-subtitle" style="font-weight:400;">
         re:publica 2018 <br>
         STATION Berlin <br>
-        Luckenwalder Str. 4-6 <br>
+        Luckenwalder Str. 4–6 <br>
         10963 Berlin <br>
         Germany <br>
         <br>
         2nd until 4th of May <br>
-        12:00 – 18:00
+        12:00 – 18:00
       </p>
       <p class="screen-subtitle">
         How to get to the æternity stand

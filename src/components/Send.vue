@@ -8,7 +8,8 @@
         Scan QR
       </h1>
       <p class="screen-subtitle">
-        From somebody who you want to send your tokens to. They need to reveil their QR Code in the ‘Receive’ tab.
+        Give someone tokens <br>
+        Ask the person to whom you would like to send tokens to reveal their QR code by clicking on 'Receive'. Simply scan the code, choose an amount and hit send.
       </p>
       <div class="loader" v-if="loading">
         <ae-loader></ae-loader> Loading
@@ -27,7 +28,7 @@
         Look up name
       </h1>
       <p class="screen-subtitle">
-        Enter the name of the person you want to send tokens to.
+        Enter the name of the person you want to send tokens to. You find the name in the header or on the postcard.
       </p>
       <ae-label for="receiver" :help-text="errors.first('receiver')">Name</ae-label>
       <ae-input id="receiver" name="receiver" v-model="domainInput" v-validate="`min:3`" placeholder='Enter Receiver’s Public Name'>
@@ -45,8 +46,8 @@
         Give Tokens
       </h1>
       <p class="screen-subtitle">
-        Not such a beer drinker? Transfer <br>
-        tokens to someone who is!
+        Not in the mood for beer? Transfer your <br>
+        tokens to someone who needs one!
       </p>
       <div v-if="!receiver">
         <ae-label>Receiver Name</ae-label>
@@ -94,10 +95,10 @@
               </svg>
             </div>
             <h1 class="modal-title">
-              beer app
+              Beer App
             </h1>
             <p class="modal-subtitle">
-              requests a transaction
+              REQUESTS A TRANSACTION
             </p>
             <div class="row" style="display:flex;align-items:center;">
                 <div>
@@ -142,7 +143,7 @@
                 </div>
                 <div>
                   <strong>
-                    1
+                    1 TOKEN
                   </strong>
                 </div>
               </div>
@@ -188,7 +189,7 @@
     </div>
     <div v-if="state === 'done'" class="done state">
       <h1 class="screen-title">
-        Done
+        Bye Tokens!
       </h1>
     </div>
   </div>

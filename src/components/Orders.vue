@@ -5,7 +5,7 @@
         My Orders
       </h1>
       <p class="screen-subtitle">
-        Here is a list of all the beer you order until now.  Click an order to display the QR Code, which you can show us at the aeternity stand
+        Here is a list of all the beer you have ordered so far.  Click an order to display the QR Code, which you can show us at the aeternity stand.
       </p>
     </div>
     <div class="orders-bottom">
@@ -24,7 +24,6 @@
         <order-row v-for="beerHash in beerHashes" :key="beerHash" :beerHash="beerHash" @click.native="showQrCode(beerHash)"></order-row>
       </div>
     </div>
-    <!-- TODO: display hash in a popover?! -->
     <div class="popover" v-bind:class="{active: isActive}">
       <BeerHash v-if="bHash" :bHash='bHash'></BeerHash>
       <ae-button type="boring" @click='isActive = false'>Close</ae-button>

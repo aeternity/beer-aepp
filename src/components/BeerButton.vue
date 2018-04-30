@@ -3,7 +3,7 @@
     <div class="buyButton" v-if="hasTokensForBeer && beerAvailable && t">
       <h1 class="screen-title">Order Beer</h1>
       <p class="screen-subtitle">
-        With your tokens (upper right corner), you can order beer at the æternity stand.
+        Use your tokens (upper right hand corner) to order a beer at our stand.
       </p>
       <!-- <ae-label for="numBeers" :help-text="errors.first('numBeers')">How many beers?</ae-label> -->
       <ae-input id="numBeers" name="numBeers" type="number" v-model.number="selectedBeerNumber" v-validate="`min_value:1|max_value:${maxBeers}`" units="beers">
@@ -46,10 +46,10 @@
               </svg>
             </div>
             <h1 class="modal-title">
-              beer app
+              Beer App
             </h1>
             <p class="modal-subtitle">
-              requests a transaction
+              REQUESTS A TRANSACTION
             </p>
             <div class="row" style="display:flex;align-items:center;">
                 <div>
@@ -94,7 +94,7 @@
                 </div>
                 <div>
                   <strong>
-                    1
+                    1 TOKEN
                   </strong>
                 </div>
               </div>
@@ -133,13 +133,12 @@
         We are filling up your beer!
       </h1>
       <p class="loadingText">
-        Head over to the æternity stand and have a drink and chat with us!
+        Head over to the æternity stand, have a drink and chat with us!
       </p>
       <p class="loadingText">
-        You’re using Blockchain for this <br>
-        order. Every transaction on <br>
-        Blockchain, needs to wait until the <br>
-        next Block is mined.
+        At this moment, your transaction <br>
+        on the blockchain is being confirmed <br>
+        by being included in a newly mined block.
       </p>
       <div id="water">
         <div class="wave">
@@ -168,10 +167,10 @@
     </div>
     <div class="beer-panel--ready" v-if="ajaxCall.status=='ready'">
       <h1>
-        Your beer is ready.
+        Your beer is ready!
       </h1>
       <p class="screen-subtitle" style="text-align: center;padding:0 10px;">
-        Show this QR at the æternity stand & pick up your beer(s)
+        Show this QR at the æternity stand &amp; pick up your beer(s)
       </p>
       <BeerHash :bHash='txHash'></BeerHash>
       <router-link to='buy'>
@@ -184,9 +183,9 @@
       </h1>
       <p class="screen-subtitle">
         You don’t have enough tokens <br>
-        to buy a beer. Let someone <br>
-        transfer you some. navigate to <br>
-        ‘Receive’ in the bottom.
+        to buy a beer. To let someone <br>
+        transfer some to you, simply <br>
+        click on ‘Receive’ below.
       </p>
       <!-- Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{balance}} tokens to a friend and share a beer. -->
     </div>
@@ -195,10 +194,10 @@
         🍺
       </h1>
       <p class="screen-subtitle">
-        The’re is nodody who can hand <br>
-        you a beer at the moment. We <br>
-        are there on the 2nd until the <br>
-        4th of May: 12 - 18Uhr
+        Sorry, there is no one to serve <br>
+        your beer right now. Our stand <br>
+        is only open for beer service <br>
+        from 12-18Uhr on May 2nd, 3rd and 4th.
       </p>
     </div>
     <div class="link" v-if="beerEmpty">
@@ -207,7 +206,7 @@
       </h1>
       <p class="screen-subtitle">
         Sorry. Currently the Bar is <br>
-        out of beer
+        out of beer.
       </p>
     </div>
   </div>
