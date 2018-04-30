@@ -5,7 +5,7 @@
       <span v-if="!wasMined">
         <ae-loader />
       </span>
-      <span v-if="wasMined && !wasScanned">qr code</span>
+      <span v-if="wasMined && !wasScanned"></span>
       <span v-if="wasMined && wasScanned">
         <ae-icon name="check" />
       </span>
@@ -98,6 +98,9 @@ export default {
     flex-grow: 1;
     overflow: hidden;
     list-style: none;
+  }
+  .order-row div {
+    flex:1;
   }
   .order-row  .ae-icon {
     // transform: rotate(-40deg);

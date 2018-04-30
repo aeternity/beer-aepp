@@ -1,7 +1,8 @@
 <template>
-  <div class="header">
+  <div class="header" v-bind:class="{fixedPos: isOrdersActive}">
     <div class="header-container shell">
-      <div class="back-arrow" v-if="$route.path =='/about' || $route.path =='/orders' || $route.path =='/impressum'">
+      <div class="back-arrow" 
+      v-if="$route.path =='/about' || $route.path =='/orders' || $route.path =='/impressum'">
         <router-link to='/more'>
           <ae-icon name="arrow" rotate='180'/>
         </router-link>
@@ -32,6 +33,7 @@ export default {
   data () {
     return {
       address: this.$store.state.account.pub
+      // isOrdersActive: false
     }
   },
   computed: {
@@ -40,7 +42,18 @@ export default {
     },
     balance () {
       return this.$store.state.balance
+    },
+    isOrdersActive() {
+      // let morePath = $route.path
+      if( this.$route.path =='/orders') {
+         return true
+      } else {
+        return false
+      }
     }
+  },
+  mounted: {
+    
   }
 }
 </script>
@@ -75,5 +88,13 @@ export default {
 .avatar {
   width:30px !important;
   height:30px !important;
+}
+.fixedPos {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background: #fff;
+  z-index:3;
 }
 </style>

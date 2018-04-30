@@ -11,10 +11,10 @@
     <div class="orders-bottom">
       <div class="orders-head">
         <div class="orders-head-item">
-          Amount
+          <strong>Amount</strong>
         </div>
         <div class="orders-head-item">
-          Picked up?
+          <strong>Picked up?</strong>
         </div>
         <div class="orders-head-item">
 
@@ -69,6 +69,7 @@ export default {
   display:flex;
   .orders-head-item {
     flex:1;
+    padding-bottom:10px;
   }
 }
 .order-row {
@@ -87,7 +88,11 @@ export default {
 flex:1;
 align-self:center;
 }
+.popover {
+  display:none;
+}
 .popover.active {
+  display:block;
   color:#fff;
   position:fixed;
   top:10%;
@@ -96,5 +101,11 @@ align-self:center;
   height:100%;
   padding-top:20%;
   background: #f7296e;
+}
+.orders {
+  margin-top:10vh;
+}
+.orders-head-item > strong {
+  font-size:14px;
 }
 </style>
