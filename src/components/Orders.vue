@@ -60,6 +60,9 @@ export default {
       this.bHash = beerHash
       this.isActive = true
     }
+  },
+  mounted () {
+    window.scrollTo(0, 0)
   }
 }
 </script>
