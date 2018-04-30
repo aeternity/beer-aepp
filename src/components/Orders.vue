@@ -21,13 +21,13 @@
         </div>
       </div>
       <div class="orders-rows">
-        <order-row v-for="beerHash in beerHashes" :key="beerHash" :beerHash="beerHash" @click.native="showQrCode(beerHash)"></order-row>  
+        <order-row v-for="beerHash in beerHashes" :key="beerHash" :beerHash="beerHash" @click.native="showQrCode(beerHash)"></order-row>
       </div>
     </div>
     <!-- TODO: display hash in a popover?! -->
     <div class="popover" v-bind:class="{active: isActive}">
       <BeerHash v-if="bHash" :bHash='bHash'></BeerHash>
-      <ae-button type="booring" @click='isActive = false'>Close</ae-button>
+      <ae-button type="boring" @click='isActive = false'>Close</ae-button>
     </div>
   </div>
 </template>
