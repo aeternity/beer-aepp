@@ -136,9 +136,7 @@
         Head over to the æternity stand, have a drink and chat with us!
       </p>
       <p class="loadingText">
-        At this moment, your transaction <br>
-        on the blockchain is being confirmed <br>
-        by being included in a newly mined block.
+        At this moment, your transaction on the blockchain is being confirmed by being included in a newly mined block.
       </p>
       <div id="water">
         <div class="wave">
@@ -182,10 +180,7 @@
         🤔
       </h1>
       <p class="screen-subtitle">
-        You don’t have enough tokens <br>
-        to buy a beer. To let someone <br>
-        transfer some to you, simply <br>
-        click on ‘Receive’ below.
+        You don’t have enough tokens to buy a beer. To let someone transfer some tokens to you, simply click on ‘Receive’ below.
       </p>
       <!-- Not enough tokens to buy beer. You can <router-link :to="{name: 'send'}">send</router-link> your remaining {{balance}} tokens to a friend and share a beer. -->
     </div>
@@ -194,10 +189,7 @@
         🍺
       </h1>
       <p class="screen-subtitle">
-        Sorry, there is no one to serve <br>
-        your beer right now. Our stand <br>
-        is only open for beer service <br>
-        from 12-18Uhr on May 2nd, 3rd and 4th.
+        Sorry, there is no one to serve your beer right now. Our stand is only open for beer service from 12–18Uhr on May 2nd, 3rd, and 4th.
       </p>
     </div>
     <div class="link" v-if="beerEmpty">
@@ -205,8 +197,7 @@
         🍺
       </h1>
       <p class="screen-subtitle">
-        Sorry. Currently the Bar is <br>
-        out of beer.
+        Sorry. Currently the Bar is out of beer.
       </p>
     </div>
   </div>

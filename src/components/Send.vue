@@ -5,10 +5,9 @@
         <p>+</p>
       </div>
       <h1 class="screen-title" style="margin-top:10vh;">
-        Scan QR
+        Give someone tokens
       </h1>
       <p class="screen-subtitle">
-        Give someone tokens <br>
         Ask the person to whom you would like to send tokens to reveal their QR code by clicking on 'Receive'. Simply scan the code, choose an amount and hit send.
       </p>
       <div class="loader" v-if="loading">
@@ -46,8 +45,7 @@
         Give Tokens
       </h1>
       <p class="screen-subtitle">
-        Not in the mood for beer? Transfer your <br>
-        tokens to someone who needs one!
+        Not in the mood for beer? Transfer your tokens to someone who needs one!
       </p>
       <div v-if="!receiver">
         <ae-label>Receiver Name</ae-label>
@@ -171,9 +169,7 @@
         Why send money to yourself?
       </h1>
       <p class="screen-subtitle">
-        Scanning your own code <br>
-        doesn’t make any sense. Scan <br>
-        another one.
+        Scanning your own code doesn’t make any sense. Scan another one.
       </p>
     </div>
     <!-- <div v-if="state === 'waiting'" class="waiting">

@@ -8,9 +8,7 @@
         æternity is not just a blockchain, it’s a vision for the future. It is a way of thinking. It’s a cause realized through technology.
       </p>
       <p class="screen-subtitle">
-        We want to start a decentralized <br>
-        digital revolution. But first we want <br>
-        to give you beer.
+        We want to start a decentralized digital revolution. But first we want to give you beer.
       </p>
     </div>
     <div class="more-bottom">
