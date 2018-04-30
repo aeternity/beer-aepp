@@ -11,10 +11,10 @@
     <div class="orders-bottom">
       <div class="orders-head">
         <div class="orders-head-item">
-          Amount
+          <strong>Amount</strong>
         </div>
         <div class="orders-head-item">
-          Picked up?
+          <strong>Picked up?</strong>
         </div>
         <div class="orders-head-item">
 
@@ -64,11 +64,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .orders-head {
   display:flex;
   .orders-head-item {
     flex:1;
+    padding-bottom:10px;
   }
 }
 .order-row {
@@ -103,5 +104,8 @@ align-self:center;
 }
 .orders {
   margin-top:10vh;
+}
+.orders-head-item > strong {
+  font-size:14px;
 }
 </style>
