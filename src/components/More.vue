@@ -2,28 +2,35 @@
   <div class="more">
     <div class="more-top shell">
       <h1 class="screen-title">
-        more info
+        More Info
       </h1>
       <p class="screen-subtitle">
-        publick key
+        Your Public Key
       </p>
       <p class="pubKey">
         {{account.pub}}
       </p>
       <p class="screen-subtitle" style="font-weight:400;">
-        A public key is a cryptographic code that allows a user to receive cryptocurrencies into his or her account. The private key is used to  decrypt the information that is sent to the account.
+        A public key is a cryptographic code that allows users to receive cryptocurrencies into his or her account. A private key is used to  decrypt the information that is sent to the account.
       </p>
       <p class="screen-subtitle">
-        Opening hours aeternity stand
+        Opening hours of the æternity stand
       </p>
       <p class="screen-subtitle" style="font-weight:400;">
         re:publica 2018 <br>
-        Schönhauser Allee 6/7 <br>
-        10179 Berlin <br>
+        STATION Berlin <br>
+        Luckenwalder Str. 4-6 <br>
+        10963 Berlin <br>
         Germany <br>
         <br>
         2nd until 4th of May <br>
         12:00 – 18:00
+      </p>
+      <p class="screen-subtitle">
+        How to get to the æternity stand
+      </p>
+      <p class="screen-subtitle" style="font-weight:400;">
+        We are ...
       </p>
     </div>
     <div class="more-bottom">
@@ -32,7 +39,7 @@
           <div class="shell">
             <div class="list-item-el">
               <router-link to='/orders'>
-                <h5>My Orders</h5>  
+                <h5>My Orders</h5>
               </router-link>
             </div>
             <div class="list-item-el">
@@ -48,7 +55,7 @@
           <div class="shell">
             <div class="list-item-el">
               <router-link to='/about'>
-                <h5>About æternity</h5>  
+                <h5>About æternity</h5>
               </router-link>
             </div>
             <div class="list-item-el">
@@ -64,7 +71,7 @@
           <div class="shell">
             <div class="list-item-el">
               <router-link to='/impressum'>
-                <h5>Impressum</h5>  
+                <h5>Impressum</h5>
               </router-link>
             </div>
             <div class="list-item-el">
@@ -106,11 +113,11 @@ export default {
   letter-spacing:1.44;
 }
 .screen-title {
-  text-transform: capitalize !important;
+  // text-transform: capitalize !important;
 }
 .screen-subtitle {
   font-weight:700;
-  text-transform: capitalize !important;
+  // text-transform: capitalize !important;
 }
 a {
   text-decoration:none;

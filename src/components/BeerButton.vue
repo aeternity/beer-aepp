@@ -174,7 +174,6 @@
         Show this QR at the æternity stand & pick up your beer(s)
       </p>
       <BeerHash :bHash='txHash'></BeerHash>
-      <ae-button type='booring'>How to get there</ae-button>
     </div>
     <div class="link" v-if="!hasTokensForBeer">
       <h1 class="screen-title">
