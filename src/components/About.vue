@@ -16,11 +16,15 @@
         <div class="list-item">
           <div class="shell">
             <div class="list-item-el">
-              <h5>Official Website</h5>
+              <a href='https://www.aeternity.com/' target="_blank">
+                <h5>Official Website</h5>
+              </a>
             </div>
             <div class="list-item-el">
               <div class="arrow">
-                <ae-icon name="arrow" />
+                <a href='https://www.aeternity.com/' target="_blank">
+                  <ae-icon name="arrow" />
+                </a>
               </div>
             </div>
           </div>
@@ -28,11 +32,15 @@
         <div class="list-item">
           <div class="shell">
             <div class="list-item-el">
-              <h5>æpps Showcase</h5>
+              <a href='https://www.aepps.com/' target="_blank">
+                <h5>æpps Showcase</h5>
+              </a>
             </div>
             <div class="list-item-el">
               <div class="arrow">
-                <ae-icon name="arrow" />
+                <a href='https://www.aepps.com/' target="_blank">
+                  <ae-icon name="arrow" />
+                </a>
               </div>
             </div>
           </div>
@@ -43,13 +51,13 @@
               <h5>Social Links</h5>
             </div>
             <div class="list-item-el" style="width:100%;text-align:right;">
-              <a href="https://twitter.com/aeternity">
+              <a href="https://twitter.com/aeternity" target="_blank">
                 <i class="fab fa-twitter"></i>
               </a>
-              <a href="https://www.facebook.com/aeternityproject/">
+              <a href="https://www.facebook.com/aeternityproject/" target="_blank">
                 <i class="fab fa-facebook-f"></i>
               </a>
-              <a href="https://telegram.me/aeternity">
+              <a href="https://telegram.me/aeternity" target="_blank">
                 <i class="fab fa-telegram-plane"></i>
               </a>
             </div>
@@ -87,5 +95,9 @@ export default {
   }
   .list-item:last-child {
     border-bottom:0;
+  }
+
+  .more-bottom a {
+    text-decoration: none;
   }
 </style>

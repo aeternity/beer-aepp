@@ -1,39 +1,9 @@
 <template>
   <div class="more">
-    <div class="more-top shell">
+    <div class="more-bottom shell">
       <h1 class="screen-title">
         More Info
       </h1>
-      <p class="screen-subtitle">
-        Your Public Key
-      </p>
-      <p class="pubKey">
-        {{account.pub}}
-      </p>
-      <p class="screen-subtitle" style="font-weight:400;">
-        A keypair consists of a private and a public key. Your public key is the address people use to send funds to you. Your private key must be kept secret at all times.
-      </p>
-      <p class="screen-subtitle">
-        Opening hours of the æternity stand
-      </p>
-      <p class="screen-subtitle" style="font-weight:400;">
-        re:publica 2018<br>
-        STATION Berlin<br>
-        Luckenwalder Str. 4&hairsp;–&hairsp;6<br>
-        10963 Berlin<br>
-        Germany<br>
-        <br>
-        2nd&hairsp;–&hairsp;4th of May<br>
-        12:00&hairsp;–&hairsp;18:00
-      </p>
-      <p class="screen-subtitle">
-        How to get to the æternity stand
-      </p>
-      <p class="screen-subtitle" style="font-weight:400;">
-        We are ...
-      </p>
-    </div>
-    <div class="more-bottom">
       <div class="list">
         <div class="list-item">
           <div class="shell">
@@ -84,6 +54,36 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="more-top shell">
+      <p class="screen-subtitle">
+        Your Public Key
+      </p>
+      <p class="pubKey">
+        {{account.pub}}
+      </p>
+      <p class="screen-subtitle" style="font-weight:400;">
+        A keypair consists of a private and a public key. Your public key is the address people use to send funds to you. Your private key must be kept secret at all times.
+      </p>
+      <p class="screen-subtitle">
+        Opening hours of the æternity stand
+      </p>
+      <p class="screen-subtitle" style="font-weight:400;">
+        re:publica 2018<br>
+        STATION Berlin<br>
+        Luckenwalder Str. 4&hairsp;–&hairsp;6<br>
+        10963 Berlin<br>
+        Germany<br>
+        <br>
+        2nd&hairsp;–&hairsp;4th of May<br>
+        12:00&hairsp;–&hairsp;18:00
+      </p>
+      <p class="screen-subtitle">
+        How to get to the æternity stand
+      </p>
+      <p class="screen-subtitle" style="font-weight:400;">
+        We are in the main hall. Look for the beer.
+      </p>
     </div>
   </div>
 </template>
