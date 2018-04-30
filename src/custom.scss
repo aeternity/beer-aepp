@@ -1,8 +1,112 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+
 // $color: green;
 html {
   // background: red;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  font-family: 'Roboto', sans-serif;
 }
 :focus {
   outline-width: 0;
+}
+body {
+  margin: 0;
+  color: #1e1e1e;
+}
+#app {
+  height: 100vh;
+}
+.shell {
+  width: 90%;
+  margin: 0 auto;
+}
+h1 {
+    font-size: 30px;
+    line-height: 1.27;
+    text-align: center;
+}
+p {
+    font-size: 18px;
+    line-height: 1.56;
+    font-weight: 400;
+}
+.cross p {
+  font-size: 37px;
+  transform: translate3d;
+  transform: rotateZ(45deg);
+  line-height: 0;
+  margin:15px 0;
+}
+.screen-title {
+  text-align:left;
+}
+.screen-subtitle {
+    text-align: left;
+}
+.takeAllPar {
+    font-size: 14px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    margin-top: 16px;
+}
+/* modal */
+.modal-title {
+    font-size: 18px;
+    line-height: 1.56;
+    color: #1e1e1e;
+}
+.modal-subtitle {
+    color:#989898;
+    font-size: 13px;
+    letter-spacing: .3em;
+    line-height: 1.33;
+}
+.modal-address-name {
+    font-size: 14px;
+    color: #1e1e1e;
+    line-height: 1.43;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.modal-token-amount {
+    font-size: 40px;
+    font-weight: 300;
+    color: #1e1e1e;
+    margin: 0;
+}
+.modal-token-amount-sub {
+    font-size: 14px;
+    color: #000;
+    text-transform: uppercase;
+}
+.modal-beer-count {
+    color: #989898;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+/* more */
+.list {
+  margin-bottom: 20vh;
+}
+.list-item {
+  border-top:2px solid #f0f0f0;
+}
+.list-item:last-child {
+  border-bottom: 2px solid #f0f0f0;
+}
+.list-item .shell{
+  display: flex;
+  text-align: center;
+}
+.list-item .list-item-el {
+  flex:1;
+  align-self:center;
+}
+.list-item h5 {
+  text-align: left;
+  color: #1e1e1e;
+  font-size: 17px;
+  // line-height: 2.24;
+}
+.list-item-el .arrow {
+  text-align: right;
 }

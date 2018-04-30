@@ -4,6 +4,11 @@ import AddressDisplay from './components/AddressDisplay.vue'
 import Home from './components/Home.vue'
 import Send from './components/Send.vue'
 import BeerHash from './components/BeerHash.vue'
+import More from './components/More.vue'
+import Impressum from './components/Impressum.vue'
+import About from './components/About.vue'
+import Orders from './components/Orders.vue'
+import Transactions from './components/Transactions.vue'
 
 export default (store) => {
   const routes = [
@@ -48,6 +53,35 @@ export default (store) => {
         if (!store.state.account || !store.state.account.priv) return next({ name: 'home' })
         next()
       }
+    },
+    {
+      path: '/more',
+      name: 'more',
+      component: More,
+      beforeEnter (to, from, next) {
+        if (!store.state.account || !store.state.account.priv) return next({ name: 'home' })
+        next()
+      }
+    },
+    {
+      path: '/impressum',
+      name: 'impressum',
+      component: Impressum
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
+    },
+    {
+      path: '/orders',
+      name: 'orders',
+      component: Orders
+    },
+    {
+      path: '/transactions',
+      name: 'transactions',
+      component: Transactions
     }
   ]
 
