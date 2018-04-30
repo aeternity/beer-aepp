@@ -1,6 +1,11 @@
 <template>
   <div class="header">
     <div class="header-container shell">
+      <div class="back-arrow" v-if="$route.path =='/about' || $route.path =='/orders' || $route.path =='/impressum'">
+        <router-link to='/more'>
+          <ae-icon name="arrow" rotate='180'/>
+        </router-link>
+      </div>
       <div class="item address-icon" style="display:flex; align-items:center;">
         <!-- <ae-identity-avatar :address='account.pub'></ae-identity-avatar> -->
         <ae-identity-avatar :address="account.pub"></ae-identity-avatar>
@@ -17,11 +22,12 @@
   </div>
 </template>
 <script>
-import { AeIdentityAvatar } from '@aeternity/aepp-components'
+import { AeIdentityAvatar, AeIcon } from '@aeternity/aepp-components'
 export default {
   name: 'Header',
   components: {
-    AeIdentityAvatar
+    AeIdentityAvatar,
+    AeIcon
   },
   data () {
     return {
