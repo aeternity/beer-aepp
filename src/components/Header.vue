@@ -4,7 +4,7 @@
       <div class="back-arrow"
       v-if="$route.path =='/about' || $route.path =='/orders' || $route.path =='/impressum'">
         <router-link to='/more'>
-          <ae-icon name="arrow" rotate='180'/>
+          <ae-icon name="chevron" rotate="180" />
         </router-link>
       </div>
       <div class="item address-icon" style="display:flex; align-items:center;">
@@ -96,5 +96,8 @@ export default {
   width:100%;
   background: #fff;
   z-index:3;
+}
+.back-arrow {
+  margin-right: 2%;
 }
 </style>

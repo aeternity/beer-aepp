@@ -11,7 +11,7 @@
       </span>
     </div>
     <div class="arrow">
-      <ae-icon name="arrow" />
+      <ae-icon name="chevron" />
     </div>
   </div>
 </template>
@@ -101,8 +101,5 @@ export default {
   }
   .order-row div {
     flex:1;
-  }
-  .order-row  .ae-icon {
-    // transform: rotate(-40deg);
   }
 </style>

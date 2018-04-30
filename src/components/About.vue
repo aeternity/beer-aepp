@@ -78,13 +78,16 @@ export default {
   }
 }
 </script>
-<style>
+<style lang='scss'>
   .fab {
     color:#f7296e;
     font-size:17px;
     margin: 10px;
   }
-  .ae-icon {
+  .about .ae-icon {
     transform: rotate(-40deg);
+  }
+  .list-item:last-child {
+    border-bottom:0;
   }
 </style>

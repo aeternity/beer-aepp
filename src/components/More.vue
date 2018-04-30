@@ -31,40 +31,30 @@
         <div class="list-item">
           <div class="shell">
             <div class="list-item-el">
-              <h5>My Orders</h5>
+              <router-link to='/orders'>
+                <h5>My Orders</h5>  
+              </router-link>
             </div>
             <div class="list-item-el">
               <div class="arrow">
                 <router-link to='/orders'>
-                  <ae-icon name="arrow" />
+                  <ae-icon name="chevron" />
                 </router-link>
               </div>
             </div>
           </div>
         </div>
-        <!-- <div class="list-item">
-          <div class="shell">
-            <div class="list-item-el">
-              <h5>My Transactions</h5>
-            </div>
-            <div class="list-item-el">
-              <div class="arrow">
-                <router-link to='/transactions'>
-                  <ae-icon name="arrow" />
-                </router-link>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div class="list-item">
           <div class="shell">
             <div class="list-item-el">
-              <h5>About æternity</h5>
+              <router-link to='/about'>
+                <h5>About æternity</h5>  
+              </router-link>
             </div>
             <div class="list-item-el">
               <div class="arrow">
                 <router-link to='/about'>
-                  <ae-icon name="arrow" />
+                  <ae-icon name="chevron" />
                 </router-link>
               </div>
             </div>
@@ -73,12 +63,14 @@
         <div class="list-item">
           <div class="shell">
             <div class="list-item-el">
-              <h5>Impressum</h5>
+              <router-link to='/impressum'>
+                <h5>Impressum</h5>  
+              </router-link>
             </div>
             <div class="list-item-el">
               <div class="arrow">
                 <router-link to='/impressum'>
-                  <ae-icon name="arrow" />
+                  <ae-icon name="chevron" />
                 </router-link>
               </div>
             </div>
@@ -119,5 +111,8 @@ export default {
 .screen-subtitle {
   font-weight:700;
   text-transform: capitalize !important;
+}
+a {
+  text-decoration:none;
 }
 </style>
