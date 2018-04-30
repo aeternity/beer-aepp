@@ -24,7 +24,7 @@
       </h1>
       <p class="screen-subtitle">
         Not such a beer drinker? Transfer <br>
-        tokens to someone who is! 
+        tokens to someone who is!
       </p>
       <div class="domainInput" v-if="!receiver">
         <ae-label for="receiver" :help-text="errors.first('receiver')">Receiver Name</ae-label>
@@ -52,7 +52,7 @@
       <!-- <span v-if="!isSameAddress">It seems you are trying to send tokens to yourself! Why tho?</span> -->
       <div class="actions" v-if="receiver">
         <ae-button
-        
+
         @click="modalVisible = true"
         type="dramatic"
         class="send-button"
@@ -72,7 +72,7 @@
               beer app
             </h1>
             <p class="modal-subtitle">
-              requests a transaction  
+              requests a transaction
             </p>
             <div class="row" style="display:flex;align-items:center;">
                 <div>
@@ -112,7 +112,7 @@
               <div class="fees">
                 <div>
                   <strong>
-                    Additional fees                    
+                    Additional fees
                   </strong>
                 </div>
                 <div>
@@ -152,7 +152,7 @@
     </div>
     <div v-if="state === 'waiting'" class="waiting">
       <div style="font-size:50px;margin-top:15vh;">
-        <ae-loader /> Waiting  
+        <ae-loader /> Waiting
       </div>
     </div>
     <div v-if="state === 'done'" class="done">
@@ -190,7 +190,7 @@ export default {
         symbol: 'BT'
       },
       units: [
-        { symbol: 'BT', name: 'Beer Token' }
+        { symbol: 'TOKENS', name: 'Beer Token' }
       ],
       state: 'qrcode',
       loading: true,

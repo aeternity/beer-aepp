@@ -8,13 +8,13 @@
       <!-- <ae-label for="numBeers" :help-text="errors.first('numBeers')">How many beers?</ae-label> -->
       <ae-input id="numBeers" name="numBeers" type="number" v-model.number="selectedBeerNumber" v-validate="`min_value:1|max_value:${maxBeers}`" units="beers">
         <!-- <ae-button class='inc' slot='left'>
-          
+
         </ae-button> -->
         <div class="inc" @click="beerQuantity('inc')" slot='left'>
-          <ae-icon name="chevron" rotate="270" />  
+          <ae-icon name="chevron" rotate="270" />
         </div>
         <div class="dec" @click="beerQuantity('dec')" slot='left'>
-          <ae-icon name="chevron" rotate="90" />          
+          <ae-icon name="chevron" rotate="90" />
         </div>
         <span class="unit" slot='right'>beer(s)</span>
       </ae-input>
@@ -350,9 +350,11 @@ export default {
   },
   mounted () {
     // hack to disable direct token input
-    const tokenInput = this.$refs.tokensCount.$el.querySelector('input')
-    if (tokenInput) {
-      tokenInput.readOnly = true
+    if (this.$refs.tokensCount) {
+      const tokenInput = this.$refs.tokensCount.$el.querySelector('input')
+      if (tokenInput) {
+        tokenInput.readOnly = true
+      }
     }
   }
 }

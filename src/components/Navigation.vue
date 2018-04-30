@@ -7,7 +7,7 @@
       <router-link to="send" >give</router-link>
     </div>
     <div class="nav">
-      <router-link to="address" >recieve</router-link>
+      <router-link to="address" >receive</router-link>
     </div>
     <div class="nav">
       <router-link to="more" >more</router-link>
