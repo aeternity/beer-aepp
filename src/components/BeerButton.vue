@@ -174,9 +174,11 @@
         Show this QR at the æternity stand & pick up your beer(s)
       </p>
       <BeerHash :bHash='txHash'></BeerHash>
-      <ae-button type='booring'>How to get there</ae-button>
+      <router-link to='buy'>
+        <ae-button type='booring'>Close</ae-button>
+      </router-link>
     </div>
-    <div class="link" v-if="!hasTokensForBeer">
+    <div class="link" v-if="!hasTokensForBeer && ajaxCall.status !=='ready'">
       <h1 class="screen-title">
         🤔
       </h1>
@@ -515,6 +517,9 @@ input#tokensCount {
 .link .screen-title,
 .link .screen-subtitle {
   text-align:center;
+}
+.equal-icon {
+  margin: -1vh;
 }
 @keyframes swell {
   0%, 100% {
