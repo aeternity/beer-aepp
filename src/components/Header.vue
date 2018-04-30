@@ -1,7 +1,7 @@
 <template>
   <div class="header" v-bind:class="{fixedPos: isOrdersActive}">
     <div class="header-container shell">
-      <div class="back-arrow" 
+      <div class="back-arrow"
       v-if="$route.path =='/about' || $route.path =='/orders' || $route.path =='/impressum'">
         <router-link to='/more'>
           <ae-icon name="arrow" rotate='180'/>
@@ -43,17 +43,17 @@ export default {
     balance () {
       return this.$store.state.balance
     },
-    isOrdersActive() {
+    isOrdersActive () {
       // let morePath = $route.path
-      if( this.$route.path =='/orders') {
-         return true
+      if (this.$route.path === '/orders') {
+        return true
       } else {
         return false
       }
     }
   },
   mounted: {
-    
+
   }
 }
 </script>
