@@ -122,4 +122,9 @@ export default {
 a {
   text-decoration:none;
 }
+
+.pubKey {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+}
 </style>
