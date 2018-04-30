@@ -156,13 +156,21 @@
         another one.
       </p>
     </div>
-    <div v-if="state === 'waiting'" class="waiting">
+    <!-- <div v-if="state === 'waiting'" class="waiting">
       <div style="font-size:50px;margin-top:15vh;">
         <ae-loader /> Waiting
       </div>
+    </div> -->
+    <div v-if="state === 'waiting'" class="waiting state">
+      <div>
+        <h1 class="screen-title" style="text-align:center">Waiting</h1>
+        <ae-loader />
+      </div>
     </div>
-    <div v-if="state === 'done'" class="done">
-      Done
+    <div v-if="state === 'done'" class="done state">
+      <h1 class="screen-title">
+        Done
+      </h1>
     </div>
   </div>
 </template>
@@ -327,5 +335,10 @@ label {
   color: #1e1e1e;
   text-align:left;
   font-weight:700;
+}
+.state.done,
+.state.waiting {
+  margin-top:30vh;
+  font-size:50px;
 }
 </style>
