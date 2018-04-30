@@ -18,6 +18,28 @@
       </div>
       <qrcode-reader @decode="onDecode" @init="onInit"></qrcode-reader>
     </div>
+
+    <div v-if="state === 'addressLookup'" class="shell">
+      <div class="close cross" @click="state = 'input'" style="position:absolute;top:10vh;right:5vw;">
+        <p>+</p>
+      </div>
+      <h1 class="screen-title" style="margin-top:10vh;">
+        Look up name
+      </h1>
+      <p class="screen-subtitle">
+        Enter the name of the person you want to send tokens to.
+      </p>
+      <ae-label for="receiver" :help-text="errors.first('receiver')">Name</ae-label>
+      <ae-input id="receiver" name="receiver" v-model="domainInput" v-validate="`min:3`" placeholder='Enter Receiver’s Public Name'>
+      </ae-input>
+      <div class="domain-error" v-if="domainError">{{domainError}}</div>
+      <ae-button
+        @click="lookupDomain()"
+        type="dramatic"
+        class="send-button">
+        Look up name</ae-button>
+    </div>
+
     <div v-if="state === 'input'" class="input shell">
       <h1 class="screen-title">
         Give Tokens
@@ -26,18 +48,16 @@
         Not such a beer drinker? Transfer <br>
         tokens to someone who is!
       </p>
-      <div class="domainInput" v-if="!receiver">
-        <ae-label for="receiver" :help-text="errors.first('receiver')">Receiver Name</ae-label>
-        <ae-input id="receiver" name="receiver" v-model="domainInput" v-validate="`min:3`" placeholder='Enter Receiver’s Public Name'>
+      <div v-if="!receiver">
+        <ae-label>Receiver Name</ae-label>
+        <div class="nameInput">
+          <span @click="state = 'addressLookup'">Enter Receiver’s Public Name</span>
           <div class="scan" slot='right' v-if="hasCamera" @click="startQrCode()">
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" viewBox="0 0 26 20">
-                <path fill="#F7296E" fill-rule="evenodd" d="M9.09 0L7.577 2.941H2.12C.946 2.941 0 3.86 0 5v12.941C0 19.082.946 20 2.121 20h21.212c1.176 0 2.122-.918 2.122-2.059V5c0-1.14-.946-2.059-2.122-2.059H17.88L16.364 0H9.09zm3.637 6.364c3.013 0 5.455 2.238 5.455 5 0 2.761-2.442 5-5.455 5-3.012 0-5.454-2.239-5.454-5 0-2.762 2.442-5 5.454-5z"/>
+              <path fill="#F7296E" fill-rule="evenodd" d="M9.09 0L7.577 2.941H2.12C.946 2.941 0 3.86 0 5v12.941C0 19.082.946 20 2.121 20h21.212c1.176 0 2.122-.918 2.122-2.059V5c0-1.14-.946-2.059-2.122-2.059H17.88L16.364 0H9.09zm3.637 6.364c3.013 0 5.455 2.238 5.455 5 0 2.761-2.442 5-5.455 5-3.012 0-5.454-2.239-5.454-5 0-2.762 2.442-5 5.454-5z"/>
             </svg>
           </div>
-        </ae-input>
-        <span v-if="domainError">{{domainError}}</span>
-        <!-- <ae-button @click="lookupDomain()">lookupDomain</ae-button> -->
-        <!-- <ae-button v-if="hasCamera" @click="startQrCode()">Read QR Code</ae-button> -->
+        </div>
       </div>
       <div class="privateKeyInput" v-if="receiver">
         <ae-label>Receiver Public Key</ae-label>
@@ -58,11 +78,10 @@
       <!-- <span v-if="!isSameAddress">It seems you are trying to send tokens to yourself! Why tho?</span> -->
       <div class="actions">
         <ae-button
-
-        @click="modalVisible = true"
+        @click="showSignScreen()"
         type="dramatic"
         class="send-button"
-        :inactive="errors.any()"
+        :inactive="!validInput"
         >
         💸 Send Tokens</ae-button>
       </div>
@@ -88,7 +107,7 @@
                   <ae-icon name="arrow" />
                 </div>
                 <div>
-                  <ae-identity-avatar :address="barPubKey"></ae-identity-avatar>
+                  <ae-identity-avatar :address="receiver"></ae-identity-avatar>
                 </div>
               </div>
               <div class="row" style="display:flex;align-items:center;">
@@ -110,9 +129,9 @@
                   {{amount.amount}}
                   <span class="modal-token-amount-sub">tokens</span>
                 </h4>
-                <h5 class="modal-beer-count">
+                <!-- <h5 class="modal-beer-count">
                   {{beerCount}} beer(s)
-                </h5>
+                </h5> -->
               </div>
               <ae-divider />
               <div class="fees">
@@ -206,9 +225,9 @@ export default {
       units: [
         { symbol: 'TOKENS', name: 'Beer Token' }
       ],
-      state: 'qrcode',
+      state: 'input',
       loading: true,
-      hasCamera: false,
+      hasCamera: true,
       qrWarning: null,
       domainError: null,
       modalVisible: false
@@ -247,11 +266,14 @@ export default {
     },
     beerCount () {
       return parseInt(this.amount.amount / 1000)
+    },
+    validInput () {
+      return this.receiver && this.amountInt > 0 && this.amountInt < this.balance
     }
   },
   methods: {
     async sendTokens () {
-      if (!await this.$validator.validateAll()) return
+      if (!await this.$validator.validateAll() || !this.validInput) return
       try {
         const spendTx = await this.client.base.spend(this.receiver, this.amountInt, this.wallet, {fee: 1})
         this.state = 'waiting'
@@ -270,7 +292,7 @@ export default {
         this.receiver = content
         this.state = 'input'
       } else if (/^https?:\/\/aet\.li/.test(content)) {
-        this.qrWarning = 'Somebody let you scan their private key. This is terrible. Please tell them to let you scan the other code.'
+        this.qrWarning = 'Somebody let you scan their private key. This is terrible. Please tell them to navigate to the receive tab in the beer app.'
       }
     },
     async onInit (promise) {
@@ -312,10 +334,16 @@ export default {
         console.log('domainData', domainData)
         if (domainData.pointers && domainData.pointers.account_pubkey) {
           this.receiver = domainData.pointers.account_pubkey
+          this.state = 'input'
         }
       } catch (err) {
         console.log(err)
         this.domainError = 'Domain lookup error. ' + err.message
+      }
+    },
+    showSignScreen () {
+      if (this.validInput) {
+        this.modalVisible = true
       }
     }
   },
@@ -340,5 +368,37 @@ label {
 .state.waiting {
   margin-top:30vh;
   font-size:50px;
+}
+
+.nameInput {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 2px solid #dcdcdc;
+  padding: 0 13px;
+  margin: 10px 0 30px;
+  overflow: hidden;
+  background-color: #fff;
+  text-align: left;
+}
+
+.nameInput span {
+  display: block;
+  flex-grow: 1;
+  min-width: 0;
+  padding: 14px 13px;
+  border: none;
+  font-weight: 500;
+  line-height: 1.63;
+  letter-spacing: .2px;
+  color: #1e1e1e;
+  opacity: 0.3;
+  font-size: 13px;
+}
+
+.domain-error {
+  margin-bottom: 25px;
 }
 </style>
