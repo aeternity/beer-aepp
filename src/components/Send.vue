@@ -316,7 +316,7 @@ export default {
     },
     async lookupDomain () {
       this.domainError = null
-      let domain = this.domainInput.toLowerCase()
+      let domain = this.domainInput.toLowerCase().trim()
       if (!domain.endsWith('.aet')) {
         domain += '.aet'
       }
