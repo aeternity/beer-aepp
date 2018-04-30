@@ -174,7 +174,7 @@
       </p>
       <BeerHash :bHash='txHash'></BeerHash>
       <router-link to='buy'>
-        <ae-button type='boring'>Close</ae-button>
+        <ae-button type='boring' @click='resetScreen()'>Close</ae-button>
       </router-link>
     </div>
     <div class="link" v-if="!hasTokensForBeer && ajaxCall.status !=='ready'">
@@ -347,6 +347,14 @@ export default {
       } else {
         this.selectedBeerNumber--
       }
+    },
+    resetScreen () {
+      this.ajaxCall.status = 'busy'
+      this.txHash = null
+      this.selectedBeerNumber = 1
+      this.t = true
+      this.modalVisible = false
+      this.isOrderDone = false
     }
   },
   mounted () {
