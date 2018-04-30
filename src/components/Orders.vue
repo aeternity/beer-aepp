@@ -64,7 +64,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .orders-head {
   display:flex;
   .orders-head-item {
@@ -87,7 +87,11 @@ export default {
 flex:1;
 align-self:center;
 }
+.popover {
+  display:none;
+}
 .popover.active {
+  display:block;
   color:#fff;
   position:fixed;
   top:10%;
@@ -96,5 +100,8 @@ align-self:center;
   height:100%;
   padding-top:20%;
   background: #f7296e;
+}
+.orders {
+  margin-top:10vh;
 }
 </style>
