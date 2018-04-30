@@ -172,7 +172,7 @@
       </p>
       <BeerHash :bHash='txHash'></BeerHash>
       <router-link to='buy'>
-        <ae-button type='boring' @click='resetScreen()'>Close</ae-button>
+        <ae-button type='boring' @click='resetScreen()'>I picked up my beer</ae-button>
       </router-link>
     </div>
     <div class="link" v-if="!hasTokensForBeer && ajaxCall.status !=='ready'">
