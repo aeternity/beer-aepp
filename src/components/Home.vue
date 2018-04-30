@@ -103,6 +103,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.home > div {
+  padding-top:7vh;
+}
 h1 {
   text-align:center;
 }
