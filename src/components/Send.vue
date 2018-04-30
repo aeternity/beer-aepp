@@ -28,17 +28,23 @@
       </p>
       <div class="domainInput" v-if="!receiver">
         <ae-label for="receiver" :help-text="errors.first('receiver')">Receiver Name</ae-label>
-        <ae-input id="receiver" name="receiver" v-model="domainInput" v-validate="`min:3`"></ae-input>
+        <ae-input id="receiver" name="receiver" v-model="domainInput" v-validate="`min:3`" placeholder='Enter Receiver’s Public Name'>
+          <div class="scan" slot='right' v-if="hasCamera" @click="startQrCode()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" viewBox="0 0 26 20">
+                <path fill="#F7296E" fill-rule="evenodd" d="M9.09 0L7.577 2.941H2.12C.946 2.941 0 3.86 0 5v12.941C0 19.082.946 20 2.121 20h21.212c1.176 0 2.122-.918 2.122-2.059V5c0-1.14-.946-2.059-2.122-2.059H17.88L16.364 0H9.09zm3.637 6.364c3.013 0 5.455 2.238 5.455 5 0 2.761-2.442 5-5.455 5-3.012 0-5.454-2.239-5.454-5 0-2.762 2.442-5 5.454-5z"/>
+            </svg>
+          </div>
+        </ae-input>
         <span v-if="domainError">{{domainError}}</span>
-        <ae-button @click="lookupDomain()">lookupDomain</ae-button>
-        <ae-button v-if="hasCamera" @click="startQrCode()">Read QR Code</ae-button>
+        <!-- <ae-button @click="lookupDomain()">lookupDomain</ae-button> -->
+        <!-- <ae-button v-if="hasCamera" @click="startQrCode()">Read QR Code</ae-button> -->
       </div>
       <div class="privateKeyInput" v-if="receiver">
         <ae-label>Receiver Public Key</ae-label>
         <ae-address show-avatar size='short' :address="receiver"/>
       </div>
 
-      <div class="amount" v-if="receiver">
+      <div class="amount">
         <ae-label for="amount" :help-text="errors.first('amount')">Amount</ae-label>
         <ae-amount-input
         id="amount"
@@ -50,7 +56,7 @@
         placeholder="0.00"></ae-amount-input>
       </div>
       <!-- <span v-if="!isSameAddress">It seems you are trying to send tokens to yourself! Why tho?</span> -->
-      <div class="actions" v-if="receiver">
+      <div class="actions">
         <ae-button
 
         @click="modalVisible = true"
@@ -187,7 +193,7 @@ export default {
       receiver: null,
       amount: {
         amount: 0,
-        symbol: 'BT'
+        symbol: 'TOKENS'
       },
       units: [
         { symbol: 'TOKENS', name: 'Beer Token' }
