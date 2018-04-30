@@ -35,25 +35,9 @@ export default {
   methods: {
   },
   mounted () {
-    // Get URL params (account info)
-
-    // this.account = this.$route.query
-
-    // DEBUG async fetch
-    // const blabla = this.fetchAsync('https://sdk-testnet.aepps.com/v2/top')
-    //                     .then((value) => console.log(value))
-    //                     .catch((error) => console.warn(error))
-
-    console.info('Vue App mounted')
-
     this.$store.dispatch('updateBalance')
     setInterval(() => {
       this.$store.dispatch('updateBalance')
-    }, 10000)
-
-    this.$store.dispatch('checkBeerAvailable')
-    setInterval(() => {
-      this.$store.dispatch('checkBeerAvailable')
     }, 10000)
   }
 }
