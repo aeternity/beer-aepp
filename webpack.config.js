@@ -3,7 +3,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const dist_folder = path.resolve(__dirname, 'dist');
 const jsLoader = 'babel-loader!standard-loader?error=true'
@@ -23,7 +24,7 @@ module.exports = {
       template: 'index.html',
       filename: 'index.html',
       inject: true,
-      title: 'Beer Æpp',
+      title: 'Beer æpp',
       baseUrl: '/',
       APIUrl: 'http://localhost:8080/',
       alwaysWriteToDisk: true
@@ -31,6 +32,13 @@ module.exports = {
     new HtmlWebpackHarddiskPlugin(),
     new ExtractTextPlugin('style.css?[hash]'),
     new CleanWebpackPlugin([dist_folder]),
+    new CopyWebpackPlugin([
+      {
+        from: 'static',
+        to: '',
+        ignore: ['.*']
+      }
+    ])
     // debug bundle (for optimisation)
     // new BundleAnalyzerPlugin()
   ],
