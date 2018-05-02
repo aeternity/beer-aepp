@@ -82,7 +82,7 @@
         How to get to the æternity stand
       </p>
       <p class="screen-subtitle" style="font-weight:400;">
-        We are in the main hall. Look for the beer.
+        We are in the main hall next to the wardrobe, near the main entrance.
       </p>
     </div>
   </div>
