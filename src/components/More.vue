@@ -76,7 +76,7 @@
         Germany<br>
         <br>
         2nd&hairsp;–&hairsp;4th of May<br>
-        12:00&hairsp;–&hairsp;18:00
+        12:00&hairsp;–&hairsp;19:00
       </p>
       <p class="screen-subtitle">
         How to get to the æternity stand

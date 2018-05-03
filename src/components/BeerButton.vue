@@ -189,7 +189,7 @@
         🍺
       </h1>
       <p class="screen-subtitle">
-        Sorry, there is no one to serve your beer right now. Our stand is only open for beer service from 12:00&hairsp;–&hairsp;18:00 on May 2nd, 3rd, and 4th.<br>
+        Sorry, there is no one to serve your beer right now. Our stand is only open for beer service from 12:00&hairsp;–&hairsp;19:00 on May 2nd, 3rd, and 4th.<br>
         We are in the main hall next to the wardrobe, near the main entrance.
       </p>
     </div>
