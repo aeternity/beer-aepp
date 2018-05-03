@@ -24,6 +24,22 @@
         <div class="list-item">
           <div class="shell">
             <div class="list-item-el">
+              <a :href='`https://republica-explorer.aepps.com/#/account/${account.pub}`' target="_blank">
+                <h5>My Transactions</h5>
+              </a>
+            </div>
+            <div class="list-item-el">
+              <div class="arrow">
+                <a :href='`https://republica-explorer.aepps.com/#/account/${account.pub}`' target="_blank">
+                  <ae-icon name="chevron" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="shell">
+            <div class="list-item-el">
               <router-link to='/about'>
                 <h5>About æternity</h5>
               </router-link>
