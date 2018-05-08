@@ -4,18 +4,13 @@ pipeline {
       filename 'Dockerfile.ci'
       args '-v /etc/group:/etc/group:ro ' +
            '-v /etc/passwd:/etc/passwd:ro ' +
-           '-v /var/lib/jenkins:/var/lib/jenkins ' +
-           '-v /var/run/docker.sock:/var/run/docker.sock:rw ' +
-           '-v /usr/bin/docker:/usr/bin/docker:ro ' +
-           '--group-add docker'
+           '-v /var/lib/jenkins:/var/lib/jenkins'
     }
   }
 
   environment {
     TEST_NODE = credentials('TEST_NODE')
-    DOCKER_REGISTRY = 'https://166568770115.dkr.ecr.eu-central-1.amazonaws.com'
-    DOCKER_IMAGE = 'republica/beer-aepp'
-    ECR_CREDENTIAL = 'ecr:eu-central-1:aws-jenkins'
+    BUCKET = 'beer.aepps.com'
   }
 
   stages {
@@ -23,20 +18,7 @@ pipeline {
       steps {
         sh 'cp -r /node_modules ./'
         sh 'yarn build'
-      }
-    }
-
-    stage('Publish') {
-      steps {
-        script {
-          docker.withRegistry(env.DOCKER_REGISTRY, env.ECR_CREDENTIAL) {
-            def image = docker.build(env.DOCKER_IMAGE)
-            image.push('latest')
-            if (BRANCH_NAME ==~ /master/) {
-              image.push('release')
-            }
-          }
-        }
+        archiveArtifacts artifacts: 'dist/*', fingerprint: true
       }
     }
 
@@ -45,7 +27,9 @@ pipeline {
         expression { BRANCH_NAME ==~ /master/ }
       }
       steps {
-        build 'deploy-beer-aepp'
+        withAWS(credentials: 'aws-jenkins-userpass') {
+          s3Upload bucket: env.BUCKET, acl: 'PublicRead', workingDir: 'dist', includePathPattern: '*'
+        }
       }
     }
   }
