@@ -4,6 +4,12 @@ import { AeternityClient } from '@aeternity/aepp-sdk'
 
 Vue.use(Vuex)
 
+// IMPORTANT:
+// SETTINGS is coming from index.html's line:
+// <script src="settings.js" type="text/javascript"></script>
+// eslint-disable-next-line
+// console.log(SETTINGS.epoch_url)
+
 const store = new Vuex.Store({
   state: {
     account: {
@@ -14,8 +20,10 @@ const store = new Vuex.Store({
     balance: 0,
     beerHashes: [],
     beerPrice: 1000,
-    barPubKey: 'ak$3TRJBCvcvaegewQkexWVQkt7bEFf1tCvhvj6jfErZQNWyJ4NoyxUwkGrVVWDefxPpPEiY534fTutPaURn72HrGKCYaNWPM',
-    websocketUrl: 'https://republica-pos.aepps.com',
+    // eslint-disable-next-line
+    barPubKey: SETTINGS.pos_public_key, // 'ak$3TRJBCvcvaegewQkexWVQkt7bEFf1tCvhvj6jfErZQNWyJ4NoyxUwkGrVVWDefxPpPEiY534fTutPaURn72HrGKCYaNWPM'
+    // eslint-disable-next-line
+    websocketUrl: SETTINGS.pos_url, // 'https://republica-pos.aepps.com',
     socketConnected: false,
     barState: null
   },
@@ -28,7 +36,9 @@ const store = new Vuex.Store({
     },
     client () {
       const provider = new AeternityClient.providers.HttpProvider(
-        'republica.aepps.com',
+        // 'republica.aepps.com',
+        // eslint-disable-next-line
+        SETTINGS.epoch_url,
         443,
         { secured: true, internal: false }
       )
@@ -36,7 +46,9 @@ const store = new Vuex.Store({
     },
     clientInternal () {
       const provider = new AeternityClient.providers.HttpProvider(
-        'republica.aepps.com',
+        // 'republica.aepps.com',
+        // eslint-disable-next-line
+        SETTINGS.epoch_url,
         443,
         { secured: true, internal: true }
       )

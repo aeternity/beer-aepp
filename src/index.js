@@ -47,6 +47,5 @@ new Vue({
   router: getRouter(store),
   store,
   render: h => h(App),
-  mounted () {
-  }
+  mounted () {}
 }).$mount('#app')
