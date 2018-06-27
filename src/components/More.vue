@@ -24,13 +24,13 @@
         <div class="list-item">
           <div class="shell">
             <div class="list-item-el">
-              <a :href='`https://republica-explorer.aepps.com/#/account/${account.pub}`' target="_blank">
+              <a :href='`https://explorer.beer.aepps.com/#/account/${account.pub}`' target="_blank">
                 <h5>My Transactions</h5>
               </a>
             </div>
             <div class="list-item-el">
               <div class="arrow">
-                <a :href='`https://republica-explorer.aepps.com/#/account/${account.pub}`' target="_blank">
+                <a :href='`https://explorer.beer.aepps.com/#/account/${account.pub}`' target="_blank">
                   <ae-icon name="chevron" />
                 </a>
               </div>
@@ -82,23 +82,17 @@
         A keypair consists of a private and a public key. Your public key is the address people use to send funds to you. Your private key must be kept secret at all times.
       </p>
       <p class="screen-subtitle">
-        Opening hours of the æternity stand
+        æternity beer app for:
       </p>
       <p class="screen-subtitle" style="font-weight:400;">
-        re:publica 2018<br>
-        STATION Berlin<br>
+        Crypto World Party<br>
+        <!-- STATION Berlin<br>
         Luckenwalder Str. 4&hairsp;–&hairsp;6<br>
         10963 Berlin<br>
         Germany<br>
         <br>
         2nd&hairsp;–&hairsp;4th of May<br>
-        12:00&hairsp;–&hairsp;19:00
-      </p>
-      <p class="screen-subtitle">
-        How to get to the æternity stand
-      </p>
-      <p class="screen-subtitle" style="font-weight:400;">
-        We are in the main hall next to the wardrobe, near the main entrance.
+        12:00&hairsp;–&hairsp;19:00 -->
       </p>
     </div>
   </div>

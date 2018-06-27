@@ -133,7 +133,7 @@
         We are filling up your beer!
       </h1>
       <p class="loadingText">
-        Head over to the æternity stand, have a drink and chat with us! We are in the main hall next to the wardrobe, near the main entrance.
+        Head over to the æternity's representatives, have a drink and chat with us!
       </p>
       <p class="loadingText">
         At this moment, your transaction on the blockchain is being confirmed by being included in a newly mined block.
@@ -189,8 +189,7 @@
         🍺
       </h1>
       <p class="screen-subtitle">
-        Sorry, there is no one to serve your beer right now. Our stand is only open for beer service from 12:00&hairsp;–&hairsp;19:00 on May 2nd, 3rd, and 4th.<br>
-        We are in the main hall next to the wardrobe, near the main entrance.
+        Sorry, there is no one to serve your beer right now.
       </p>
     </div>
     <div class="link" v-if="beerEmpty">

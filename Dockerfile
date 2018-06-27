@@ -1,9 +1,7 @@
-FROM node:9.8.0
+FROM abiosoft/caddy
 
 USER root
-EXPOSE 3000
+EXPOSE 80
 
-ADD . /app
-WORKDIR /app
-
-CMD yarn start
+ADD ./dist /srv
+WORKDIR /srv

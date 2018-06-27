@@ -37,6 +37,11 @@ module.exports = {
         from: 'static',
         to: '',
         ignore: ['.*']
+      },
+      {
+        from: 'src/settings.js',
+        to: 'settings.js',
+        ignore: ['.*']
       }
     ])
     // debug bundle (for optimisation)
