@@ -100,7 +100,7 @@ const store = new Vuex.Store({
       const pubKey = state.account.pub
       if (pubKey) {
         try {
-          const balance = await getters.client.accounts.getBalance(pubKey)
+          const balance = await getters.clientInternal.accounts.getBalance(pubKey)
           commit('setBalance', balance)
           return balance
         } catch (err) {
