@@ -2,13 +2,13 @@
 
 ## Overview
 
-This is a simple Web Application that will be used during [re:publica 2018](https://re-publica.com/en) using VueJS and [Aeternity's JS SDK](https://github.com/aeternity/aepp-sdk-js).
+This is a simple Web Application that will be used during events to showcase aeternity's main features using VueJS and [Aeternity's JS SDK](https://github.com/aeternity/aepp-sdk-js).
 
 It allows conference participants to order beers using tokens.
 
 There will be a dedicated Aeternity-Blockchain running only for this project. Accounts for the participants will be generated on this chain beforehand. For every account a domain name will be registered and an initial token amount will be transfered.
 
-*This repository is a work in progress* and it has the precise scope of only being used during re:publica 2018 to gamify the process of ordering a beer offered by Aeternity.
+*This repository is a work in progress* and it has the precise scope of only being used during events, to gamify the process of ordering a beer offered by Aeternity.
 
 ## Usage
 

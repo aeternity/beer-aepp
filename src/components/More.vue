@@ -24,13 +24,13 @@
         <div class="list-item">
           <div class="shell">
             <div class="list-item-el">
-              <a :href='`https://republica-explorer.aepps.com/#/account/${account.pub}`' target="_blank">
+              <a :href='`https://explorer.beer.aepps.com/#/account/${account.pub}`' target="_blank">
                 <h5>My Transactions</h5>
               </a>
             </div>
             <div class="list-item-el">
               <div class="arrow">
-                <a :href='`https://republica-explorer.aepps.com/#/account/${account.pub}`' target="_blank">
+                <a :href='`https://explorer.beer.aepps.com/#/account/${account.pub}`' target="_blank">
                   <ae-icon name="chevron" />
                 </a>
               </div>
@@ -85,11 +85,11 @@
         Opening hours of the æternity stand
       </p>
       <p class="screen-subtitle" style="font-weight:400;">
-        re:publica 2018<br>
-        STATION Berlin<br>
+        Crypto World Party<br>
+        <!-- STATION Berlin<br>
         Luckenwalder Str. 4&hairsp;–&hairsp;6<br>
         10963 Berlin<br>
-        Germany<br>
+        Germany<br> -->
         <br>
         2nd&hairsp;–&hairsp;4th of May<br>
         12:00&hairsp;–&hairsp;19:00

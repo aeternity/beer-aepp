@@ -11,7 +11,7 @@
       </div>
       <div class="title">
         <h1>
-          re:publica
+          Crypto World Party
         </h1>
       </div>
       <div class="intro-text">

@@ -36,7 +36,6 @@ const store = new Vuex.Store({
     },
     client () {
       const provider = new AeternityClient.providers.HttpProvider(
-        // 'republica.aepps.com',
         // eslint-disable-next-line
         SETTINGS.epoch_url,
         443,
@@ -46,7 +45,6 @@ const store = new Vuex.Store({
     },
     clientInternal () {
       const provider = new AeternityClient.providers.HttpProvider(
-        // 'republica.aepps.com',
         // eslint-disable-next-line
         SETTINGS.epoch_url,
         443,
