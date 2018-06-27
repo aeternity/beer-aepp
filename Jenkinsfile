@@ -32,7 +32,7 @@ pipeline {
           docker.withRegistry(env.DOCKER_REGISTRY, env.ECR_CREDENTIAL) {
             def image = docker.build(env.DOCKER_IMAGE)
             image.push('latest')
-            if (BRANCH_NAME == "feature/json-settings") {
+            if (BRANCH_NAME ==~ "feature/json-settings") {
               image.push('release')
             }
           }
@@ -41,9 +41,9 @@ pipeline {
     }
 
     stage('Deploy') {
-      when {
-        expression { BRANCH_NAME == "feature/json-settings" }
-      }
+      // when {
+      //   expression { BRANCH_NAME == "feature/json-settings" }
+      // }
       steps {
         build 'deploy-beer-aepp'
       }
