@@ -16,6 +16,7 @@ Vue.use(VueSocketio, store.state.websocketUrl, store)
 try {
   // eslint-disable-next-line no-undef
   let account = JSON.parse(localStorage.getItem('account'))
+  store.dispatch("initAe");
   if (account) {
     store.commit('setAccount', account)
   }

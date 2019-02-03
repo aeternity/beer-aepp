@@ -41,6 +41,7 @@ export default {
   methods: {
   },
   mounted () {
+    this.$store.dispatch('initAe')
     this.$store.dispatch('updateBalance')
     setInterval(() => {
       this.$store.dispatch('updateBalance')

@@ -56,7 +56,7 @@ export default {
       // this isnt needed here, just as a poc on how to use verify
       const sigBuffer = Buffer.from(sigBase64, 'base64')
       const hashBuffer = Buffer.from(beerHash)
-      const pub = Crypto.decodeBase58Check(pubKey.split('$')[1])
+      const pub = Crypto.decodeBase58Check(pubKey.split('_')[1])
       const verified = Crypto.verify(hashBuffer, sigBuffer, pub)
       return verified
     }

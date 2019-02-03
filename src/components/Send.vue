@@ -311,7 +311,7 @@ export default {
       this.loading = true
     },
     isValidAddress (value) {
-      const regex = /^(\w+.(aet|test)|ak\$[123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ]{94})$/i
+      const regex = /^(\w+.(aet|test)|ak_[123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ]{94})$/i
       return regex.test(value)
     },
     async lookupDomain () {
