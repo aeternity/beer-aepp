@@ -272,10 +272,8 @@ export default {
     async sendTokens () {
       if (!await this.$validator.validateAll() || !this.validInput) return
       try {
-        const spendTx = await this.client.base.spend(this.receiver, this.amountInt, this.wallet, {fee: 1})
-        this.state = 'waiting'
-        console.log('spendTx', spendTx)
-        await this.client.tx.waitForTransaction(spendTx['tx_hash'])
+        const spendTx = await this.client.spend(this.receiver, this.amountInt)
+        console.log('spendTx -> ', spendTx)
         this.state = 'done'
       } catch (err) {
         console.log(err)
@@ -317,11 +315,11 @@ export default {
     async lookupDomain () {
       this.domainError = null
       let domain = this.domainInput.toLowerCase().trim()
-      if (!domain.endsWith('.aet')) {
-        domain += '.aet'
+      if (!domain.endsWith('.test')) {
+        domain += '.test'
       }
       try {
-        const domainData = await this.client.aens.getName(domain)
+        const domainData = await this.client.aensQuery(domain)
         if (!domainData) {
           this.domainError = 'Domain not found. Check for typos'
         }

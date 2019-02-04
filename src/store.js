@@ -1,10 +1,7 @@
 import Vuex from "vuex";
 import Vue from "vue";
-// import { AeternityClient } from '@aeternity/aepp-sdk'
-import Ae from "@aeternity/aepp-sdk/es/ae/universal";
 
 Vue.use(Vuex);
-
 
 
 const store = new Vuex.Store({
@@ -33,15 +30,10 @@ const store = new Vuex.Store({
     },
     ae(state) {
       return state.ae;
-    }
-    // client () { // TODO: this should be updated to the latest sdk
-    //   const provider = new AeternityClient.providers.HttpProvider(
-    //     'republica.aepps.com',
-    //     443,
-    //     { secured: true, internal: false }
-    //   )
-    //   return new AeternityClient(provider)
-    // },
+    },
+    client (state) { // TODO: this should be updated to the latest sdk
+     return state.ae;
+    },
     // clientInternal() { // TODO: this should be updated to the latest sdk and is not necesary
     //   const provider = new AeternityClient.providers.HttpProvider(
     //     'republica.aepps.com',
@@ -102,8 +94,8 @@ const store = new Vuex.Store({
     async updateBalance({ commit, state, getters }) {
       const pubKey = state.account.pub;
       if (pubKey) {
-        (await getters.ae)
-          .balance(pubKey)
+        state.ae
+          .balance(pubKey, { format: false })
           .then(balance => {
             // logs current balance of "A_PUB_ADDRESS"
             console.log("balance", balance);
@@ -116,19 +108,6 @@ const store = new Vuex.Store({
           });
       }
       return 0;
-    },
-    async initAe({ commit, state, getters }) {
-      commit(
-        "setAe",
-        Ae({
-          url: "https://sdk-testnet.aepps.com",
-          internalUrl: "https://sdk-testnet.aepps.com",
-          networkId: "aet_ua" // or any other networkId your client should connect to
-          // accounts: [
-          //   MemoryAccount({ keypair: { secretKey: 'A_PRIV_KEY', publicKey: 'A_PUB_ADDRESS' } })
-          // ],
-        })
-      );
     }
   }
 });

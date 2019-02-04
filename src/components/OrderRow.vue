@@ -30,7 +30,7 @@ export default {
       return this.$store.state.account
     },
     client () {
-      return this.$store.getters.client
+      return this.$store.getters.ae
     },
     wasMined () {
       if (!this.beerTx) {
@@ -73,7 +73,7 @@ export default {
   async mounted () {
     if (this.beerHash) {
       try {
-        this.beerTx = await this.client.tx.getTransaction(this.beerHash)
+        this.beerTx = await this.client.tx(this.beerHash)
         this.wasScanned = await this.getBeerState(this.beerHash)
       } catch (err) {
         console.log(err)
